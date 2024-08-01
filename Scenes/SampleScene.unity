@@ -316,8 +316,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  speed: 0.5
-  rotationSpeed: 1
+  shipAcceleration: 25
+  shipStopping: 10
+  maxVelocity: 100
+  minVelocity: 1
+  rotationSpeed: 200
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

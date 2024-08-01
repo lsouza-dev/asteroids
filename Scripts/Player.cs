@@ -6,8 +6,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] float speed;
-    [SerializeField] float rotationSpeed;
+    private bool isAlive = true;
+    private bool isAccelerating = true;
+
+    [SerializeField] private float shipAcceleration;
+    [SerializeField] private float shipStopping;
+    [SerializeField] private float maxVelocity;
+    [SerializeField] private float minVelocity;
+    [SerializeField] private float rotationSpeed;
     
     // Start is called before the first frame update
     void Start()
@@ -18,28 +24,49 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerMove();
+        // Se estiver vivo, chama os métodos de aceleração e rotação
+        if (isAlive)
+        {
+            ShipAcceleration();
+            ShipRotation();
+        }
+        
     }
 
-
-    private void PlayerMove()
+    private void FixedUpdate()
     {
-        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if(isAlive && isAccelerating)
         {
-            Debug.Log("Sobe");
+            // Adiciona força ao rigid multiplicando pela aceleração e tranform.up
+            rb.AddForce(shipAcceleration * transform.up);
+            // Definindo o limite da velocidade da nave
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
         }
-        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        else if(isAlive && !isAccelerating) 
+        {
+            rb.velocity = Vector2.zero;
+        }
+    }
+
+    private void ShipAcceleration()
+    {
+        // Definindo que isAccelerating será true quando apertar seta para cima ou W
+        isAccelerating = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
+    }
+
+    private void ShipRotation()
+    {
+        if(Input.GetKey(KeyCode.LeftArrow))
+        {
+            // Se apertar para esquerda, rotaciona a nave incrementando o rotation speed
+            // multiplicado pelo deltaTime e transform.forward
+            transform.Rotate(rotationSpeed * Time.deltaTime * transform.forward);
+        }else if (Input.GetKey(KeyCode.RightArrow))
         {
 
-            Debug.Log("Desce");
-        }
-        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.eulerAngles += new Vector3(0, 0, rotationSpeed);
-        }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.eulerAngles += new Vector3(0, 0, -rotationSpeed);
+            // Se apertar para esquerda, rotaciona a nave decrementando o rotation speed
+            // multiplicado pelo deltaTime e transform.forward
+            transform.Rotate(-rotationSpeed * Time.deltaTime * transform.forward);
         }
     }
 }
