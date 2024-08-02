@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 172794598}
   - component: {fileID: 172794597}
   - component: {fileID: 172794600}
+  - component: {fileID: 172794601}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -320,7 +321,21 @@ MonoBehaviour:
   shipStopping: 10
   maxVelocity: 100
   minVelocity: 1
-  rotationSpeed: 200
+  rotationSpeed: 250
+--- !u!114 &172794601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172794596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 139aa39d2f376bd41b85c6c83d97167f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  limitX: 38
+  limitY: 21
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
