@@ -5,9 +5,9 @@ using UnityEngine.UIElements;
 
 public class Wrap : MonoBehaviour
 {
-    private Vector3 pos;
-    [SerializeField]  private float limitX;
-    [SerializeField]  private float limitY; 
+    private Vector2 pos;
+    [SerializeField]  private float xOffset = 37;
+    [SerializeField]  private float yOffset = 21;
     
     // Start is called before the first frame update
     void Start()
@@ -18,33 +18,40 @@ public class Wrap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
+        WrapObject();
+    }
 
-
-        Vector3 moveWrap = Vector3.zero;
-
-
-
-        if (viewportPosition.x <= 0)
+    private void WrapObject()
+    {
+        if (pos.x > xOffset)
         {
-            moveWrap.x += 1;
+            //Se o valor for maior que o xOffset
+            // definimos um novo vector2 levando ao xOffset negativo
+            // Ou seja, para a posição contrária
+            transform.position = new Vector2(-xOffset, pos.y);
+
         }
-        else if (viewportPosition.x >= 1)
+        else if (pos.x < -xOffset)
         {
-            moveWrap.x -= 0;
+            //Se o valor for menor que o -xOffset
+            // definimos um novo vector2 levando ao xOffset positivo
+            // Ou seja, para a posição contrária
+            transform.position = new Vector2(xOffset, pos.y);
         }
-        else if (viewportPosition.y <= 0)
+        else if (pos.y > yOffset)
         {
-            moveWrap.y += 1;
+            // Mesma operação realizada para o xOffset...
+            transform.position = new Vector2(pos.x, -yOffset);
         }
-        else if (viewportPosition.y >= 1)
+        else if (pos.y < -yOffset)
         {
-            moveWrap.y -= 0;
+            // Mesma operação realizada para o xOffset...
+            transform.position = new Vector2(pos.x, yOffset);
         }
 
-        Debug.Log($"Y: {moveWrap.y} - X: {moveWrap.x}");
-        Debug.Log(viewportPosition);
+        // Atualizando a pos durante a cada frame, fazendo com que ela 
+        // receba o transform.position (Posição em tempo real do GameObject)
+        pos = transform.position;
 
-        transform.position = Camera.main.ViewportToWorldPoint(viewportPosition + moveWrap);
     }
 }

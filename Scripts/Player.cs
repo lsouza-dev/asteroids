@@ -10,9 +10,9 @@ public class Player : MonoBehaviour
     private bool isAccelerating = true;
 
     [SerializeField] private float shipAcceleration;
-    [SerializeField] private float shipStopping;
     [SerializeField] private float maxVelocity;
     [SerializeField] private float minVelocity;
+
     [SerializeField] private float rotationSpeed;
     
     // Start is called before the first frame update
@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         // Se estiver vivo, chama os métodos de aceleração e rotação
         if (isAlive)
         {
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
         }
         else if(isAlive && !isAccelerating) 
         {
+            // Parando a nave se estiver vivo e não acelerar
             rb.velocity = Vector2.zero;
         }
     }
