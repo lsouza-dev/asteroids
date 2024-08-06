@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 public class Wrap : MonoBehaviour
 {
     private Vector2 pos;
-    [SerializeField]  private float xOffset = 37;
-    [SerializeField]  private float yOffset = 21;
+    [SerializeField]  private float xOffset;
+    [SerializeField]  private float yOffset;
     
     // Start is called before the first frame update
     void Start()

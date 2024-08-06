@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     private int gameLevel = 1;
+    [SerializeField] private int rocksAdd = 1;
     [SerializeField] private float xMin = 15;
     [SerializeField] private float xMax = 33;
     [SerializeField]  private float yMin = 10;
@@ -18,7 +19,7 @@ public class GameController : MonoBehaviour
         switch (gameLevel)
         {
             case 1:
-                rocksQuantity = gameLevel + 1;
+                rocksQuantity = gameLevel + rocksAdd;
                 InstantiateRocks();
                 break;
         }

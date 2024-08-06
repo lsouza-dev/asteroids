@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9027343710636207914}
   m_Layer: 0
   m_Name: Rock
-  m_TagString: Untagged
+  m_TagString: Rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,6 +69,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: be426bde2d55159468c8140b0c75c462, type: 3}
   - {fileID: 21300000, guid: c53b215cf48b0b54db35102551b4739b, type: 3}
   rock: {fileID: 700472224537563130}
+  qtdSmallRocks: 0
 --- !u!50 &1394496938929333128
 Rigidbody2D:
   serializedVersion: 4
@@ -125,7 +126,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,12 +11,14 @@ public class Rock : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Sprite[] sprites = new Sprite[2];
     [SerializeField] private GameObject rock; 
+    [SerializeField] private int qtdSmallRocks;
+    private bool bigRock = true;
 
     // Start is called before the first frame update
     void Start()
     {
         RandomDirection();
-        
+
     }
 
     // Update is called once per frame
@@ -26,19 +29,10 @@ public class Rock : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Hit();
+        
     }
 
-    private void Hit()
-    {
-        Sprite teste = rock.GetComponent<SpriteRenderer>().sprite;
-        teste = sprites[0];
-
-        rock.GetComponent<SpriteRenderer>().sprite = teste;
-        Instantiate(rock,transform.position,Quaternion.identity);
-       
-    }
-
+    
     private void RandomDirection()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -62,5 +56,28 @@ public class Rock : MonoBehaviour
         }
 
         rb.velocity = dir;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Bullet")
+        {
+            if (bigRock)
+            {
+                qtdSmallRocks = 2;
+
+                for (int i = 0; i < qtdSmallRocks; i++)
+                {
+                    Rock smallRock = Instantiate(this, transform.position, Quaternion.identity);
+                    smallRock.bigRock = false;
+                }
+                Destroy(this.gameObject);
+                Destroy(other.gameObject);
+            }else
+            {
+                Destroy(this.gameObject);
+                Destroy(other.gameObject);
+            }
+        }
     }
 }

@@ -12,8 +12,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float shipAcceleration;
     [SerializeField] private float maxVelocity;
     [SerializeField] private float minVelocity;
-
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private float bulletSpeed = 8f;
+
+    [SerializeField] private Transform bulletSpawn;
+    [SerializeField] private Rigidbody2D bulletPrefab;
+
+
+
     
     // Start is called before the first frame update
     void Start()
@@ -30,6 +36,7 @@ public class Player : MonoBehaviour
         {
             ShipAcceleration();
             ShipRotation();
+            ShipShooting();
         }
         
     }
@@ -58,12 +65,13 @@ public class Player : MonoBehaviour
 
     private void ShipRotation()
     {
-        if(Input.GetKey(KeyCode.LeftArrow))
+        if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             // Se apertar para esquerda, rotaciona a nave incrementando o rotation speed
             // multiplicado pelo deltaTime e transform.forward
             transform.Rotate(rotationSpeed * Time.deltaTime * transform.forward);
-        }else if (Input.GetKey(KeyCode.RightArrow))
+
+        }else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
 
             // Se apertar para esquerda, rotaciona a nave decrementando o rotation speed
@@ -71,4 +79,27 @@ public class Player : MonoBehaviour
             transform.Rotate(-rotationSpeed * Time.deltaTime * transform.forward);
         }
     }
+
+    private void ShipShooting()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Rigidbody2D bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
+
+            Vector2 shipVelocity = rb.velocity;
+            Vector2 shipDirection = transform.up;
+            float shipForwardSpeed = Vector2.Dot(shipVelocity, shipDirection);
+
+            if (shipForwardSpeed < 0)
+                shipForwardSpeed = 0;
+
+            bullet.velocity = shipDirection * shipForwardSpeed;
+
+            bullet.AddForce(bulletSpeed * transform.up, ForceMode2D.Impulse);
+
+
+        }
+
+    }
+    
 }
