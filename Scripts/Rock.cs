@@ -1,34 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Json;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rock : MonoBehaviour
 {
     [SerializeField] private Vector2 dir;
     [SerializeField] private float speed;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Sprite[] sprites = new Sprite[2];
-    [SerializeField] private GameObject rock; 
-    [SerializeField] private int qtdSmallRocks;
+    [SerializeField] private int qtdRocks;
+    private int totalRocks;
+    private bool nextLevel;
+    [SerializeField] private float rockScale;
+    [SerializeField] private SpriteRenderer spriteRenderer ;
+    [SerializeField] private Sprite[] sprites;
+    
+    [SerializeField] private GameObject controller;
+    
+    
     private bool bigRock = true;
+    
+
 
     // Start is called before the first frame update
     void Start()
     {
+        controller = GameObject.FindGameObjectWithTag("GameController");
         RandomDirection();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
+        if(nextLevel)
+        {
+            SceneManager.LoadScene(0);
+        }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
         
     }
 
@@ -60,24 +73,35 @@ public class Rock : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+
         if (other.tag == "Bullet")
         {
+            qtdRocks = 2;
+            totalRocks = qtdRocks;
+
             if (bigRock)
             {
-                qtdSmallRocks = 2;
-
-                for (int i = 0; i < qtdSmallRocks; i++)
+                for (int i = 0; i < qtdRocks; i++)
                 {
-                    Rock smallRock = Instantiate(this, transform.position, Quaternion.identity);
-                    smallRock.bigRock = false;
+                    Rock mediumRock = Instantiate(this, transform.position, Quaternion.identity);
+                    rockScale = .8f;
+                    mediumRock.transform.localScale = new Vector3(rockScale, rockScale, rockScale);
+                    mediumRock.spriteRenderer.sprite = sprites[1];
+                    mediumRock.bigRock = false;
+                    totalRocks += 1;
                 }
-                Destroy(this.gameObject);
+                totalRocks -= 1;
                 Destroy(other.gameObject);
-            }else
-            {
                 Destroy(this.gameObject);
-                Destroy(other.gameObject);
             }
+            else
+            {
+                totalRocks-=1;
+                Destroy(other.gameObject);
+                Destroy(this.gameObject);
+            }
+
+            Debug.Log(totalRocks);
         }
     }
 }

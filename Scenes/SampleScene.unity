@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 872658335}
   m_Layer: 0
   m_Name: GameController
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -460,11 +460,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20f38ffd2adacb4d8f9b818d8554853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rocksAdd: 1
   xMin: 15
   xMax: 33
   yMin: 10
   yMax: 18
   rockPrefab: {fileID: 700472224537563130, guid: 66fc9acc90dd033479b1702c6a6eae67, type: 3}
+  smallRockSprite: {fileID: 21300000, guid: 713a9e5fb0087254ba127a75eb7cfb21, type: 3}
 --- !u!4 &872658336
 Transform:
   m_ObjectHideFlags: 0

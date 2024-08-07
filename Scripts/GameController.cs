@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -12,7 +14,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private float yMax = 18;
     // Start is called before the first frame update
     [SerializeField] private GameObject rockPrefab;
+    [SerializeField] private Sprite smallRockSprite;
     private int rocksQuantity = 0;
+    
     void Start()
     {
 
@@ -20,6 +24,7 @@ public class GameController : MonoBehaviour
         {
             case 1:
                 rocksQuantity = gameLevel + rocksAdd;
+                
                 InstantiateRocks();
                 break;
         }
