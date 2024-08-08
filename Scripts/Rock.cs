@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Json;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,15 +12,11 @@ public class Rock : MonoBehaviour
     [SerializeField] private Vector2 dir;
     [SerializeField] private float speed;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private int qtdRocks;
-    private int totalRocks;
-    private bool nextLevel;
+    [SerializeField] private int qtdRocks = 0;
     [SerializeField] private float rockScale;
     [SerializeField] private SpriteRenderer spriteRenderer ;
     [SerializeField] private Sprite[] sprites;
-    
-    [SerializeField] private GameObject controller;
-    
+    [SerializeField] private GameController controller;
     
     private bool bigRock = true;
     
@@ -28,7 +25,7 @@ public class Rock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controller = GameObject.FindGameObjectWithTag("GameController");
+        controller = FindObjectOfType<GameController>();
         RandomDirection();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
@@ -37,10 +34,7 @@ public class Rock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(nextLevel)
-        {
-            SceneManager.LoadScene(0);
-        }
+        
 
         
     }
@@ -73,14 +67,14 @@ public class Rock : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+        
         if (other.tag == "Bullet")
         {
-            qtdRocks = 2;
-            totalRocks = qtdRocks;
-
             if (bigRock)
             {
+                qtdRocks = 2;
+                controller.rocksQuantity = qtdRocks;
+
                 for (int i = 0; i < qtdRocks; i++)
                 {
                     Rock mediumRock = Instantiate(this, transform.position, Quaternion.identity);
@@ -88,20 +82,26 @@ public class Rock : MonoBehaviour
                     mediumRock.transform.localScale = new Vector3(rockScale, rockScale, rockScale);
                     mediumRock.spriteRenderer.sprite = sprites[1];
                     mediumRock.bigRock = false;
-                    totalRocks += 1;
+                    controller.rocksQuantity++;
                 }
-                totalRocks -= 1;
+
+                Debug.Log($"Destruiu ROCK");
+                controller.rocksQuantity--;
                 Destroy(other.gameObject);
                 Destroy(this.gameObject);
             }
             else
             {
-                totalRocks-=1;
+                controller.rocksQuantity--;
                 Destroy(other.gameObject);
                 Destroy(this.gameObject);
+                Debug.Log($"Destruiu SMALLROCK");
             }
-
-            Debug.Log(totalRocks);
+            
+            if(controller.rocksQuantity == 0)
+            {
+                controller.nextLevel = true;
+            }
         }
     }
 }

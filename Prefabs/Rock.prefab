@@ -72,7 +72,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: baa85a903a67d5345872cdd38370b697, type: 3}
   - {fileID: 21300000, guid: 713a9e5fb0087254ba127a75eb7cfb21, type: 3}
   - {fileID: 21300000, guid: a05a0f4bc54443b43afba84decdfc7f4, type: 3}
-  rockSizes: []
   controller: {fileID: 0}
 --- !u!50 &1394496938929333128
 Rigidbody2D:
