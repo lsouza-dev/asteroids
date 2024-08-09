@@ -12,30 +12,31 @@ public class Rock : MonoBehaviour
     [SerializeField] private Vector2 dir;
     [SerializeField] private float speed;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private int qtdRocks = 0;
+    [SerializeField] public int qtdRocks;
     [SerializeField] private float rockScale;
     [SerializeField] private SpriteRenderer spriteRenderer ;
     [SerializeField] private Sprite[] sprites;
     [SerializeField] private GameController controller;
     
     private bool bigRock = true;
-    
 
+
+    private void Awake()
+    {
+        controller = FindObjectOfType<GameController>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        controller = FindObjectOfType<GameController>();
         RandomDirection();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-
+        //qtdRocks = controller.rocksQuantity;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
         
     }
 
@@ -72,10 +73,7 @@ public class Rock : MonoBehaviour
         {
             if (bigRock)
             {
-                qtdRocks = 2;
-                controller.rocksQuantity = qtdRocks;
-
-                for (int i = 0; i < qtdRocks; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     Rock mediumRock = Instantiate(this, transform.position, Quaternion.identity);
                     rockScale = .8f;
@@ -85,23 +83,28 @@ public class Rock : MonoBehaviour
                     controller.rocksQuantity++;
                 }
 
-                Debug.Log($"Destruiu ROCK");
                 controller.rocksQuantity--;
                 Destroy(other.gameObject);
                 Destroy(this.gameObject);
+
+                controller.points += 50;
             }
             else
             {
                 controller.rocksQuantity--;
                 Destroy(other.gameObject);
                 Destroy(this.gameObject);
-                Debug.Log($"Destruiu SMALLROCK");
+
+                controller.points += 25;
             }
-            
-            if(controller.rocksQuantity == 0)
+
+            if (controller.rocksQuantity == 0)
             {
+
                 controller.nextLevel = true;
             }
+
+            Debug.Log($"Remain Rocks: {controller.rocksQuantity}");
         }
     }
 }
