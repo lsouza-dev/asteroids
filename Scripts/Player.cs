@@ -19,12 +19,13 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody2D bulletPrefab;
 
 
-
+    [SerializeField] public ScreenShakeController shakeController;
     
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        shakeController = FindObjectOfType<ScreenShakeController>();
     }
 
     // Update is called once per frame
@@ -97,7 +98,7 @@ public class Player : MonoBehaviour
 
             bullet.AddForce(bulletSpeed * transform.up, ForceMode2D.Impulse);
 
-
+            shakeController.shakeActive = true;
         }
 
     }
