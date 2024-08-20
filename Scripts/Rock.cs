@@ -17,13 +17,15 @@ public class Rock : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer ;
     [SerializeField] private Sprite[] sprites;
     [SerializeField] private GameController controller;
-    
+    [SerializeField] private ScreenShakeController screenShake;
+
     private bool bigRock = true;
 
 
     private void Awake()
     {
         controller = FindObjectOfType<GameController>();
+        screenShake = FindObjectOfType<ScreenShakeController>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
@@ -87,6 +89,10 @@ public class Rock : MonoBehaviour
                 Destroy(other.gameObject);
                 Destroy(this.gameObject);
 
+                screenShake.shakeAmount = .6f;
+                screenShake.shakeDuration = .6f;
+                screenShake.shakeActive = true;
+
                 controller.points += 50;
             }
             else
@@ -94,6 +100,11 @@ public class Rock : MonoBehaviour
                 controller.rocksQuantity--;
                 Destroy(other.gameObject);
                 Destroy(this.gameObject);
+
+                screenShake.shakeAmount = .4f;
+                screenShake.shakeDuration = .4f;
+                screenShake.shakeActive = true;
+
 
                 controller.points += 25;
             }
@@ -103,8 +114,6 @@ public class Rock : MonoBehaviour
 
                 controller.nextLevel = true;
             }
-
-            Debug.Log($"Remain Rocks: {controller.rocksQuantity}");
         }
     }
 }

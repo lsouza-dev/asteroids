@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEditor.SearchService;
 using UnityEditor.Tilemaps;
@@ -10,10 +11,14 @@ public class GameController : MonoBehaviour
 {
     [Header("Text Mesh")]
     [SerializeField]private TMP_Text pointsText;
+    [SerializeField] private TMP_Text levelText;
+    [SerializeField] private TMP_Text timerText;
     public int points = 0;
+    float nextLevelTimer = 3f;
 
     [Header("Level Variables")]
     private int gameLevel = 1;
+    public bool levelTransition;
     public bool nextLevel;
 
     [Header("Rocks Variables")]
@@ -24,9 +29,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private int rocksAdd= 1;
 
     [Header("Position Variables")]
-    [SerializeField] private float xMin = 15;
-    [SerializeField] private float xMax = 33;
-    [SerializeField]  private float yMin = 10;
+    [SerializeField] private float xMin = 25;
+    [SerializeField] private float xMax = 34;
+    [SerializeField]  private float yMin = 15;
     [SerializeField] private float yMax = 18;
 
     // Start is called before the first frame update
@@ -39,6 +44,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        levelTransition = true;
         rocksSpawn = gameLevel + rocksAdd;
         rocksQuantity = rocksSpawn;
         InstantiateRocks(rocksSpawn);
@@ -52,6 +58,13 @@ public class GameController : MonoBehaviour
             NextLevel();
        }
 
+        if (levelTransition)
+        {
+            nextLevelTimer -= Time.time;
+            LevelText();
+        }
+
+
         pointsText.text = $"POINTS: {points}";
     }
 
@@ -63,8 +76,20 @@ public class GameController : MonoBehaviour
         rocksQuantity = rocksSpawn;
         InstantiateRocks(rocksSpawn);
         //rock.qtdRocks = rocksQuantity;
-        
     }
+
+    public void LevelText()
+    {
+        
+        if(nextLevelTimer <= 0)
+        {
+            Debug.Log("Inicia");
+        }
+
+        timerText.text = $"{Mathf.Round(nextLevelTimer)}...";
+    }
+
+    
 
     private void InstantiateRocks(int quantity)
     {

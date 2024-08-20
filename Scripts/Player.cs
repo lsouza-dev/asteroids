@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private Rigidbody2D bulletPrefab;
 
+    float timerToRespawn;
 
     [SerializeField] public ScreenShakeController shakeController;
     
@@ -31,13 +32,16 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(timerToRespawn);
         // Se estiver vivo, chama os métodos de aceleração e rotação
         if (isAlive)
         {
             ShipAcceleration();
             ShipRotation();
             ShipShooting();
+        }else
+        {
+            
         }
         
     }
@@ -94,13 +98,32 @@ public class Player : MonoBehaviour
             if (shipForwardSpeed < 0)
                 shipForwardSpeed = 0;
 
+            bullet.transform.rotation = transform.rotation;
             bullet.velocity = shipDirection * shipForwardSpeed;
-
             bullet.AddForce(bulletSpeed * transform.up, ForceMode2D.Impulse);
 
             shakeController.shakeActive = true;
         }
 
     }
-    
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Rock")
+        {
+            RestartGame();
+            Destroy(this.gameObject);
+            isAlive = false; 
+        }
+    }
+
+    private void RestartGame()
+    {
+        if(timerToRespawn >= 2)
+        {
+            Player player = gameObject.GetComponent<Player>();
+            Instantiate(player, new Vector2(0, 0), Quaternion.identity);
+        }
+    }
 }
