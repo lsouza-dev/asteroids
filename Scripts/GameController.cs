@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text timerText;
     public int points = 0;
-    float nextLevelTimer = 3f;
+    float nextLevelTimer = 3.5f;
 
     [Header("Level Variables")]
     private int gameLevel = 1;
@@ -29,10 +29,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private int rocksAdd= 1;
 
     [Header("Position Variables")]
-    [SerializeField] private float xMin = 25;
-    [SerializeField] private float xMax = 34;
-    [SerializeField]  private float yMin = 15;
-    [SerializeField] private float yMax = 18;
+    [SerializeField] private float xMin;
+    [SerializeField] private float xMax;
+    [SerializeField]  private float yMin;
+    [SerializeField] private float yMax;
 
     // Start is called before the first frame update
     
@@ -48,6 +48,8 @@ public class GameController : MonoBehaviour
         rocksSpawn = gameLevel + rocksAdd;
         rocksQuantity = rocksSpawn;
         InstantiateRocks(rocksSpawn);
+        levelText.text = $"LEVEL: {gameLevel}";
+        timerText.text = string.Empty;
     }
 
     // Update is called once per frame
@@ -55,17 +57,20 @@ public class GameController : MonoBehaviour
     {
        if(nextLevel)
        {
-            NextLevel();
+            Player player = FindObjectOfType<Player>();
+            player.transform.position = Vector3.zero;
+
+            LevelCronometer();
+            if (nextLevelTimer <= 0)
+            {
+                NextLevel();
+                timerText.text = string.Empty;
+            }
+            
        }
-
-        if (levelTransition)
-        {
-            nextLevelTimer -= Time.time;
-            LevelText();
-        }
-
-
+       
         pointsText.text = $"POINTS: {points}";
+        
     }
 
     public void NextLevel()
@@ -74,22 +79,19 @@ public class GameController : MonoBehaviour
         gameLevel += 1;
         rocksSpawn = gameLevel + rocksAdd;
         rocksQuantity = rocksSpawn;
+        levelText.text = $"LEVEL: {gameLevel}";
+        nextLevelTimer = 3.5f;
         InstantiateRocks(rocksSpawn);
-        //rock.qtdRocks = rocksQuantity;
+        
     }
 
-    public void LevelText()
+    public void LevelCronometer()
     {
-        
-        if(nextLevelTimer <= 0)
-        {
-            Debug.Log("Inicia");
-        }
+        nextLevelTimer -= Time.deltaTime;
 
         timerText.text = $"{Mathf.Round(nextLevelTimer)}...";
     }
 
-    
 
     private void InstantiateRocks(int quantity)
     {
