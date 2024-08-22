@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] private Rigidbody2D bulletPrefab;
+    [SerializeField] private GameObject explosionPrefab;
 
     float timerToRespawn;
 
@@ -32,7 +33,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(timerToRespawn);
         // Se estiver vivo, chama os métodos de aceleração e rotação
         if (isAlive)
         {
@@ -112,6 +112,12 @@ public class Player : MonoBehaviour
     {
         if(other.tag == "Rock")
         {
+            GameObject explosion = Instantiate(explosionPrefab,this.transform.position,Quaternion.identity);
+            Destroy(explosion,1f);
+
+            shakeController.shakeAmount = 1f;
+            shakeController.shakeDuration = 1f;
+            shakeController.shakeActive = true;
             RestartGame();
             Destroy(this.gameObject);
             isAlive = false; 

@@ -14,16 +14,23 @@ public class Rock : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] public int qtdRocks;
     [SerializeField] private float rockScale;
+    [SerializeField] private Collider2D rockCollider;
+    [SerializeField] private float colliderScaleX = 2.3f;
+    [SerializeField] private float colliderScaleY = 4.25f;
     [SerializeField] private SpriteRenderer spriteRenderer ;
     [SerializeField] private Sprite[] sprites;
     [SerializeField] private GameController controller;
     [SerializeField] private ScreenShakeController screenShake;
+
+
+    // Value Collider: BIGROCK = x - 2.3 y - 4.25  ||| SMALLROCK = x - 4 y - 4.6
 
     private bool bigRock = true;
 
 
     private void Awake()
     {
+        rockCollider = GetComponent<Collider2D>();
         controller = FindObjectOfType<GameController>();
         screenShake = FindObjectOfType<ScreenShakeController>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -34,6 +41,7 @@ public class Rock : MonoBehaviour
     {
         RandomDirection();
         //qtdRocks = controller.rocksQuantity;
+        
     }
 
     // Update is called once per frame
@@ -89,8 +97,8 @@ public class Rock : MonoBehaviour
                 Destroy(other.gameObject);
                 Destroy(this.gameObject);
 
-                screenShake.shakeAmount = .6f;
-                screenShake.shakeDuration = .6f;
+                screenShake.shakeAmount = .35f;
+                screenShake.shakeDuration = .35f;
                 screenShake.shakeActive = true;
 
                 controller.points += 50;
@@ -101,8 +109,8 @@ public class Rock : MonoBehaviour
                 Destroy(other.gameObject);
                 Destroy(this.gameObject);
 
-                screenShake.shakeAmount = .4f;
-                screenShake.shakeDuration = .4f;
+                screenShake.shakeAmount = .2f;
+                screenShake.shakeDuration = .2f;
                 screenShake.shakeActive = true;
 
 
