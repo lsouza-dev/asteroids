@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private bool isAccelerating = true;
 
     [SerializeField] private float shipAcceleration;
+    [SerializeField] private float shipDisacceleration;
+
     [SerializeField] private float maxVelocity;
     [SerializeField] private float minVelocity;
     [SerializeField] private float rotationSpeed;
@@ -58,7 +60,7 @@ public class Player : MonoBehaviour
         else if(isAlive && !isAccelerating) 
         {
             // Parando a nave se estiver vivo e não acelerar
-            rb.velocity = Vector2.zero;
+            rb.velocity *= shipDisacceleration;
         }
     }
 
@@ -110,9 +112,9 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Rock")
+        if(other.tag == "Rock" || other.tag == "SmallRock")
         {
-            GameObject explosion = Instantiate(explosionPrefab,this.transform.position,Quaternion.identity);
+            GameObject explosion = Instantiate(explosionPrefab,transform.position,Quaternion.identity);
             Destroy(explosion,1f);
 
             shakeController.shakeAmount = 1f;

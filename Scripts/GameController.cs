@@ -59,7 +59,6 @@ public class GameController : MonoBehaviour
        {
             Player player = FindObjectOfType<Player>();
             player.transform.position = Vector3.zero;
-
             LevelCronometer();
             if (nextLevelTimer <= 0)
             {
@@ -78,8 +77,8 @@ public class GameController : MonoBehaviour
         nextLevel = false;
         gameLevel += 1;
         rocksSpawn = gameLevel + rocksAdd;
-        rocksQuantity = rocksSpawn;
         levelText.text = $"LEVEL: {gameLevel}";
+        rocksQuantity = rocksSpawn;
         nextLevelTimer = 3.5f;
         InstantiateRocks(rocksSpawn);
         
@@ -88,7 +87,6 @@ public class GameController : MonoBehaviour
     public void LevelCronometer()
     {
         nextLevelTimer -= Time.deltaTime;
-
         timerText.text = $"{Mathf.Round(nextLevelTimer)}...";
     }
 
