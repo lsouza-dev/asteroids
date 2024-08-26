@@ -794,6 +794,8 @@ MonoBehaviour:
   xMax: 34
   yMin: 19
   yMax: 18
+  diffToggles: {fileID: 0}
+  diff: 
 --- !u!4 &872658336
 Transform:
   m_ObjectHideFlags: 0

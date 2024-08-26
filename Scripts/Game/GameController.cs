@@ -6,6 +6,7 @@ using UnityEditor.SearchService;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -34,16 +35,38 @@ public class GameController : MonoBehaviour
     [SerializeField]  private float yMin;
     [SerializeField] private float yMax;
 
+
+    [SerializeField] public TogglesManager diffToggles;
+    [SerializeField] private string diff;
+
     // Start is called before the first frame update
     
 
     private void Awake()
     {
         rock = FindObjectOfType<Rock>();
+        diffToggles = FindObjectOfType<TogglesManager>();
     }
 
     void Start()
     {
+        diff = diffToggles.diff;
+
+        if( diff == "Fácil" )
+        {
+            rocksAdd = 1;
+        }else if (diff == "Médio")
+        {
+            rocksAdd = 2;
+        }else if (diff == "Difícil")
+        {
+            rocksAdd = 3;
+        }
+        else
+        {
+            Debug.Log("Erro");
+        }
+
         levelTransition = true;
         rocksSpawn = gameLevel + rocksAdd;
         rocksQuantity = rocksSpawn;
