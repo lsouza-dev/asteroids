@@ -44,23 +44,24 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        
         rock = FindObjectOfType<Rock>();
-        diffToggles = FindObjectOfType<TogglesManager>();
+        diffToggles = FindObjectOfType<TogglesManager>();                                                                                                                                                                                                                                                                                                                                                                                                                   
     }
 
     void Start()
     {
-        diff = diffToggles.diff;
+        diff = TogglesManager.instance.diff;
 
-        if( diff == "Fácil" )
-        {
-            rocksAdd = 1;
-        }else if (diff == "Médio")
+        if( diff == "facil" )
         {
             rocksAdd = 2;
-        }else if (diff == "Difícil")
+        }else if (diff == "medio")
         {
-            rocksAdd = 3;
+            rocksAdd = 4;
+        }else if (diff == "dificil")
+        {
+            rocksAdd = 6;
         }
         else
         {

@@ -6,10 +6,25 @@ using UnityEngine.UI;
 
 public class TogglesManager : MonoBehaviour
 {
+    public static TogglesManager instance;
+
     [SerializeField] public List<Toggle> toggles = new List<Toggle>();
     [SerializeField] public string diff;
+    
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        if(instance == null)
+            instance = this;
+    }
     void Start()
+    {
+        diff = "facil";
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         foreach (var toggle in toggles)
         {
@@ -17,15 +32,9 @@ public class TogglesManager : MonoBehaviour
             {
                 if (toggle.isOn)
                 {
-                    diff = toggle.name;
+                    diff = toggle.name.ToLower();
                 }
             });
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

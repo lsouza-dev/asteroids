@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     private bool isAlive = true;
     private bool isAccelerating = true;
 
+    
+
     [SerializeField] private float shipAcceleration;
     [SerializeField] private float shipDisacceleration;
 

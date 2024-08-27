@@ -790,10 +790,10 @@ MonoBehaviour:
   rocksQuantity: 0
   rocksSpawn: 1
   rocksAdd: 1
-  xMin: 33
-  xMax: 34
-  yMin: 19
-  yMax: 18
+  xMin: 34
+  xMax: 45
+  yMin: 20
+  yMax: 19
   diffToggles: {fileID: 0}
   diff: 
 --- !u!4 &872658336
