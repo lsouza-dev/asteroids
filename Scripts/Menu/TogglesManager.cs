@@ -17,10 +17,10 @@ public class TogglesManager : MonoBehaviour
     {
         if(instance == null)
             instance = this;
+        diff = "facil";
     }
     void Start()
     {
-        diff = "facil";
     }
 
     // Update is called once per frame

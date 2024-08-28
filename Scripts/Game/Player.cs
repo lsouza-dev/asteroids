@@ -26,12 +26,14 @@ public class Player : MonoBehaviour
     float timerToRespawn;
 
     [SerializeField] public ScreenShakeController shakeController;
+    [SerializeField] public GameController gameController;
     
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         shakeController = FindObjectOfType<ScreenShakeController>();
+        gameController = FindObjectOfType<GameController>();
     }
 
     // Update is called once per frame
@@ -124,7 +126,10 @@ public class Player : MonoBehaviour
             shakeController.shakeActive = true;
             RestartGame();
             Destroy(this.gameObject);
-            isAlive = false; 
+            isAlive = false;
+
+            int lifesRemain = gameController.playerLifes -= 1;
+            gameController.UpdatePlayerEnergy(lifesRemain);
         }
     }
 

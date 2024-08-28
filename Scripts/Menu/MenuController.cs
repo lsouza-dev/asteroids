@@ -16,6 +16,7 @@ public class MenuController : MonoBehaviour
     Toggle fullScreen;
 
     // Start is called before the first frame update
+   
     public void Play()
     {
         SceneManager.LoadScene("Game");

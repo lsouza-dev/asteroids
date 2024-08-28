@@ -25,8 +25,6 @@ public class Rock : MonoBehaviour
 
     // Value Collider: BIGROCK = x - 2.3 y - 4.25  ||| SMALLROCK = x - 4 y - 4.6
 
-    private bool bigRock = true;
-
 
     private void Awake()
     {

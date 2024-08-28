@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -39,21 +40,36 @@ public class GameController : MonoBehaviour
     [SerializeField] public TogglesManager diffToggles;
     [SerializeField] private string diff;
 
+    [SerializeField] public List<Sprite> energySprites;
+    [SerializeField] public Image energyImage;
+    [SerializeField] public int playerLifes = 4;
+
     // Start is called before the first frame update
     
 
     private void Awake()
     {
-        
-        rock = FindObjectOfType<Rock>();
-        diffToggles = FindObjectOfType<TogglesManager>();                                                                                                                                                                                                                                                                                                                                                                                                                   
+        rock = FindObjectOfType<Rock>();                                                                                                                                                                                                                                                                                                                                                                                                               
     }
 
     void Start()
     {
-        diff = TogglesManager.instance.diff;
+        UpdatePlayerEnergy(playerLifes - 1);
 
-        if( diff == "facil" )
+        try
+        {
+            diff = TogglesManager.instance.diff;
+        }
+        catch
+        {
+            if (diff == null)
+            {
+                diff = "facil";
+            }
+            
+        }
+
+        if(diff == "facil" )
         {
             rocksAdd = 2;
         }else if (diff == "medio")
@@ -62,10 +78,6 @@ public class GameController : MonoBehaviour
         }else if (diff == "dificil")
         {
             rocksAdd = 6;
-        }
-        else
-        {
-            Debug.Log("Erro");
         }
 
         levelTransition = true;
@@ -89,7 +101,6 @@ public class GameController : MonoBehaviour
                 NextLevel();
                 timerText.text = string.Empty;
             }
-            
        }
        
         pointsText.text = $"POINTS: {points}";
@@ -119,8 +130,14 @@ public class GameController : MonoBehaviour
     {
         for (int i = 0; i < quantity; i++)
         {
-            Vector2 randomPos = new Vector2(Random.Range(-xMin, xMax), Random.Range(-yMin, yMax));
+            Vector2 randomPos = new Vector2(UnityEngine.Random.Range(-xMin, xMax), UnityEngine.Random.Range(-yMin, yMax));
             GameObject obstacleInstance = Instantiate(rockPrefab, randomPos, Quaternion.identity);
         }
+    }
+
+
+    public void UpdatePlayerEnergy(int lifes)
+    {
+        energyImage.sprite = energySprites[lifes];
     }
 }
