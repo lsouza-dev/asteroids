@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] PolygonCollider2D coll;
     private bool isAlive = true;
     private bool isAccelerating = true;
 
@@ -23,17 +24,22 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody2D bulletPrefab;
     [SerializeField] private GameObject explosionPrefab;
 
-    float timerToRespawn;
+    [SerializeField]  float invencibleTime = 3;
 
     [SerializeField] public ScreenShakeController shakeController;
     [SerializeField] public GameController gameController;
-    
+
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+
         rb = GetComponent<Rigidbody2D>();
         shakeController = FindObjectOfType<ScreenShakeController>();
         gameController = FindObjectOfType<GameController>();
+        coll = GetComponent<PolygonCollider2D>();
+    }
+    void Start()
+    {
     }
 
     // Update is called once per frame
@@ -42,6 +48,16 @@ public class Player : MonoBehaviour
         // Se estiver vivo, chama os métodos de aceleração e rotação
         if (isAlive)
         {
+            if(invencibleTime > 0)
+            {
+                invencibleTime -= Time.deltaTime;
+                coll.enabled = false;
+
+            }
+            else
+            {
+                coll.enabled = true;
+            }
             ShipAcceleration();
             ShipRotation();
             ShipShooting();
@@ -118,27 +134,24 @@ public class Player : MonoBehaviour
     {
         if(other.tag == "Rock" || other.tag == "SmallRock")
         {
-            GameObject explosion = Instantiate(explosionPrefab,transform.position,Quaternion.identity);
-            Destroy(explosion,1f);
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+            if (gameController.playerLifes > 0)
+            {
+                int lifesRemain = gameController.playerLifes -= 1;
+                gameController.UpdatePlayerEnergy(lifesRemain);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            invencibleTime = 3;
 
             shakeController.shakeAmount = 1f;
             shakeController.shakeDuration = 1f;
             shakeController.shakeActive = true;
-            RestartGame();
-            Destroy(this.gameObject);
-            isAlive = false;
-
-            int lifesRemain = gameController.playerLifes -= 1;
-            gameController.UpdatePlayerEnergy(lifesRemain);
-        }
-    }
-
-    private void RestartGame()
-    {
-        if(timerToRespawn >= 2)
-        {
-            Player player = gameObject.GetComponent<Player>();
-            Instantiate(player, new Vector2(0, 0), Quaternion.identity);
+            Destroy(explosion, 1f);
         }
     }
 }

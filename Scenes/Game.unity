@@ -349,10 +349,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 172794599}
-  - component: {fileID: 172794598}
   - component: {fileID: 172794597}
   - component: {fileID: 172794601}
   - component: {fileID: 172794600}
+  - component: {fileID: 172794603}
+  - component: {fileID: 172794602}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -387,41 +388,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &172794598
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 172794596}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 1
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 3.0232463, y: 3.0232463}
-  m_Direction: 0
 --- !u!4 &172794599
 Transform:
   m_ObjectHideFlags: 0
@@ -452,6 +418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
+  coll: {fileID: 0}
   shipAcceleration: 20
   shipDisacceleration: 0.9
   maxVelocity: 50
@@ -461,6 +428,7 @@ MonoBehaviour:
   bulletSpawn: {fileID: 1739348051}
   bulletPrefab: {fileID: 2963084133321884316, guid: cb47c05bfb62dc94892ac7fd15d2ed8a, type: 3}
   explosionPrefab: {fileID: 9093416792063945609, guid: 24861445a69d5a24481ae668b97fd7d5, type: 3}
+  invencibleTime: 3
   shakeController: {fileID: 0}
   gameController: {fileID: 0}
 --- !u!114 &172794601
@@ -477,6 +445,77 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xOffset: 37
   yOffset: 21
+--- !u!60 &172794602
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172794596}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.018384777, y: 1.2206173}
+      - {x: -0.50982183, y: 0.2906322}
+      - {x: -1.1577134, y: -0.9560953}
+      - {x: 1.1393287, y: -0.97448}
+      - {x: 0.65690005, y: 0.1251693}
+  m_UseDelaunayMesh: 0
+--- !u!95 &172794603
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172794596}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 31909911a685d964bb0087b6ee450d17, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &460569575
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,7 +842,7 @@ MonoBehaviour:
   - {fileID: 1357877344, guid: b2233c0eeee80f644b2ecaae25f084b0, type: 3}
   - {fileID: 87711758, guid: b2233c0eeee80f644b2ecaae25f084b0, type: 3}
   energyImage: {fileID: 1419149729}
-  playerLifes: 4
+  playerLifes: 3
 --- !u!4 &872658336
 Transform:
   m_ObjectHideFlags: 0
