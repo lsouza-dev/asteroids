@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody2D bulletPrefab;
     [SerializeField] private GameObject explosionPrefab;
 
-    [SerializeField]  float invencibleTime = 3;
+    [SerializeField] public float invencibleTime = 3;
 
     [SerializeField] public ScreenShakeController shakeController;
     [SerializeField] public GameController gameController;

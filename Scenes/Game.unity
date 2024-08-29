@@ -330,7 +330,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 514b92d5f4b51a447b6ef0914fa8a325, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -420,7 +420,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   coll: {fileID: 0}
   shipAcceleration: 20
-  shipDisacceleration: 0.9
+  shipDisacceleration: 0.92
   maxVelocity: 50
   minVelocity: 5
   rotationSpeed: 300
@@ -834,6 +834,7 @@ MonoBehaviour:
   xMax: 45
   yMin: 20
   yMax: 19
+  player: {fileID: 0}
   diffToggles: {fileID: 0}
   diff: 
   energySprites:

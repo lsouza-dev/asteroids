@@ -36,6 +36,8 @@ public class GameController : MonoBehaviour
     [SerializeField]  private float yMin;
     [SerializeField] private float yMax;
 
+    [SerializeField] private Player player;
+
 
     [SerializeField] public TogglesManager diffToggles;
     [SerializeField] private string diff;
@@ -49,7 +51,8 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        rock = FindObjectOfType<Rock>();                                                                                                                                                                                                                                                                                                                                                                                                               
+        rock = FindObjectOfType<Rock>();            
+        player = FindObjectOfType<Player>();
     }
 
     void Start()
@@ -84,6 +87,7 @@ public class GameController : MonoBehaviour
         rocksSpawn = gameLevel + rocksAdd;
         rocksQuantity = rocksSpawn;
         InstantiateRocks(rocksSpawn);
+        player.invencibleTime = 3;
         levelText.text = $"LEVEL: {gameLevel}";
         timerText.text = string.Empty;
     }
@@ -115,6 +119,7 @@ public class GameController : MonoBehaviour
         levelText.text = $"LEVEL: {gameLevel}";
         rocksQuantity = rocksSpawn;
         nextLevelTimer = 3.5f;
+        player.invencibleTime = 3;
         InstantiateRocks(rocksSpawn);
         
     }
