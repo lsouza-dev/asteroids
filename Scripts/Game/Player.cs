@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     
 
-    [SerializeField] private float shipAcceleration;
+    [SerializeField] public float shipAcceleration;
     [SerializeField] private float shipDisacceleration;
 
     [SerializeField] private float maxVelocity;

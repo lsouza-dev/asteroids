@@ -97,11 +97,12 @@ public class GameController : MonoBehaviour
     {
        if(nextLevel)
        {
-            Player player = FindObjectOfType<Player>();
             player.transform.position = Vector3.zero;
+            player.shipAcceleration = 0;
             LevelCronometer();
             if (nextLevelTimer <= 0)
             {
+                player.shipAcceleration = 20f;
                 NextLevel();
                 timerText.text = string.Empty;
             }
