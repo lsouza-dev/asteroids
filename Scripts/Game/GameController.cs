@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField] public List<Sprite> energySprites;
     [SerializeField] public Image energyImage;
-    [SerializeField] public int playerLifes = 3;
+    [SerializeField] public int playerLifes = 4;
 
     // Start is called before the first frame update
     
