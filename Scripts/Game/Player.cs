@@ -7,10 +7,17 @@ public class Player : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] PolygonCollider2D coll;
+    [SerializeField] private Rigidbody2D bulletPrefab;
+
     private bool isAlive = true;
     private bool isAccelerating = true;
 
-    
+    [SerializeField] private Animator animator;
+    [SerializeField] public ScreenShakeController shakeController;
+    [SerializeField] private Transform bulletSpawn;
+    [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] public GameController gameController;
+    [SerializeField] public GameObject shield;
 
     [SerializeField] public float shipAcceleration;
     [SerializeField] private float shipDisacceleration;
@@ -20,14 +27,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float bulletSpeed = 8f;
 
-    [SerializeField] private Transform bulletSpawn;
-    [SerializeField] private Rigidbody2D bulletPrefab;
-    [SerializeField] private GameObject explosionPrefab;
+    
 
     [SerializeField] public float invencibleTime = 3;
 
-    [SerializeField] public ScreenShakeController shakeController;
-    [SerializeField] public GameController gameController;
+    
 
     // Start is called before the first frame update
     private void Awake()
@@ -37,6 +41,8 @@ public class Player : MonoBehaviour
         shakeController = FindObjectOfType<ScreenShakeController>();
         gameController = FindObjectOfType<GameController>();
         coll = GetComponent<PolygonCollider2D>();
+        animator = GetComponentInChildren<Animator>();
+        
     }
     void Start()
     {
@@ -52,11 +58,13 @@ public class Player : MonoBehaviour
             {
                 invencibleTime -= Time.deltaTime;
                 coll.enabled = false;
+                shield.SetActive(true);
 
             }
             else
             {
                 coll.enabled = true;
+                shield.SetActive(false);
             }
             ShipAcceleration();
             ShipRotation();
@@ -76,11 +84,13 @@ public class Player : MonoBehaviour
             rb.AddForce(shipAcceleration * transform.up);
             // Definindo o limite da velocidade da nave
             rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
+
         }
         else if(isAlive && !isAccelerating) 
         {
             // Parando a nave se estiver vivo e não acelerar
             rb.velocity *= shipDisacceleration;
+          
         }
     }
 
@@ -88,6 +98,15 @@ public class Player : MonoBehaviour
     {
         // Definindo que isAccelerating será true quando apertar seta para cima ou W
         isAccelerating = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
+
+        if (isAccelerating)
+        {
+            animator.SetBool("isBoost", true);
+        }
+        else
+        {
+            animator.SetBool("isBoost", false);
+        }
     }
 
     private void ShipRotation()
@@ -113,6 +132,8 @@ public class Player : MonoBehaviour
         {
             Rigidbody2D bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
 
+            animator.SetBool("isShoot", true);
+
             Vector2 shipVelocity = rb.velocity;
             Vector2 shipDirection = transform.up;
             float shipForwardSpeed = Vector2.Dot(shipVelocity, shipDirection);
@@ -126,6 +147,10 @@ public class Player : MonoBehaviour
 
             shakeController.shakeActive = true;
         }
+        else
+        {
+            animator.SetBool("isShoot", false);
+        }
 
     }
 
@@ -134,8 +159,8 @@ public class Player : MonoBehaviour
     {
         if(other.tag == "Rock" || other.tag == "SmallRock")
         {
-            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-
+            //GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            
             if (gameController.playerLifes > 0)
             {
                 int lifesRemain = gameController.playerLifes -= 1;
@@ -151,7 +176,7 @@ public class Player : MonoBehaviour
             shakeController.shakeAmount = 1f;
             shakeController.shakeDuration = 1f;
             shakeController.shakeActive = true;
-            Destroy(explosion, 1f);
+            //Destroy(explosion, 1f);
         }
     }
 }

@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2061384033657680007}
   - component: {fileID: 1348966731049175722}
+  - component: {fileID: 4695758469654395727}
   - component: {fileID: 1394496938929333128}
   - component: {fileID: 9129539748120385039}
   - component: {fileID: 4598018698438261477}
-  - component: {fileID: 4695758469654395727}
   m_Layer: 0
   m_Name: SmallRock
   m_TagString: Rock
@@ -50,6 +50,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xOffset: 37
   yOffset: 21
+--- !u!114 &4695758469654395727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700472224537563130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf6877c331aa2249ad772880ba100c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir: {x: 0, y: 0}
+  speed: 12
+  rb: {fileID: 0}
+  qtdRocks: 0
+  rockCollider: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  controller: {fileID: 0}
+  screenShake: {fileID: 0}
 --- !u!50 &1394496938929333128
 Rigidbody2D:
   serializedVersion: 4
@@ -164,27 +184,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.7098593
---- !u!114 &4695758469654395727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 700472224537563130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cf6877c331aa2249ad772880ba100c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dir: {x: 0, y: 0}
-  speed: 8
-  rb: {fileID: 0}
-  qtdRocks: 0
-  rockScale: 0
-  rockCollider: {fileID: 0}
-  colliderScaleX: 2.3
-  colliderScaleY: 4.25
-  spriteRenderer: {fileID: 0}
-  sprites: []
-  controller: {fileID: 0}
-  screenShake: {fileID: 0}
