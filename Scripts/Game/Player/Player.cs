@@ -58,6 +58,12 @@ public class Player : MonoBehaviour
         // Se estiver vivo, chama os métodos de aceleração e rotação
         if (isAlive)
         {
+            if (gameController.nextLevel)
+            {
+                transform.position = Vector2.zero;
+                invencibleTime = 3f;
+            }
+
             if (invencibleTime > 0)
             {
                 invencibleTime -= Time.deltaTime;
@@ -167,6 +173,7 @@ public class Player : MonoBehaviour
             }
             else
             {
+                gameController.gameOver.SetActive(true);
                 gameController.isRespawn = false;
                 Destroy(gameObject);
             }

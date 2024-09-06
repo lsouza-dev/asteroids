@@ -44,6 +44,8 @@ public class GameController : MonoBehaviour
     public float respawnTime = 2;
 
 
+    [SerializeField] public GameObject gameOver;
+
     [SerializeField] public TogglesManager diffToggles;
     [SerializeField] private string diff;
 
@@ -56,7 +58,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        rock = FindObjectOfType<Rock>();            
+        rock = FindObjectOfType<Rock>();
     }
 
     void Start()
@@ -101,8 +103,7 @@ public class GameController : MonoBehaviour
     {
        if(nextLevel)
        {
-            player.transform.position = Vector3.zero;
-            player.shipAcceleration = 0;
+            
             LevelCronometer();
             if (nextLevelTimer <= 0)
             {
@@ -134,7 +135,6 @@ public class GameController : MonoBehaviour
         levelText.text = $"LEVEL: {gameLevel}";
         rocksQuantity = rocksSpawn;
         nextLevelTimer = 3.5f;
-        player.invencibleTime = 3;
         InstantiateRocks(rocksSpawn);
         
     }
@@ -163,12 +163,9 @@ public class GameController : MonoBehaviour
         
     public void PlayerRespawn()
     {
-       
         Player respawnPlayer = Instantiate(player, Vector2.zero, Quaternion.identity);
         respawnTime = 2f;
         isRespawn = false;
-
-        
     }
    
 }
