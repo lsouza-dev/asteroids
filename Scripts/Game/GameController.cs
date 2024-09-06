@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,7 @@ using System.Drawing;
 using TMPro;
 using UnityEditor.SearchService;
 using UnityEditor.Tilemaps;
+using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -38,6 +40,9 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private Player player;
 
+    public bool isRespawn;
+    public float respawnTime = 2;
+
 
     [SerializeField] public TogglesManager diffToggles;
     [SerializeField] private string diff;
@@ -52,7 +57,6 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         rock = FindObjectOfType<Rock>();            
-        player = FindObjectOfType<Player>();
     }
 
     void Start()
@@ -107,7 +111,17 @@ public class GameController : MonoBehaviour
                 timerText.text = string.Empty;
             }
        }
-       
+
+        if (isRespawn)
+        {
+            respawnTime -= Time.deltaTime;
+            if(respawnTime < 0)
+            {
+                PlayerRespawn();
+            }
+            
+        }
+
         pointsText.text = $"POINTS: {points}";
         
     }
@@ -146,4 +160,15 @@ public class GameController : MonoBehaviour
     {
         energyImage.sprite = energySprites[lifes];
     }
+        
+    public void PlayerRespawn()
+    {
+       
+        Player respawnPlayer = Instantiate(player, Vector2.zero, Quaternion.identity);
+        respawnTime = 2f;
+        isRespawn = false;
+
+        
+    }
+   
 }

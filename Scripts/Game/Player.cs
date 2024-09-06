@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] PolygonCollider2D coll;
     [SerializeField] private Rigidbody2D bulletPrefab;
 
-    private bool isAlive = true;
+    [SerializeField] private bool isAlive = true;
     private bool isAccelerating = true;
 
     [SerializeField] private Animator animator;
@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] public GameController gameController;
     [SerializeField] public GameObject shield;
+    [SerializeField] public GameObject explosion;
+    [SerializeField] public SpriteRenderer playerRenderer;
+    
 
     [SerializeField] public float shipAcceleration;
     [SerializeField] private float shipDisacceleration;
@@ -30,19 +33,20 @@ public class Player : MonoBehaviour
     
 
     [SerializeField] public float invencibleTime = 3;
+    [SerializeField] public float respawnTime;
+    [SerializeField] public bool isRespawning;
 
-    
+
 
     // Start is called before the first frame update
     private void Awake()
     {
-
+        playerRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         shakeController = FindObjectOfType<ScreenShakeController>();
         gameController = FindObjectOfType<GameController>();
         coll = GetComponent<PolygonCollider2D>();
         animator = GetComponentInChildren<Animator>();
-        
     }
     void Start()
     {
@@ -54,7 +58,7 @@ public class Player : MonoBehaviour
         // Se estiver vivo, chama os métodos de aceleração e rotação
         if (isAlive)
         {
-            if(invencibleTime > 0)
+            if (invencibleTime > 0)
             {
                 invencibleTime -= Time.deltaTime;
                 coll.enabled = false;
@@ -69,11 +73,11 @@ public class Player : MonoBehaviour
             ShipAcceleration();
             ShipRotation();
             ShipShooting();
-        }else
-        {
-            
         }
-        
+        else
+        {
+
+        }
     }
 
     private void FixedUpdate()
@@ -132,8 +136,6 @@ public class Player : MonoBehaviour
         {
             Rigidbody2D bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
 
-            animator.SetBool("isShoot", true);
-
             Vector2 shipVelocity = rb.velocity;
             Vector2 shipDirection = transform.up;
             float shipForwardSpeed = Vector2.Dot(shipVelocity, shipDirection);
@@ -147,11 +149,6 @@ public class Player : MonoBehaviour
 
             shakeController.shakeActive = true;
         }
-        else
-        {
-            animator.SetBool("isShoot", false);
-        }
-
     }
 
 
@@ -159,24 +156,26 @@ public class Player : MonoBehaviour
     {
         if(other.tag == "Rock" || other.tag == "SmallRock")
         {
-            //GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+            int lifesRemain = gameController.playerLifes -= 1;
+
             if (gameController.playerLifes > 0)
             {
-                int lifesRemain = gameController.playerLifes -= 1;
-                gameController.UpdatePlayerEnergy(lifesRemain);
+                gameController.isRespawn = true;
+                Destroy(gameObject);
             }
             else
             {
+                gameController.isRespawn = false;
                 Destroy(gameObject);
             }
 
-            invencibleTime = 3;
-
+            gameController.UpdatePlayerEnergy(lifesRemain);
             shakeController.shakeAmount = 1f;
             shakeController.shakeDuration = 1f;
             shakeController.shakeActive = true;
-            //Destroy(explosion, 1f);
+            Destroy(explosion, 1f);   
         }
     }
 }
