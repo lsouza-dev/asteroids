@@ -54,12 +54,6 @@ public class GameController : MonoBehaviour
     [SerializeField] public int playerLifes = 4;
 
     // Start is called before the first frame update
-    
-
-    private void Awake()
-    {
-        rock = FindObjectOfType<Rock>();
-    }
 
     void Start()
     {
@@ -103,11 +97,11 @@ public class GameController : MonoBehaviour
     {
        if(nextLevel)
        {
-            
+            player.shipAcceleration = 0f;
             LevelCronometer();
             if (nextLevelTimer <= 0)
             {
-                player.shipAcceleration = 20f;
+               
                 NextLevel();
                 timerText.text = string.Empty;
             }

@@ -335,6 +335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89926467a9483f4f8e0c6a906b93e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boost: {fileID: 0}
+  death: {fileID: 0}
   rb: {fileID: 0}
   coll: {fileID: 0}
   bulletPrefab: {fileID: 2963084133321884316, guid: cb47c05bfb62dc94892ac7fd15d2ed8a, type: 3}
@@ -347,12 +349,12 @@ MonoBehaviour:
   shield: {fileID: 8072129940971848646}
   explosion: {fileID: 0}
   playerRenderer: {fileID: 0}
-  shipAcceleration: 20
+  shipAcceleration: 0
   shipDisacceleration: 0.92
   maxVelocity: 50
   minVelocity: 5
   rotationSpeed: 300
-  bulletSpeed: 25
+  bulletSpeed: 30
   invencibleTime: 3
   respawnTime: 0
   isRespawning: 0

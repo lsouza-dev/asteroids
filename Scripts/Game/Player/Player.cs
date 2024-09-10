@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField] PolygonCollider2D coll;
     [SerializeField] private Rigidbody2D bulletPrefab;
 
+
+    
+
     [SerializeField] private bool isAlive = true;
     private bool isAccelerating = true;
 
@@ -28,7 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxVelocity;
     [SerializeField] private float minVelocity;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private float bulletSpeed = 8f;
+    [SerializeField] private float bulletSpeed = 30f;
 
     
 
@@ -41,6 +44,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        
         playerRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         shakeController = FindObjectOfType<ScreenShakeController>();
@@ -50,6 +54,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -61,7 +66,12 @@ public class Player : MonoBehaviour
             if (gameController.nextLevel)
             {
                 transform.position = Vector2.zero;
+                shipAcceleration = 0;
                 invencibleTime = 3f;
+            }
+            else
+            {
+                shipAcceleration = 20f;
             }
 
             if (invencibleTime > 0)
@@ -163,6 +173,7 @@ public class Player : MonoBehaviour
         if(other.tag == "Rock" || other.tag == "SmallRock")
         {
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            
 
             int lifesRemain = gameController.playerLifes -= 1;
 

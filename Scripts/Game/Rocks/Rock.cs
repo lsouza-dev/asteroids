@@ -19,15 +19,16 @@ public class Rock : MonoBehaviour
     [SerializeField] private Sprite[] sprites;
     [SerializeField] private GameController controller;
     [SerializeField] private ScreenShakeController screenShake;
-    [SerializeField] private GameObject smallRock;
+    [SerializeField] private SmallRock smallRock;
+    [SerializeField] private int rocksDivision = 2;
 
 
-
-    // Value Collider: BIGROCK = x - 2.3 y - 4.25  ||| SMALLROCK = x - 4 y - 4.6
+    [SerializeField] private AudioSource audioSource;
 
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         rockCollider = GetComponent<Collider2D>();
         controller = FindObjectOfType<GameController>();
         screenShake = FindObjectOfType<ScreenShakeController>();
@@ -77,22 +78,21 @@ public class Rock : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         
-        if (other.tag == "Bullet")
+        if (other.CompareTag("Bullet"))
         {
-            
-            for (int i = 0; i < 2; i++)
+
+            for (int i = 0; i < rocksDivision; i++)
             {
-                Instantiate(smallRock, transform.position, Quaternion.identity);
+                SmallRock small =  Instantiate(smallRock, transform.position, Quaternion.identity);
+                small.direction = i;
                 rockScale = .8f;
-                smallRock.transform.localScale = new Vector3(rockScale, rockScale, rockScale);
-                //mediumRock.spriteRenderer.sprite = sprites[1];
-                //mediumRock.bigRock = false;
+                small.transform.localScale = new Vector3(rockScale, rockScale, rockScale);
                 controller.rocksQuantity++;
             }
 
             controller.rocksQuantity--;
             Destroy(other.gameObject);
-            Destroy(this.gameObject);
+            Destroy(gameObject);
 
             screenShake.shakeAmount = .2f;
             screenShake.shakeDuration = .2f;

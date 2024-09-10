@@ -14,6 +14,7 @@ public class SmallRock : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameController controller;
     [SerializeField] private ScreenShakeController screenShake;
+    public int direction;
 
 
 
@@ -31,7 +32,7 @@ public class SmallRock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        RandomDirection();
+        RandomDirection(direction);
         //qtdRocks = controller.rocksQuantity;
 
     }
@@ -43,11 +44,9 @@ public class SmallRock : MonoBehaviour
     }
 
 
-    private void RandomDirection()
+    public void RandomDirection(int direction)
     {
         rb = GetComponent<Rigidbody2D>();
-
-        int direction = Random.Range(0, 4);
 
         switch (direction)
         {
