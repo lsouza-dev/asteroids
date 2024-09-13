@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-
+        invencibleTime = 3f;
     }
 
     // Update is called once per frame

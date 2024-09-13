@@ -20,7 +20,8 @@ public class Rock : MonoBehaviour
     [SerializeField] private GameController controller;
     [SerializeField] private ScreenShakeController screenShake;
     [SerializeField] private SmallRock smallRock;
-    [SerializeField] private int rocksDivision = 2;
+    private float rotationSpeed = .2f;
+    public int rocksDivision;
 
 
     [SerializeField] private AudioSource audioSource;
@@ -46,7 +47,7 @@ public class Rock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.eulerAngles += new Vector3(0, 0, rotationSpeed);
     }
 
     
@@ -54,7 +55,7 @@ public class Rock : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        int direction = Random.Range(0, 4);
+        int direction = Random.Range(0, 5);
 
         switch (direction)
         {
@@ -70,6 +71,12 @@ public class Rock : MonoBehaviour
             case 3:
                 dir = new Vector2(speed, -speed);
                 break;
+            case 4:
+                dir = new Vector2(speed, 0);
+                break;
+            case 5:
+                dir = new Vector2(-speed, 0);
+                break;
         }
 
         rb.velocity = dir;
@@ -80,12 +87,14 @@ public class Rock : MonoBehaviour
         
         if (other.CompareTag("Bullet"))
         {
+            //rocksDivision = 3;
 
             for (int i = 0; i < rocksDivision; i++)
             {
                 SmallRock small =  Instantiate(smallRock, transform.position, Quaternion.identity);
-                small.direction = i;
-                rockScale = .8f;
+                small.direction = Random.Range(0, 5);
+                rockScale = .7f;
+                small.speed = Random.Range(small.speed - 5, small.speed);
                 small.transform.localScale = new Vector3(rockScale, rockScale, rockScale);
                 controller.rocksQuantity++;
             }

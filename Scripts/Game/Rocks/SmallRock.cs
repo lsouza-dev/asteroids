@@ -7,13 +7,14 @@ public class SmallRock : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] private Vector2 dir;
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] public int qtdRocks;
     [SerializeField] private Collider2D rockCollider;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameController controller;
     [SerializeField] private ScreenShakeController screenShake;
+    private float rotationSpeed = .4f;
     public int direction;
 
 
@@ -40,7 +41,7 @@ public class SmallRock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        transform.eulerAngles += new Vector3(0, 0, rotationSpeed);
     }
 
 
@@ -61,6 +62,12 @@ public class SmallRock : MonoBehaviour
                 break;
             case 3:
                 dir = new Vector2(speed, -speed);
+                break;
+            case 4:
+                dir = new Vector2(speed, 0);
+                break;
+            case 5:
+                dir = new Vector2(-speed, 0);
                 break;
         }
 

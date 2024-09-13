@@ -74,13 +74,18 @@ public class GameController : MonoBehaviour
 
         if(diff == "facil" )
         {
-            rocksAdd = 2;
+            rocksAdd = 1;
+            rock.rocksDivision = 2;
+
         }else if (diff == "medio")
         {
-            rocksAdd = 4;
-        }else if (diff == "dificil")
+            rocksAdd = 3;
+            rock.rocksDivision = 3;
+        }
+        else if (diff == "dificil")
         {
-            rocksAdd = 6;
+            rocksAdd = 5;
+            rock.rocksDivision = 3;
         }
 
         levelTransition = true;
