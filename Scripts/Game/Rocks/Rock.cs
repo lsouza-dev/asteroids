@@ -21,7 +21,7 @@ public class Rock : MonoBehaviour
     [SerializeField] private ScreenShakeController screenShake;
     [SerializeField] private SmallRock smallRock;
     private float rotationSpeed = .2f;
-    public int rocksDivision;
+    [SerializeField] public int rocksDivision;
 
 
     [SerializeField] private AudioSource audioSource;
@@ -55,7 +55,7 @@ public class Rock : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        int direction = Random.Range(0, 5);
+        int direction = Random.Range(0, 7);
 
         switch (direction)
         {
@@ -77,6 +77,12 @@ public class Rock : MonoBehaviour
             case 5:
                 dir = new Vector2(-speed, 0);
                 break;
+            case 6:
+                dir = Vector2.up * speed;
+                break;
+            case 7:
+                dir = Vector2.down * speed;
+                break;
         }
 
         rb.velocity = dir;
@@ -84,10 +90,15 @@ public class Rock : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
         if (other.CompareTag("Bullet"))
         {
-            //rocksDivision = 3;
+            screenShake.shakeAmount = .2f;
+            screenShake.shakeDuration = .2f;
+            screenShake.shakeActive = true;
+
+            controller.rocksQuantity--;
+            controller.destroyedRocks++;
+            controller.points += 50;
 
             for (int i = 0; i < rocksDivision; i++)
             {
@@ -99,16 +110,13 @@ public class Rock : MonoBehaviour
                 controller.rocksQuantity++;
             }
 
-            controller.rocksQuantity--;
+            if (controller.destroyedRocks == controller.rocksToPowerUp)
+            {
+                controller.InstantiatePowerUp(transform.position);
+            }
+
             Destroy(other.gameObject);
             Destroy(gameObject);
-
-            screenShake.shakeAmount = .2f;
-            screenShake.shakeDuration = .2f;
-            screenShake.shakeActive = true;
-
-            controller.points += 50;
-            
         }
     }
 }

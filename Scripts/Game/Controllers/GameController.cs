@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
 
     [Header("Rocks Variables")]
     [SerializeField] private GameObject rockPrefab;
-    private Rock rock;
+    [SerializeField] private Rock rock;
     public int rocksQuantity;
     [SerializeField] public int rocksSpawn = 1;
     [SerializeField] private int rocksAdd= 1;
@@ -38,19 +38,27 @@ public class GameController : MonoBehaviour
     [SerializeField]  private float yMin;
     [SerializeField] private float yMax;
 
-    [SerializeField] private Player player;
+    [Header("Respawn Variables")]
+    [SerializeField] public bool isRespawn;
+    [SerializeField] public float respawnTime = 2;
 
-    public bool isRespawn;
-    public float respawnTime = 2;
+    [Header("Sprites Variables")]
+    [SerializeField] public List<Sprite> energySprites;
+    [SerializeField] public Image energyImage;
 
-
-    [SerializeField] public GameObject gameOver;
-
+    [Header("Difficulty Variables")]
     [SerializeField] public TogglesManager diffToggles;
     [SerializeField] private string diff;
 
-    [SerializeField] public List<Sprite> energySprites;
-    [SerializeField] public Image energyImage;
+    [SerializeField] private Player player;
+    [SerializeField] public GameObject gameOver;
+
+
+    [Header("PowerUps")]
+    [SerializeField] private List<GameObject> powerUps;
+    [SerializeField] public int destroyedRocks;
+    public int rocksToPowerUp = 25;
+
     [SerializeField] public int playerLifes = 4;
 
     // Start is called before the first frame update
@@ -68,6 +76,7 @@ public class GameController : MonoBehaviour
             if (diff == null)
             {
                 diff = "facil";
+                rock.rocksDivision = 2;
             }
             
         }
@@ -75,7 +84,7 @@ public class GameController : MonoBehaviour
         if(diff == "facil" )
         {
             rocksAdd = 1;
-            rock.rocksDivision = 2;
+            rock.rocksDivision = 2; 
 
         }else if (diff == "medio")
         {
@@ -152,6 +161,13 @@ public class GameController : MonoBehaviour
             Vector2 randomPos = new Vector2(UnityEngine.Random.Range(-xMin, xMax), UnityEngine.Random.Range(-yMin, yMax));
             GameObject obstacleInstance = Instantiate(rockPrefab, randomPos, Quaternion.identity);
         }
+    }
+
+    public void InstantiatePowerUp(Vector2 pos)
+    {
+        GameObject powerUp = powerUps[UnityEngine.Random.Range(0, powerUps.Count)];
+        GameObject selectedPowerUp = Instantiate(powerUp, pos, Quaternion.identity);
+        destroyedRocks = 0;
     }
 
 

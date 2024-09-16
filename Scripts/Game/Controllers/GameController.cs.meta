@@ -3,7 +3,16 @@ guid: b20f38ffd2adacb4d8f9b818d8554853
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - pointsText: {instanceID: 0}
+  - levelText: {instanceID: 0}
+  - timerText: {instanceID: 0}
+  - rockPrefab: {fileID: 700472224537563130, guid: 66fc9acc90dd033479b1702c6a6eae67, type: 3}
+  - rock: {fileID: 167845295823241581, guid: 66fc9acc90dd033479b1702c6a6eae67, type: 3}
+  - player: {instanceID: 0}
+  - gameOver: {instanceID: 0}
+  - diffToggles: {instanceID: 0}
+  - energyImage: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

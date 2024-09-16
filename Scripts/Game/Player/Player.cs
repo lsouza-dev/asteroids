@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] PolygonCollider2D coll;
+    [SerializeField] CapsuleCollider2D coll;
     [SerializeField] private Rigidbody2D bulletPrefab;
 
 
@@ -44,12 +44,11 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        
         playerRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         shakeController = FindObjectOfType<ScreenShakeController>();
         gameController = FindObjectOfType<GameController>();
-        coll = GetComponent<PolygonCollider2D>();
+        coll = GetComponent<CapsuleCollider2D>();
         animator = GetComponentInChildren<Animator>();
     }
     void Start()
@@ -190,10 +189,29 @@ public class Player : MonoBehaviour
             }
 
             gameController.UpdatePlayerEnergy(lifesRemain);
+
             shakeController.shakeAmount = 1f;
             shakeController.shakeDuration = 1f;
             shakeController.shakeActive = true;
+
             Destroy(explosion, 1f);   
         }
+
+        if (other.CompareTag("PUpHealth"))
+        {
+            Destroy(other.gameObject);
+
+            if(gameController.playerLifes < 4)
+            {
+                gameController.playerLifes += 1;
+                gameController.UpdatePlayerEnergy(gameController.playerLifes);
+            }
+            else
+            {
+                gameController.points += 500;                
+            }
+        }
+
+        
     }
 }

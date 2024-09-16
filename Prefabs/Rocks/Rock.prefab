@@ -77,6 +77,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   screenShake: {fileID: 0}
   smallRock: {fileID: 4695758469654395727, guid: b17f98b261eb67e4ea8dd564b0cb0fc7, type: 3}
+  rocksDivision: 2
   audioSource: {fileID: 0}
 --- !u!50 &1394496938929333128
 Rigidbody2D:

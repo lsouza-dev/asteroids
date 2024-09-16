@@ -78,17 +78,22 @@ public class SmallRock : MonoBehaviour
     {
         if (other.tag == "Bullet")
         {
-            
-            controller.rocksQuantity--;
-            Destroy(other.gameObject);
-            Destroy(this.gameObject);
-
             screenShake.shakeAmount = .1f;
             screenShake.shakeDuration = .1f;
             screenShake.shakeActive = true;
 
+            controller.rocksQuantity--;
             controller.points += 50;
-           
+            controller.destroyedRocks++;
+
+            if (controller.destroyedRocks == controller.rocksToPowerUp)
+            {
+                controller.InstantiatePowerUp(transform.position);
+            }
+
+            Destroy(other.gameObject);
+            Destroy(this.gameObject);
+
             if (controller.rocksQuantity == 0)
             {
 
