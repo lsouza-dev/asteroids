@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class PowerUps : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Vector2 dir;
     [SerializeField] private float speed;
+    [SerializeField] private float xLimit = 38f;
+    [SerializeField] private float yLimit = 22f;
     // Start is called before the first frame update
     void Start()
     {
         RandomDirection();
+        dir = GetComponent<Transform>().position;
+
     }
 
     private void RandomDirection()
@@ -48,5 +53,26 @@ public class PowerUps : MonoBehaviour
         }
 
         rb.velocity = dir;
+    }
+
+    private void Update()
+    {
+        if (dir.x > xLimit)
+        {
+            Destroy(gameObject);
+        }
+        else if (dir.x < -xLimit)
+        {
+            Destroy(gameObject);
+        }
+        else if (dir.y > yLimit)
+        {
+            Destroy(gameObject);
+        }
+        else if (dir.y < -yLimit)
+        {
+            Destroy(gameObject);
+        }
+        dir = transform.position;
     }
 }

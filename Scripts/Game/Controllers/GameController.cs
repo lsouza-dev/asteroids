@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
     [Header("Rocks Variables")]
     [SerializeField] private GameObject rockPrefab;
     [SerializeField] private Rock rock;
-    public int rocksQuantity;
+    [SerializeField] public int rocksQuantity;
     [SerializeField] public int rocksSpawn = 1;
     [SerializeField] private int rocksAdd= 1;
 
@@ -57,7 +57,9 @@ public class GameController : MonoBehaviour
     [Header("PowerUps")]
     [SerializeField] private List<GameObject> powerUps;
     [SerializeField] public int destroyedRocks;
-    public int rocksToPowerUp = 25;
+    [SerializeField] public Bullet bulletPrefab;
+
+    public int rocksToPowerUp = 5;
 
     [SerializeField] public int playerLifes = 4;
 
@@ -66,6 +68,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         UpdatePlayerEnergy(playerLifes);
+        //bulletPrefab.isMissil = true;
 
         try
         {
@@ -130,9 +133,7 @@ public class GameController : MonoBehaviour
             }
             
         }
-
         pointsText.text = $"POINTS: {points}";
-        
     }
 
     public void NextLevel()
@@ -140,7 +141,7 @@ public class GameController : MonoBehaviour
         nextLevel = false;
         gameLevel += 1;
         rocksSpawn = gameLevel + rocksAdd;
-        levelText.text = $"LEVEL: {gameLevel}";
+        levelText.text = $"NEXT LEVEL";
         rocksQuantity = rocksSpawn;
         nextLevelTimer = 3.5f;
         InstantiateRocks(rocksSpawn);

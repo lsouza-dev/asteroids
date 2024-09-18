@@ -92,6 +92,8 @@ public class Rock : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
+            Bullet bullet = other.GetComponent<Bullet>();
+
             screenShake.shakeAmount = .2f;
             screenShake.shakeDuration = .2f;
             screenShake.shakeActive = true;
@@ -100,19 +102,27 @@ public class Rock : MonoBehaviour
             controller.destroyedRocks++;
             controller.points += 50;
 
-            for (int i = 0; i < rocksDivision; i++)
+            if (!bullet.isMissil)
             {
-                SmallRock small =  Instantiate(smallRock, transform.position, Quaternion.identity);
-                small.direction = Random.Range(0, 5);
-                rockScale = .7f;
-                small.speed = Random.Range(small.speed - 5, small.speed);
-                small.transform.localScale = new Vector3(rockScale, rockScale, rockScale);
-                controller.rocksQuantity++;
+                for (int i = 0; i < rocksDivision; i++)
+                {
+                    SmallRock small = Instantiate(smallRock, transform.position, Quaternion.identity);
+                    small.direction = Random.Range(0, 5);
+                    rockScale = .7f;
+                    small.speed = Random.Range(small.speed - 5, small.speed);
+                    small.transform.localScale = new Vector3(rockScale, rockScale, rockScale);
+                    controller.rocksQuantity++;
+                }
             }
 
             if (controller.destroyedRocks == controller.rocksToPowerUp)
             {
                 controller.InstantiatePowerUp(transform.position);
+            }
+
+            if(controller.rocksQuantity == 0)
+            {
+                controller.nextLevel = true;
             }
 
             Destroy(other.gameObject);

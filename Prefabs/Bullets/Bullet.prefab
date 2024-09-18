@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2963084133321884316}
   - component: {fileID: 3166250558316290419}
   - component: {fileID: 5270827417692051600}
+  - component: {fileID: -3044951784901222805}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Bullet
@@ -166,6 +167,11 @@ MonoBehaviour:
   shoot: {fileID: 0}
   animator: {fileID: 0}
   shootSound: {fileID: 0}
+  sprites:
+  - {fileID: 1470378309, guid: 85d4bc064660b5246977ce77fca66d97, type: 3}
+  - {fileID: -1722568733, guid: 30fcd70e53c79744abb3038fb54a0341, type: 3}
+  renderer: {fileID: 0}
+  isMissil: 0
 --- !u!82 &5270827417692051600
 AudioSource:
   m_ObjectHideFlags: 0
@@ -262,3 +268,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &-3044951784901222805
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555285353430921792}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 65c60aea56837a84eb91cccad3af11dc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

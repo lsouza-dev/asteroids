@@ -8,9 +8,10 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] CapsuleCollider2D coll;
     [SerializeField] private Rigidbody2D bulletPrefab;
+    [SerializeField] private Bullet bulletScript;
 
 
-    
+
 
     [SerializeField] private bool isAlive = true;
     private bool isAccelerating = true;
@@ -36,9 +37,12 @@ public class Player : MonoBehaviour
     
 
     [SerializeField] public float invencibleTime = 3;
+    [SerializeField] public float powerUpTime;
     [SerializeField] public float respawnTime;
     [SerializeField] public bool isRespawning;
+    [SerializeField] public bool havePowerUp;
 
+    [SerializeField] private bool doubleShoot;
 
 
     // Start is called before the first frame update
@@ -53,6 +57,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        havePowerUp = false;
         invencibleTime = 3f;
     }
 
@@ -85,6 +90,19 @@ public class Player : MonoBehaviour
                 coll.enabled = true;
                 shield.SetActive(false);
             }
+
+            if (havePowerUp)
+            {
+                if(powerUpTime >= 0)
+                {
+                    powerUpTime -= Time.deltaTime;
+                }
+                else
+                {
+                    bulletScript.isMissil = false;
+                }
+            }
+            
             ShipAcceleration();
             ShipRotation();
             ShipShooting();
@@ -149,11 +167,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Rigidbody2D bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
-
             Vector2 shipVelocity = rb.velocity;
             Vector2 shipDirection = transform.up;
             float shipForwardSpeed = Vector2.Dot(shipVelocity, shipDirection);
+
+            Rigidbody2D bullet = Instantiate(bulletPrefab,transform.position, Quaternion.identity);
 
             if (shipForwardSpeed < 0)
                 shipForwardSpeed = 0;
@@ -188,6 +206,11 @@ public class Player : MonoBehaviour
                 Destroy(gameObject);
             }
 
+            if (havePowerUp)
+            {
+                bulletScript.isMissil = false;
+            }
+
             gameController.UpdatePlayerEnergy(lifesRemain);
 
             shakeController.shakeAmount = 1f;
@@ -212,6 +235,14 @@ public class Player : MonoBehaviour
             }
         }
 
-        
+        if (other.CompareTag("PUpPower"))
+        {
+            Bullet bullet = bulletPrefab.GetComponent<Bullet>();
+            bullet.isMissil = true;
+            havePowerUp = true;
+            powerUpTime = 10f;
+
+            Destroy(other.gameObject);
+        }
     }
 }
