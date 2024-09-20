@@ -338,6 +338,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   coll: {fileID: 0}
   bulletPrefab: {fileID: 2963084133321884316, guid: cb47c05bfb62dc94892ac7fd15d2ed8a, type: 3}
+  bulletScript: {fileID: 3166250558316290419, guid: cb47c05bfb62dc94892ac7fd15d2ed8a, type: 3}
   isAlive: 1
   animator: {fileID: 0}
   shakeController: {fileID: 0}
@@ -354,8 +355,11 @@ MonoBehaviour:
   rotationSpeed: 300
   bulletSpeed: 50
   invencibleTime: 3
+  powerUpTime: 0
   respawnTime: 0
   isRespawning: 0
+  havePowerUp: 0
+  doubleShoot: 0
 --- !u!212 &7468272666706091962
 SpriteRenderer:
   m_ObjectHideFlags: 0

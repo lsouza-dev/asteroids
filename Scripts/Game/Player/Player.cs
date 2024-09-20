@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        havePowerUp = false;
+        bulletScript.isMissil = false;
         invencibleTime = 3f;
     }
 
@@ -91,18 +91,15 @@ public class Player : MonoBehaviour
                 shield.SetActive(false);
             }
 
-            if (havePowerUp)
+            if (powerUpTime >= 0)
             {
-                if(powerUpTime >= 0)
-                {
-                    powerUpTime -= Time.deltaTime;
-                }
-                else
-                {
-                    bulletScript.isMissil = false;
-                }
+                powerUpTime -= Time.deltaTime;
             }
-            
+            else
+            {
+                bulletScript.isMissil = false;
+            }
+
             ShipAcceleration();
             ShipRotation();
             ShipShooting();
@@ -206,11 +203,6 @@ public class Player : MonoBehaviour
                 Destroy(gameObject);
             }
 
-            if (havePowerUp)
-            {
-                bulletScript.isMissil = false;
-            }
-
             gameController.UpdatePlayerEnergy(lifesRemain);
 
             shakeController.shakeAmount = 1f;
@@ -239,8 +231,7 @@ public class Player : MonoBehaviour
         {
             Bullet bullet = bulletPrefab.GetComponent<Bullet>();
             bullet.isMissil = true;
-            havePowerUp = true;
-            powerUpTime = 10f;
+            powerUpTime = 5f;
 
             Destroy(other.gameObject);
         }

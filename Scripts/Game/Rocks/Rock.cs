@@ -23,7 +23,9 @@ public class Rock : MonoBehaviour
     private float rotationSpeed = .2f;
     [SerializeField] public int rocksDivision;
 
+    private float disableCollider = .3f;
 
+    private PolygonCollider2D coll;
     [SerializeField] private AudioSource audioSource;
 
 
@@ -34,12 +36,15 @@ public class Rock : MonoBehaviour
         controller = FindObjectOfType<GameController>();
         screenShake = FindObjectOfType<ScreenShakeController>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        coll = GetComponent<PolygonCollider2D>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         RandomDirection();
+
+        coll.enabled = false;
         //qtdRocks = controller.rocksQuantity;
         
     }
@@ -47,6 +52,15 @@ public class Rock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(disableCollider >= 0)
+        {
+            disableCollider -= Time.deltaTime;
+        }
+        else
+        {
+            coll.enabled = true;
+        }
+
         transform.eulerAngles += new Vector3(0, 0, rotationSpeed);
     }
 
