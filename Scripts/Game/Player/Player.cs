@@ -5,45 +5,42 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] CapsuleCollider2D coll;
-    [SerializeField] private Rigidbody2D bulletPrefab;
-    [SerializeField] private Bullet bulletScript;
-
-
-
-
-    [SerializeField] private bool isAlive = true;
-    private bool isAccelerating = true;
-
-    [SerializeField] private Animator animator;
-    [SerializeField] public ScreenShakeController shakeController;
-    [SerializeField] private Transform bulletSpawn;
-    [SerializeField] private GameObject explosionPrefab;
-    [SerializeField] public GameController gameController;
-    [SerializeField] public GameObject shield;
-    [SerializeField] public GameObject explosion;
-    [SerializeField] public SpriteRenderer playerRenderer;
-    
-
+    [Header("Player Variables")]
     [SerializeField] public float shipAcceleration;
     [SerializeField] private float shipDisacceleration;
-
-    [SerializeField] private float maxVelocity;
-    [SerializeField] private float minVelocity;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private float bulletSpeed = 30f;
-
-    
-
     [SerializeField] public float invencibleTime = 3;
     [SerializeField] public float powerUpTime;
     [SerializeField] public float respawnTime;
+    [SerializeField] public float maxVelocity;
+
+    [Header("Bullet Variables")]
+    [SerializeField] private Rigidbody2D bulletPrefab;
+    [SerializeField] private Bullet bulletScript;
+    [SerializeField] private float bulletSpeed = 30f;
+
+    [Header("Controller Variables")]
+    [SerializeField] public GameController gameController;
+    [SerializeField] public ScreenShakeController shakeController;
+
+    [Header("Game Objects")]
+    [SerializeField] public GameObject shield;
+    [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] public GameObject explosion;
+
+    [Header("Components")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private Transform bulletSpawn;
+    [SerializeField] public SpriteRenderer playerRenderer;
+    [SerializeField] Rigidbody2D rb;
+    [SerializeField] CapsuleCollider2D coll;
+
+    [Header("Bool Variables")]
     [SerializeField] public bool isRespawning;
     [SerializeField] public bool havePowerUp;
-
     [SerializeField] private bool doubleShoot;
-
+    [SerializeField] private bool isAlive = true;
+    private bool isAccelerating = true;
 
     // Start is called before the first frame update
     private void Awake()
@@ -168,7 +165,7 @@ public class Player : MonoBehaviour
             Vector2 shipDirection = transform.up;
             float shipForwardSpeed = Vector2.Dot(shipVelocity, shipDirection);
 
-            Rigidbody2D bullet = Instantiate(bulletPrefab,transform.position, Quaternion.identity);
+            Rigidbody2D bullet = Instantiate(bulletPrefab,bulletSpawn.transform.position, Quaternion.identity);
 
             if (shipForwardSpeed < 0)
                 shipForwardSpeed = 0;
@@ -201,6 +198,8 @@ public class Player : MonoBehaviour
                 gameController.gameOver.SetActive(true);
                 gameController.isRespawn = false;
                 Destroy(gameObject);
+
+                if(gameController.points > gameController.highscorePoints) PlayerPrefs.SetInt("highscore", gameController.points);
             }
 
             gameController.UpdatePlayerEnergy(lifesRemain);
@@ -208,6 +207,9 @@ public class Player : MonoBehaviour
             shakeController.shakeAmount = 1f;
             shakeController.shakeDuration = 1f;
             shakeController.shakeActive = true;
+
+            gameController.rocksDestroyedWithotDie = 0;
+            gameController.isOnCombo = false;
 
             Destroy(explosion, 1f);   
         }

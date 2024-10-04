@@ -9,24 +9,27 @@ using UnityEngine.SceneManagement;
 
 public class Rock : MonoBehaviour
 {
-    [SerializeField] private Vector2 dir;
-    [SerializeField] private float speed;
+    [Header("Components")]
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] public int qtdRocks;
-    [SerializeField] private float rockScale;
     [SerializeField] private Collider2D rockCollider;
-    [SerializeField] private SpriteRenderer spriteRenderer ;
-    [SerializeField] private Sprite[] sprites;
-    [SerializeField] private GameController controller;
-    [SerializeField] private ScreenShakeController screenShake;
-    [SerializeField] private SmallRock smallRock;
-    private float rotationSpeed = .2f;
-    [SerializeField] public int rocksDivision;
-
-    private float disableCollider = .3f;
-
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private PolygonCollider2D coll;
     [SerializeField] private AudioSource audioSource;
+    [Header("Numeric Variables")]
+    [SerializeField] public int qtdRocks;
+    [SerializeField] private float rockScale;
+    [SerializeField] private float speed;
+    private float rotationSpeed = .2f;
+    [SerializeField] public int rocksDivision;
+    private float disableCollider = .5f;
+    [Header("Controllers")]
+    [SerializeField] private GameController controller;
+    [SerializeField] private ScreenShakeController screenShake;
+    [Header("Others")]
+    [SerializeField] private Vector2 dir;
+    [SerializeField] private Sprite[] sprites;
+    [SerializeField] private SmallRock smallRock;
+   
 
 
     private void Awake()
@@ -114,7 +117,6 @@ public class Rock : MonoBehaviour
 
             controller.rocksQuantity--;
             controller.destroyedRocks++;
-            controller.points += 50;
 
             if (!bullet.isMissil)
             {

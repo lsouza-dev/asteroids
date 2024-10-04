@@ -6,21 +6,22 @@ public class SmallRock : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [SerializeField] private Vector2 dir;
-    [SerializeField] public float speed;
+    [Header("Components")]
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] public int qtdRocks;
     [SerializeField] private Collider2D rockCollider;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private GameController controller;
-    [SerializeField] private ScreenShakeController screenShake;
+    [Header("Numeric Variables")]
     private float rotationSpeed = .4f;
     public int direction;
-
-
+    [SerializeField] public int qtdRocks;
+    [SerializeField] public float speed;
+    [Header("Controllers")]
+    [SerializeField] private GameController controller;
+    [SerializeField] private ScreenShakeController screenShake;
+    
+    [SerializeField] private Vector2 dir;
 
     // Value Collider: BIGROCK = x - 2.3 y - 4.25  ||| SMALLROCK = x - 4 y - 4.6
-
 
     private void Awake()
     {
@@ -83,7 +84,6 @@ public class SmallRock : MonoBehaviour
             screenShake.shakeActive = true;
 
             controller.rocksQuantity--;
-            controller.points += 50;
             controller.destroyedRocks++;
 
             if (controller.destroyedRocks == controller.rocksToPowerUp)

@@ -13,10 +13,13 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    
     [Header("Text Mesh")]
+    [SerializeField] private TMP_Text highscoreText;
     [SerializeField]private TMP_Text pointsText;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text timerText;
+    [SerializeField] private TMP_Text comboPoints;
     public int points = 0;
     float nextLevelTimer = 3.5f;
 
@@ -31,6 +34,7 @@ public class GameController : MonoBehaviour
     [SerializeField] public int rocksQuantity;
     [SerializeField] public int rocksSpawn = 1;
     [SerializeField] private int rocksAdd= 1;
+    public int rocksToPowerUp = 5;
 
     [Header("Position Variables")]
     [SerializeField] private float xMin;
@@ -50,6 +54,7 @@ public class GameController : MonoBehaviour
     [SerializeField] public TogglesManager diffToggles;
     [SerializeField] private string diff;
 
+    [Header("Player Variables")]
     [SerializeField] private Player player;
     [SerializeField] public GameObject gameOver;
 
@@ -59,14 +64,30 @@ public class GameController : MonoBehaviour
     [SerializeField] public int destroyedRocks;
     [SerializeField] public Bullet bulletPrefab;
 
-    public int rocksToPowerUp = 5;
+    [Header("Points Variables")]
+    public int highscorePoints;
+    public int rockPoints = 50;
+    public int smallRockPoints = 25;
+    public bool isOnCombo;
+    public int comboMultiplier;
+    public int rocksDestroyedWithotDie;
 
     [SerializeField] public int playerLifes = 4;
 
     // Start is called before the first frame update
 
+    private void Awake()
+    {
+        highscorePoints = PlayerPrefs.GetInt("highscore");
+    }
     void Start()
     {
+        if (highscorePoints == 0) highscoreText.text = $"HIGHSCORE: 0000";
+        else
+        {
+            highscoreText.text = $"HIGHSCORE: {highscorePoints}";
+        }
+
         UpdatePlayerEnergy(playerLifes);
         //bulletPrefab.isMissil = true;
 
@@ -123,6 +144,25 @@ public class GameController : MonoBehaviour
                 timerText.text = string.Empty;
             }
        }
+
+        if (rocksDestroyedWithotDie >= 20 && rocksDestroyedWithotDie < 50)
+        {
+            comboMultiplier = 2;
+            isOnCombo = true;
+            GameObject comboPointsGO = comboPoints.gameObject;
+            comboPointsGO.SetActive(true);
+            comboPoints.text = $"X{comboMultiplier}";
+        }
+        else if (rocksDestroyedWithotDie >= 50)
+        {
+            comboMultiplier = 3;
+            comboPoints.text = $"X{comboMultiplier}";
+        }
+        else
+        {
+            GameObject comboPointsGO = comboPoints.gameObject;
+            comboPointsGO.SetActive(false);
+        }
 
         if (isRespawn)
         {
