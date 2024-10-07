@@ -8,15 +8,10 @@ using UnityEngine.Video;
 
 public class CutSceneController : MonoBehaviour
 {
-    
-    
-    
-    
-
     [Header("List Variables")]
     [SerializeField] List<VideoClip> clipList;
     [SerializeField] List<Sprite> imagens;
-    [SerializeField] GameObject playText;
+    [SerializeField] TMP_Text playText;
     [Header("UI Variables")]
     [SerializeField] Image image;
     [SerializeField] RawImage rawImage;
@@ -43,14 +38,13 @@ public class CutSceneController : MonoBehaviour
     void Start()
     {
         videoPlayer.clip = clipList[videoIndex];
-        videoPlayer.time = 0;
         videoIndex++;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Z))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             transitionTime = 1;
             StartCoroutine(ContentTransition(videoIndex));
@@ -63,10 +57,7 @@ public class CutSceneController : MonoBehaviour
             GameObject imgGO = image.gameObject;
             imgGO.SetActive(false);
             videoTransition = false;
-        }
-        
-
-        if(Input.GetKeyDown(KeyCode.Space) && playGame)
+        }else if (Input.GetKeyDown(KeyCode.Space) && playGame)
         {
             SceneManager.LoadScene("Game");
         }
@@ -98,10 +89,12 @@ public class CutSceneController : MonoBehaviour
                 imageIndex++;
             }
         }
-        if (videoIndex == clipList.Count && imageIndex == imagens.Count) { 
+        if (videoIndex == clipList.Count && imageIndex == imagens.Count)
+        {
+            playText.text = "Press Space to play!";
             playGame = true;
-            playText.SetActive(true);
         }
+
         print($"Img Index: {imageIndex} \tImg Count: {imagens.Count}\nVideo Index: {videoIndex} \tVideo Count: {clipList.Count}");
         turno++;
     }

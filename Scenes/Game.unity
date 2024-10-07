@@ -770,7 +770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1497718480338359578, guid: bf1e4eaed12da5f479d27fead3c1e370, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -21
       objectReference: {fileID: 0}
     - target: {fileID: 1497718480338359578, guid: bf1e4eaed12da5f479d27fead3c1e370, type: 3}
       propertyPath: m_LocalPosition.z
@@ -820,6 +820,10 @@ PrefabInstance:
       propertyPath: death
       value: 
       objectReference: {fileID: 8300000, guid: 6bc96b4408b277045a11a7c42259df7c, type: 3}
+    - target: {fileID: 8843362037676016873, guid: bf1e4eaed12da5f479d27fead3c1e370, type: 3}
+      propertyPath: isAlive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8843362037676016873, guid: bf1e4eaed12da5f479d27fead3c1e370, type: 3}
       propertyPath: maxVelocity
       value: 30
@@ -927,7 +931,7 @@ MonoBehaviour:
   highscoreText: {fileID: 1280026194}
   pointsText: {fileID: 1237415329}
   levelText: {fileID: 460569577}
-  timerText: {fileID: 963775952}
+  nextLevelText: {fileID: 963775952}
   comboPoints: {fileID: 136348048}
   points: 0
   levelTransition: 0
@@ -935,8 +939,9 @@ MonoBehaviour:
   rockPrefab: {fileID: 700472224537563130, guid: 66fc9acc90dd033479b1702c6a6eae67, type: 3}
   rock: {fileID: 167845295823241581, guid: 66fc9acc90dd033479b1702c6a6eae67, type: 3}
   rocksQuantity: 0
-  rocksSpawn: 1
+  rockSpawn: 1
   rocksAdd: 1
+  firstRockSpawn: 1
   rocksToPowerUp: 5
   xMin: 34
   xMax: 45
@@ -967,6 +972,7 @@ MonoBehaviour:
   comboMultiplier: 0
   rocksDestroyedWithotDie: 0
   playerLifes: 4
+  canva: {fileID: 943423119}
 --- !u!4 &872658336
 Transform:
   m_ObjectHideFlags: 0
@@ -1000,7 +1006,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &943423120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1147,7 +1153,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: NEXT LEVEL
+  m_text: "\t"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e17ecce9ef6d5c47aa6323df01b9def, type: 2}
   m_sharedMaterial: {fileID: -757149687750481205, guid: 2e17ecce9ef6d5c47aa6323df01b9def, type: 2}

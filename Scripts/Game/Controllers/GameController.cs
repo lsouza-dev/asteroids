@@ -16,9 +16,9 @@ public class GameController : MonoBehaviour
     
     [Header("Text Mesh")]
     [SerializeField] private TMP_Text highscoreText;
-    [SerializeField]private TMP_Text pointsText;
+    [SerializeField] private TMP_Text pointsText;
     [SerializeField] private TMP_Text levelText;
-    [SerializeField] private TMP_Text timerText;
+    [SerializeField] public TMP_Text nextLevelText;
     [SerializeField] private TMP_Text comboPoints;
     public int points = 0;
     float nextLevelTimer = 3.5f;
@@ -29,11 +29,13 @@ public class GameController : MonoBehaviour
     public bool nextLevel;
 
     [Header("Rocks Variables")]
-    [SerializeField] private GameObject rockPrefab;
+    [SerializeField] public GameObject rockPrefab;
     [SerializeField] private Rock rock;
     [SerializeField] public int rocksQuantity;
-    [SerializeField] public int rocksSpawn = 1;
+    [SerializeField] public int rockSpawn = 1;
     [SerializeField] private int rocksAdd= 1;
+    [SerializeField] public bool firstRockSpawn;
+    [SerializeField] private float timeToFirstSpawn;
     public int rocksToPowerUp = 5;
 
     [Header("Position Variables")]
@@ -45,7 +47,7 @@ public class GameController : MonoBehaviour
     [Header("Respawn Variables")]
     [SerializeField] public bool isRespawn;
     [SerializeField] public float respawnTime = 2;
-
+    
     [Header("Sprites Variables")]
     [SerializeField] public List<Sprite> energySprites;
     [SerializeField] public Image energyImage;
@@ -73,7 +75,9 @@ public class GameController : MonoBehaviour
     public int rocksDestroyedWithotDie;
 
     [SerializeField] public int playerLifes = 4;
+    [SerializeField] public GameObject canva;
 
+    bool teste;
     // Start is called before the first frame update
 
     private void Awake()
@@ -120,14 +124,14 @@ public class GameController : MonoBehaviour
             rocksAdd = 5;
             rock.rocksDivision = 3;
         }
+            rockSpawn = gameLevel + rocksAdd;
+            rocksQuantity = rockSpawn;
+            levelText.text = $"LEVEL: {gameLevel}";
 
-        levelTransition = true;
-        rocksSpawn = gameLevel + rocksAdd;
-        rocksQuantity = rocksSpawn;
-        InstantiateRocks(rocksSpawn);
-        player.invencibleTime = 3;
-        levelText.text = $"LEVEL: {gameLevel}";
-        timerText.text = string.Empty;
+            //player.invencibleTime = 3;
+            //levelTransition = true;
+            //nextLevelText.text = string.Empty;
+        
     }
 
     // Update is called once per frame
@@ -141,7 +145,7 @@ public class GameController : MonoBehaviour
             {
                
                 NextLevel();
-                timerText.text = string.Empty;
+                nextLevelText.text = string.Empty;
             }
        }
 
@@ -180,27 +184,32 @@ public class GameController : MonoBehaviour
     {
         nextLevel = false;
         gameLevel += 1;
-        rocksSpawn = gameLevel + rocksAdd;
+        rockSpawn = gameLevel + rocksAdd;
         levelText.text = $"LEVEL: {gameLevel}";
-        rocksQuantity = rocksSpawn;
+        rocksQuantity = rockSpawn;
         nextLevelTimer = 3.5f;
-        InstantiateRocks(rocksSpawn);
+        InstantiateRocks(rockSpawn);
         
     }
 
     public void LevelCronometer()
     {
         nextLevelTimer -= Time.deltaTime;
-        timerText.text = $"NEXT LEVEL...{Mathf.Round(nextLevelTimer)}";
+        nextLevelText.text = $"NEXT LEVEL...{Mathf.Round(nextLevelTimer)}";
     }
 
 
-    private void InstantiateRocks(int quantity)
+    public void InstantiateRocks(int quantity)
     {
-        for (int i = 0; i < quantity; i++)
+        print("SPAWN FORA");
+        if(teste)
         {
-            Vector2 randomPos = new Vector2(UnityEngine.Random.Range(-xMin, xMax), UnityEngine.Random.Range(-yMin, yMax));
-            GameObject obstacleInstance = Instantiate(rockPrefab, randomPos, Quaternion.identity);
+            print("SPAWN VIVO");
+            for (int i = 0; i < quantity; i++)
+            {
+                Vector2 randomPos = new Vector2(UnityEngine.Random.Range(-xMin, xMax), UnityEngine.Random.Range(-yMin, yMax));
+                GameObject obstacleInstance = Instantiate(rockPrefab, randomPos, Quaternion.identity);
+            }
         }
     }
 
@@ -223,5 +232,4 @@ public class GameController : MonoBehaviour
         respawnTime = 2f;
         isRespawn = false;
     }
-   
 }

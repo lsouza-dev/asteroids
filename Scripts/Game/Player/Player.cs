@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -39,9 +40,12 @@ public class Player : MonoBehaviour
     [SerializeField] public bool isRespawning;
     [SerializeField] public bool havePowerUp;
     [SerializeField] private bool doubleShoot;
-    [SerializeField] private bool isAlive = true;
+    [SerializeField] public bool isAlive;
     private bool isAccelerating = true;
 
+    public int firstPlayIndex = 0;
+    public List<string> texts = new List<string>() { "READY", "SET", "GO" };
+    [SerializeField] private float timeToChangeText = 1f;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -56,6 +60,7 @@ public class Player : MonoBehaviour
     {
         bulletScript.isMissil = false;
         invencibleTime = 3f;
+        
     }
 
     // Update is called once per frame
@@ -103,7 +108,17 @@ public class Player : MonoBehaviour
         }
         else
         {
+            rb.velocity = Vector2.up * 8f;
+            animator.SetBool("isBoost", true);
 
+            if (transform.position.y >= 0 && transform.position.x == 0)
+            {
+                isAlive = true;
+                rb.velocity = Vector2.zero;
+                animator.SetBool("isBoost", false);
+                gameController.canva.gameObject.SetActive(true);
+                gameController.InstantiateRocks(gameController.rockSpawn);
+            }
         }
     }
 
