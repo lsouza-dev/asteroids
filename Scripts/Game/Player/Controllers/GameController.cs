@@ -77,7 +77,6 @@ public class GameController : MonoBehaviour
     [SerializeField] public int playerLifes = 4;
     [SerializeField] public GameObject canva;
 
-    bool teste;
     // Start is called before the first frame update
 
     private void Awake()
@@ -93,6 +92,7 @@ public class GameController : MonoBehaviour
         }
 
         UpdatePlayerEnergy(playerLifes);
+        
         //bulletPrefab.isMissil = true;
 
         try
@@ -201,10 +201,8 @@ public class GameController : MonoBehaviour
 
     public void InstantiateRocks(int quantity)
     {
-        print("SPAWN FORA");
-        if(teste)
+        if(player.isAlive)
         {
-            print("SPAWN VIVO");
             for (int i = 0; i < quantity; i++)
             {
                 Vector2 randomPos = new Vector2(UnityEngine.Random.Range(-xMin, xMax), UnityEngine.Random.Range(-yMin, yMax));
@@ -232,4 +230,5 @@ public class GameController : MonoBehaviour
         respawnTime = 2f;
         isRespawn = false;
     }
+
 }

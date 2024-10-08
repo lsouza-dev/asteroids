@@ -15,11 +15,22 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Toggle[] toggles;
     Toggle fullScreen;
 
+    public int firstGameplay = 0;
+
+
     // Start is called before the first frame update
    
     public void Play()
     {
-        SceneManager.LoadScene("Game");
+        firstGameplay = PlayerPrefs.GetInt("firstGameplay");
+        if(firstGameplay == 0)
+        {
+            SceneManager.LoadScene("CutScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("Game");
+        }
     }
 
     public void OpenSettings()
@@ -36,6 +47,7 @@ public class MenuController : MonoBehaviour
 
     public void EndGame()
     {
+        PlayerPrefs.SetInt("firstGameplay", 0);
         Application.Quit();
     }
 

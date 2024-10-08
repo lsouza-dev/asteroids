@@ -40,12 +40,13 @@ public class Player : MonoBehaviour
     [SerializeField] public bool isRespawning;
     [SerializeField] public bool havePowerUp;
     [SerializeField] private bool doubleShoot;
-    [SerializeField] public bool isAlive;
+    [SerializeField] public bool isAlive = true;
+    private bool movementIntrodution = true;
     private bool isAccelerating = true;
 
-    public int firstPlayIndex = 0;
-    public List<string> texts = new List<string>() { "READY", "SET", "GO" };
-    [SerializeField] private float timeToChangeText = 1f;
+    private int firstPlay = 0;
+    private float disabledCollider = 1f;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -60,12 +61,21 @@ public class Player : MonoBehaviour
     {
         bulletScript.isMissil = false;
         invencibleTime = 3f;
+
+        PlayerPrefs.SetInt("firstGameplay", 1);
+        firstPlay = PlayerPrefs.GetInt("firstPlay");
+        if (firstPlay == 0) movementIntrodution = true;
+        else movementIntrodution = false;
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (disabledCollider >= 0) disabledCollider -= Time.deltaTime;
+        else coll.enabled = true;
+
+        if (Input.GetKeyDown(KeyCode.L))PlayerPrefs.SetInt("firstPlay", 0);
         // Se estiver vivo, chama os métodos de aceleração e rotação
         if (isAlive)
         {
@@ -102,23 +112,31 @@ public class Player : MonoBehaviour
                 bulletScript.isMissil = false;
             }
 
-            ShipAcceleration();
-            ShipRotation();
-            ShipShooting();
+            if (!movementIntrodution)
+            {
+                ShipAcceleration();
+                ShipRotation();
+                ShipShooting();
+            }
         }
-        else
+
+        if (movementIntrodution)
         {
             rb.velocity = Vector2.up * 8f;
             animator.SetBool("isBoost", true);
-
             if (transform.position.y >= 0 && transform.position.x == 0)
             {
+                invencibleTime = 3f;
                 isAlive = true;
+                movementIntrodution = false;
                 rb.velocity = Vector2.zero;
                 animator.SetBool("isBoost", false);
                 gameController.canva.gameObject.SetActive(true);
                 gameController.InstantiateRocks(gameController.rockSpawn);
+
+                PlayerPrefs.SetInt("firstPlay", 1);
             }
+
         }
     }
 
@@ -213,6 +231,7 @@ public class Player : MonoBehaviour
                 gameController.gameOver.SetActive(true);
                 gameController.isRespawn = false;
                 Destroy(gameObject);
+                PlayerPrefs.SetInt("firstPlay", 0);
 
                 if(gameController.points > gameController.highscorePoints) PlayerPrefs.SetInt("highscore", gameController.points);
             }

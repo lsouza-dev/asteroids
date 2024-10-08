@@ -822,7 +822,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 6bc96b4408b277045a11a7c42259df7c, type: 3}
     - target: {fileID: 8843362037676016873, guid: bf1e4eaed12da5f479d27fead3c1e370, type: 3}
       propertyPath: isAlive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8843362037676016873, guid: bf1e4eaed12da5f479d27fead3c1e370, type: 3}
       propertyPath: maxVelocity
@@ -942,6 +942,7 @@ MonoBehaviour:
   rockSpawn: 1
   rocksAdd: 1
   firstRockSpawn: 1
+  timeToFirstSpawn: 0
   rocksToPowerUp: 5
   xMin: 34
   xMax: 45

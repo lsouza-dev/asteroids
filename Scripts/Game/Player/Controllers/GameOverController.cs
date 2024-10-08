@@ -18,6 +18,7 @@ public class GameOverController : MonoBehaviour
 
     public void ExitGame()
     {
+        PlayerPrefs.SetInt("firstGameplay", 0);
         Application.Quit();
     }
 }

@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
             animator.Play("bullet");
         }
 
-        shootSound.Play();
+        shootSound.Play() ;
     }
 
     // Update is called once per frame
