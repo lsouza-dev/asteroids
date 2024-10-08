@@ -8,9 +8,7 @@ public class Bullet : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Animation shoot;
     [SerializeField] private Animator animator;
-    [SerializeField] private AudioSource shootSound;
     [SerializeField] private SpriteRenderer renderer;
-
     [SerializeField] private List<Sprite> sprites;
     [SerializeField] private float bulletLifetime = 3f;
     [SerializeField] private GameController gameController;
@@ -30,8 +28,6 @@ public class Bullet : MonoBehaviour
             renderer.sprite = sprites[0];
             animator.Play("bullet");
         }
-
-        shootSound.Play() ;
     }
 
     // Update is called once per frame
@@ -39,7 +35,6 @@ public class Bullet : MonoBehaviour
     {
         renderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        shootSound = GetComponent<AudioSource>();
         gameController = FindObjectOfType<GameController>();
         Destroy(gameObject, bulletLifetime);
     }

@@ -36,13 +36,15 @@ public class Player : MonoBehaviour
     [SerializeField] public AudioListener listener;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] CapsuleCollider2D coll;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private List<AudioClip> shootSounds;
 
     [Header("Bool Variables")]
     [SerializeField] public bool isRespawning;
     [SerializeField] public bool havePowerUp;
     [SerializeField] private bool doubleShoot;
     [SerializeField] public bool isAlive = true;
-    private bool movementIntrodution = true;
+    [SerializeField] public bool movementIntrodution = true;
     private bool isAccelerating = true;
 
     private int firstPlay = 0;
@@ -58,6 +60,7 @@ public class Player : MonoBehaviour
         coll = GetComponent<CapsuleCollider2D>();
         animator = GetComponentInChildren<Animator>();
         listener = GetComponent<AudioListener>();
+        audioSource = GetComponent<AudioSource>();
     }
     void Start()
     {
@@ -211,6 +214,11 @@ public class Player : MonoBehaviour
             bullet.transform.rotation = transform.rotation;
             bullet.velocity = shipDirection * shipForwardSpeed;
             bullet.AddForce(bulletSpeed * transform.up, ForceMode2D.Impulse);
+
+            if (!bulletScript.isMissil) audioSource.clip = shootSounds[0];
+            else audioSource.clip = shootSounds[1];
+
+            audioSource.Play();
 
             shakeController.shakeActive = true;
         }

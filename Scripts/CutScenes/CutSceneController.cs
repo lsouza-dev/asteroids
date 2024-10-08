@@ -37,6 +37,7 @@ public class CutSceneController : MonoBehaviour
     }
     void Start()
     {
+        videoPlayer.SetDirectAudioVolume((ushort)videoIndex, .5f);
         videoPlayer.clip = clipList[videoIndex];
         videoIndex++;
     }
@@ -84,6 +85,7 @@ public class CutSceneController : MonoBehaviour
         {
             if (imageIndex <= imagens.Count - 1)
             {
+                videoPlayer.Stop();
                 image.sprite = imagens[imageIndex];
                 img.SetActive(true);
                 imageIndex++;
@@ -94,8 +96,6 @@ public class CutSceneController : MonoBehaviour
             playText.text = "Press Space to play!";
             playGame = true;
         }
-
-        print($"Img Index: {imageIndex} \tImg Count: {imagens.Count}\nVideo Index: {videoIndex} \tVideo Count: {clipList.Count}");
         turno++;
     }
 }
