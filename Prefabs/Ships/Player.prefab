@@ -339,7 +339,7 @@ MonoBehaviour:
   shipAcceleration: 0
   shipDisacceleration: 0.92
   rotationSpeed: 300
-  invencibleTime: 3
+  invencibleTime: 0
   powerUpTime: 0
   respawnTime: 0
   maxVelocity: 50

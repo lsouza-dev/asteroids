@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] public float shipAcceleration;
     [SerializeField] private float shipDisacceleration;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] public float invencibleTime = 3;
+    [SerializeField] public float invencibleTime;
     [SerializeField] public float powerUpTime;
     [SerializeField] public float respawnTime;
     [SerializeField] public float maxVelocity;
@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] public SpriteRenderer playerRenderer;
+    [SerializeField] public AudioListener listener;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] CapsuleCollider2D coll;
 
@@ -56,16 +57,18 @@ public class Player : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         coll = GetComponent<CapsuleCollider2D>();
         animator = GetComponentInChildren<Animator>();
+        listener = GetComponent<AudioListener>();
     }
     void Start()
     {
         bulletScript.isMissil = false;
-        invencibleTime = 3f;
-
         PlayerPrefs.SetInt("firstGameplay", 1);
         firstPlay = PlayerPrefs.GetInt("firstPlay");
+
         if (firstPlay == 0) movementIntrodution = true;
         else movementIntrodution = false;
+
+        if (isAlive) invencibleTime = 3f;
         
     }
 
@@ -122,6 +125,8 @@ public class Player : MonoBehaviour
 
         if (movementIntrodution)
         {
+            shield.SetActive(false);
+            invencibleTime = 0f;
             rb.velocity = Vector2.up * 8f;
             animator.SetBool("isBoost", true);
             if (transform.position.y >= 0 && transform.position.x == 0)
