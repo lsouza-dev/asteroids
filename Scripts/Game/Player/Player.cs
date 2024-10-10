@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] public float powerUpTime;
     [SerializeField] public float respawnTime;
     [SerializeField] public float maxVelocity;
+    [SerializeField] public float rechargeTime;
 
     [Header("Bullet Variables")]
     [SerializeField] private Rigidbody2D bulletPrefab;
@@ -95,6 +96,8 @@ public class Player : MonoBehaviour
             {
                 shipAcceleration = 20f;
             }
+
+            if(rechargeTime >= 0) rechargeTime -= Time.deltaTime;
 
             if (invencibleTime > 0)
             {
@@ -200,7 +203,7 @@ public class Player : MonoBehaviour
 
     private void ShipShooting()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && rechargeTime <= 0)
         {
             Vector2 shipVelocity = rb.velocity;
             Vector2 shipDirection = transform.up;
@@ -215,11 +218,11 @@ public class Player : MonoBehaviour
             bullet.velocity = shipDirection * shipForwardSpeed;
             bullet.AddForce(bulletSpeed * transform.up, ForceMode2D.Impulse);
 
-            if (!bulletScript.isMissil) audioSource.clip = shootSounds[0];
+            if (!bulletScript.isMissil) audioSource.clip = shootSounds[0]; 
             else audioSource.clip = shootSounds[1];
 
+            rechargeTime = .15f;
             audioSource.Play();
-
             shakeController.shakeActive = true;
         }
     }

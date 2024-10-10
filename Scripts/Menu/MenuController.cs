@@ -50,6 +50,5 @@ public class MenuController : MonoBehaviour
     {
         PlayerPrefs.SetInt("firstGameplay",0);
         Application.Quit();
-    }
-
+    }   
 }
