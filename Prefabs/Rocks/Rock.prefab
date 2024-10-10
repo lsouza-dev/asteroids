@@ -69,7 +69,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   qtdRocks: 0
   rockScale: 0
-  speed: 5
+  speed: 10
   rocksDivision: 2
   controller: {fileID: 0}
   screenShake: {fileID: 0}
@@ -147,7 +147,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: baa85a903a67d5345872cdd38370b697, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bcb0d9c1235aff84184124f893aab727, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -194,7 +194,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 4}
+    oldSize: {x: 10.8, y: 10.8}
     newSize: {x: 0.192, y: 0.192}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

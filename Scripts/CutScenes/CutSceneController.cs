@@ -19,7 +19,7 @@ public class CutSceneController : MonoBehaviour
     [Header("Numeric Variables")]
     [SerializeField] int videoIndex;
     [SerializeField] int imageIndex;
-    [SerializeField] private float transitionTime;  
+    [SerializeField] private float transitionTime;
 
     [Header("Bool Variables")]
     [SerializeField] bool playGame;
@@ -36,6 +36,7 @@ public class CutSceneController : MonoBehaviour
     }
     void Start()
     {
+        videoPlayer.SetDirectAudioVolume((ushort)videoIndex, .5f);
         videoPlayer.clip = clipList[videoIndex];
         videoIndex++;
     }
@@ -43,20 +44,17 @@ public class CutSceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (transitionTime > 0f) transitionTime -= Time.deltaTime;
+        else
         {
-            transitionTime = 1;
-            StartCoroutine(ContentTransition(videoIndex));
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                transitionTime = 1f;
+                StartCoroutine(ContentTransition(videoIndex));
+            }
         }
-     
-        if(transitionTime > 0) transitionTime -= Time.deltaTime;
 
-        if(videoTransition && transitionTime <= 0)
-        {
-            GameObject imgGO = image.gameObject;
-            imgGO.SetActive(false);
-            videoTransition = false;
-        }else if (Input.GetKeyDown(KeyCode.Space) && playGame)
+        if (Input.GetKeyDown(KeyCode.Space) && playGame)
         {
             SceneManager.LoadScene("Game");
         }
@@ -65,24 +63,25 @@ public class CutSceneController : MonoBehaviour
     private IEnumerator ContentTransition(int indexParaTrocaAntesDoTempo)
     {
         
-        yield return new WaitForSeconds(.5f);
-       
-            if (videoIndex <= clipList.Count - 1)
+        yield return new WaitForSeconds(1f);
+        
+            if (videoIndex <= clipList.Count - 1 && transitionTime <= 0)
             {
-                transitionTime = 1f;
+                transitionTime = .5f;
                 videoTransition = true;
                 videoPlayer.clip = clipList[indexParaTrocaAntesDoTempo];
                 videoPlayer.time = 0;
                 videoIndex++;
             }
-        
-        
+       
+         
+       
         if (videoIndex == clipList.Count)
         {
             playText.text = "Press Space to play!";
             playGame = true;
         }
-        
+     
     }
 }
     

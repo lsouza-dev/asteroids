@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEditor.Build;
-using UnityEditor.PackageManager.UI;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,6 +29,7 @@ public class MenuController : MonoBehaviour
         }
         else
         {
+            PlayerPrefs.SetInt("firstPlay", 0);
             SceneManager.LoadScene("Game");
         }
     }
@@ -47,16 +48,8 @@ public class MenuController : MonoBehaviour
 
     public void EndGame()
     {
-        PlayerPrefs.SetInt("firstGameplay", 0);
+        PlayerPrefs.SetInt("firstGameplay",0);
         Application.Quit();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Screen.fullScreen = !Screen.fullScreen;
-        }
     }
 
 }

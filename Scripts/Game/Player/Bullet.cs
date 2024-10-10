@@ -8,9 +8,7 @@ public class Bullet : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Animation shoot;
     [SerializeField] private Animator animator;
-    [SerializeField] private AudioSource shootSound;
-    [SerializeField] private SpriteRenderer bulletRenderer;
-
+    [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private List<Sprite> sprites;
     [SerializeField] private float bulletLifetime = 3f;
     [SerializeField] private GameController gameController;
@@ -22,24 +20,21 @@ public class Bullet : MonoBehaviour
     {
         if (isMissil)
         {
-            bulletRenderer.sprite = sprites[1];
+            renderer.sprite = sprites[1];
             animator.Play("missil");
         }
         else
         {
-            bulletRenderer.sprite = sprites[0];
+            renderer.sprite = sprites[0];
             animator.Play("bullet");
         }
-
-        shootSound.Play();
     }
 
     // Update is called once per frame
     private void Awake()
     {
-        bulletRenderer = GetComponent<SpriteRenderer>();
+        renderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        shootSound = GetComponent<AudioSource>();
         gameController = FindObjectOfType<GameController>();
         Destroy(gameObject, bulletLifetime);
     }

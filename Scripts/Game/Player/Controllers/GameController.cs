@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
 
     [Header("Rocks Variables")]
     [SerializeField] public GameObject rockPrefab;
-    [SerializeField] public Rock rock;
+    [SerializeField] private Rock rock;
     [SerializeField] public int rocksQuantity;
     [SerializeField] public int rockSpawn = 1;
     [SerializeField] private int rocksAdd= 1;
@@ -39,8 +39,7 @@ public class GameController : MonoBehaviour
     public int rocksToPowerUp = 5;
 
     [Header("Position Variables")]
-    [SerializeField] private float xMin;
-    [SerializeField] private float xMax;
+    [SerializeField] private float xLimit;
     [SerializeField]  private float yMin;
     [SerializeField] private float yMax;
 
@@ -82,6 +81,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         highscorePoints = PlayerPrefs.GetInt("highscore");
+        player.movementIntrodution = true;
     }
     void Start()
     {
@@ -205,7 +205,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < quantity; i++)
             {
-                Vector2 randomPos = new Vector2(UnityEngine.Random.Range(-xMin, xMax), UnityEngine.Random.Range(-yMin, yMax));
+                Vector2 randomPos = new Vector2(xLimit, UnityEngine.Random.Range(-yMin, yMax));
                 GameObject obstacleInstance = Instantiate(rockPrefab, randomPos, Quaternion.identity);
             }
         }

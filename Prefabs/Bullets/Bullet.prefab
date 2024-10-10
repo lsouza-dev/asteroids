@@ -78,12 +78,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -579452997, guid: ef8cda8ad1849164e8c33c97faca08e7, type: 3}
+  m_Sprite: {fileID: 1470378309, guid: 85d4bc064660b5246977ce77fca66d97, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.8, y: 1.2}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -163,15 +163,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26598be26e14a244a946ed48dfef3486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletLifetime: 3
+  gameController: {fileID: 0}
   shoot: {fileID: 0}
   animator: {fileID: 0}
   shootSound: {fileID: 0}
-  bulletRenderer: {fileID: 0}
   sprites:
   - {fileID: 1470378309, guid: 85d4bc064660b5246977ce77fca66d97, type: 3}
   - {fileID: -1722568733, guid: 30fcd70e53c79744abb3038fb54a0341, type: 3}
-  bulletLifetime: 3
-  gameController: {fileID: 0}
+  renderer: {fileID: 0}
   isMissil: 0
 --- !u!82 &5270827417692051600
 AudioSource:
