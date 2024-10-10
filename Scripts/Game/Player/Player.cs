@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Transform bulletSpawn;
     [SerializeField] public SpriteRenderer playerRenderer;
-    [SerializeField] public AudioListener listener;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] CapsuleCollider2D coll;
 
@@ -57,7 +56,6 @@ public class Player : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         coll = GetComponent<CapsuleCollider2D>();
         animator = GetComponentInChildren<Animator>();
-        listener = GetComponent<AudioListener>();
     }
     void Start()
     {
@@ -124,7 +122,7 @@ public class Player : MonoBehaviour
         }
 
         if (movementIntrodution)
-        {
+        { 
             shield.SetActive(false);
             invencibleTime = 0f;
             rb.velocity = Vector2.up * 8f;

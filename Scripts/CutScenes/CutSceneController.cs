@@ -19,8 +19,7 @@ public class CutSceneController : MonoBehaviour
     [Header("Numeric Variables")]
     [SerializeField] int videoIndex;
     [SerializeField] int imageIndex;
-    [SerializeField] private float transitionTime;
-    int turno = 1;
+    [SerializeField] private float transitionTime;  
 
     [Header("Bool Variables")]
     [SerializeField] bool playGame;
@@ -67,36 +66,23 @@ public class CutSceneController : MonoBehaviour
     {
         
         yield return new WaitForSeconds(.5f);
-        GameObject img = image.gameObject;
-
-        if (turno % 2 == 0)
-        {
+       
             if (videoIndex <= clipList.Count - 1)
             {
-                transitionTime = .5f;
+                transitionTime = 1f;
                 videoTransition = true;
                 videoPlayer.clip = clipList[indexParaTrocaAntesDoTempo];
                 videoPlayer.time = 0;
                 videoIndex++;
             }
-        }
-        else
-        {
-            if (imageIndex <= imagens.Count - 1)
-            {
-                image.sprite = imagens[imageIndex];
-                img.SetActive(true);
-                imageIndex++;
-            }
-        }
-        if (videoIndex == clipList.Count && imageIndex == imagens.Count)
+        
+        
+        if (videoIndex == clipList.Count)
         {
             playText.text = "Press Space to play!";
             playGame = true;
         }
-
-        print($"Img Index: {imageIndex} \tImg Count: {imagens.Count}\nVideo Index: {videoIndex} \tVideo Count: {clipList.Count}");
-        turno++;
+        
     }
 }
     

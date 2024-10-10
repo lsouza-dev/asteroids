@@ -257,7 +257,6 @@ GameObject:
   - component: {fileID: 8843362037676016873}
   - component: {fileID: 7468272666706091962}
   - component: {fileID: -6859665508650120692}
-  - component: {fileID: 3996826553313390275}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -354,6 +353,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   bulletSpawn: {fileID: 8510797142150825485}
   playerRenderer: {fileID: 0}
+  listener: {fileID: 0}
   rb: {fileID: 0}
   coll: {fileID: 0}
   isRespawning: 0
@@ -447,11 +447,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.3}
   m_Size: {x: 3, y: 3}
   m_Direction: 0
---- !u!81 &3996826553313390275
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8227240131122569891}
-  m_Enabled: 1

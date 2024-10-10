@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
 
     [Header("Rocks Variables")]
     [SerializeField] public GameObject rockPrefab;
-    [SerializeField] private Rock rock;
+    [SerializeField] public Rock rock;
     [SerializeField] public int rocksQuantity;
     [SerializeField] public int rockSpawn = 1;
     [SerializeField] private int rocksAdd= 1;
