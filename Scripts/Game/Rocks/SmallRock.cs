@@ -17,6 +17,7 @@ public class SmallRock : MonoBehaviour
     [SerializeField] public float speed;
     [Header("Controllers")]
     [SerializeField] private GameController controller;
+    [SerializeField] private SpawnController spawnController;
     [SerializeField] private ScreenShakeController screenShake;
     
     [SerializeField] private Vector2 dir;
@@ -29,6 +30,7 @@ public class SmallRock : MonoBehaviour
         controller = FindObjectOfType<GameController>();
         screenShake = FindObjectOfType<ScreenShakeController>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        spawnController = FindObjectOfType<SpawnController>();
     }
 
     // Start is called before the first frame update
@@ -88,7 +90,7 @@ public class SmallRock : MonoBehaviour
 
             if (controller.destroyedRocks == controller.rocksToPowerUp)
             {
-                controller.InstantiatePowerUp(transform.position);
+                spawnController.InstantiatePowerUp(transform.position);
             }
 
             Destroy(other.gameObject);

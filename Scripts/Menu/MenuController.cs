@@ -1,8 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-
-using UnityEditor.Build;
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,11 +16,11 @@ public class MenuController : MonoBehaviour
 
 
     // Start is called before the first frame update
-   
+
     public void Play()
     {
         firstGameplay = PlayerPrefs.GetInt("firstGameplay");
-        if(firstGameplay == 0)
+        if (firstGameplay == 0)
         {
             SceneManager.LoadScene("CutScene");
         }
@@ -36,8 +33,8 @@ public class MenuController : MonoBehaviour
 
     public void OpenSettings()
     {
-        mainMenu.SetActive(false);
         settings.SetActive(true);
+        mainMenu.SetActive(false);
     }
 
     public void CloseSettings()
@@ -48,7 +45,7 @@ public class MenuController : MonoBehaviour
 
     public void EndGame()
     {
-        PlayerPrefs.SetInt("firstGameplay",0);
+        PlayerPrefs.SetInt("firstGameplay", 0);
         Application.Quit();
-    }   
+    }
 }

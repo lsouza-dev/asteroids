@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     [Header("Controller Variables")]
     [SerializeField] public GameController gameController;
     [SerializeField] public ScreenShakeController shakeController;
+    [SerializeField] public SpawnController spawnController;
 
     [Header("Game Objects")]
     [SerializeField] public GameObject shield;
@@ -47,9 +48,12 @@ public class Player : MonoBehaviour
     [SerializeField] public bool isAlive = true;
     [SerializeField] public bool movementIntrodution = true;
     private bool isAccelerating = true;
-
+    private bool sideAcceleration = false;
+    
     private int firstPlay = 0;
     private float disabledCollider = 1f;
+    [SerializeField] private float xOffset;
+    [SerializeField] private float yOffset;
 
     // Start is called before the first frame update
     private void Awake()
@@ -62,6 +66,7 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         listener = GetComponent<AudioListener>();
         audioSource = GetComponent<AudioSource>();
+        spawnController = FindObjectOfType<SpawnController>();
     }
     void Start()
     {
@@ -73,7 +78,8 @@ public class Player : MonoBehaviour
         else movementIntrodution = false;
 
         if (isAlive) invencibleTime = 3f;
-        
+
+        if (!gameController.isAsteroidGameMode) transform.Rotate(0f, 0f, -90f);
     }
 
     // Update is called once per frame
@@ -92,12 +98,9 @@ public class Player : MonoBehaviour
                 shipAcceleration = 0;
                 invencibleTime = 3f;
             }
-            else
-            {
-                shipAcceleration = 20f;
-            }
 
-            if(rechargeTime >= 0) rechargeTime -= Time.deltaTime;
+
+            if (rechargeTime >= 0) rechargeTime -= Time.deltaTime;
 
             if (invencibleTime > 0)
             {
@@ -121,67 +124,108 @@ public class Player : MonoBehaviour
                 bulletScript.isMissil = false;
             }
 
-            if (!movementIntrodution)
+            if (!movementIntrodution && gameController.isAsteroidGameMode)
             {
                 ShipAcceleration();
                 ShipRotation();
                 ShipShooting();
-            }
-        }
 
-        if (movementIntrodution)
-        {
-            shield.SetActive(false);
-            invencibleTime = 0f;
-            rb.velocity = Vector2.up * 8f;
-            animator.SetBool("isBoost", true);
-            if (transform.position.y >= 0 && transform.position.x == 0)
+            }else if(!movementIntrodution && !gameController.isAsteroidGameMode)
             {
-                invencibleTime = 3f;
-                isAlive = true;
-                movementIntrodution = false;
-                rb.velocity = Vector2.zero;
-                animator.SetBool("isBoost", false);
-                gameController.canva.gameObject.SetActive(true);
-                gameController.InstantiateRocks(gameController.rockSpawn);
-
-                PlayerPrefs.SetInt("firstPlay", 1);
+                ShipAcceleration();
+                ShipShooting();
             }
 
+            if (movementIntrodution)
+            {
+                shield.SetActive(false);
+                invencibleTime = 0f;
+                rb.velocity = Vector2.up * 8f;
+                animator.SetBool("isBoost", true);
+                if (transform.position.y >= 0 && transform.position.x == 0)
+                {
+                    invencibleTime = 3f;
+                    isAlive = true;
+                    movementIntrodution = false;
+                    rb.velocity = Vector2.zero;
+                    animator.SetBool("isBoost", false);
+                    gameController.canva.gameObject.SetActive(true);
+                    spawnController.InstantiateRocks(gameController.rockSpawn);
+
+                    PlayerPrefs.SetInt("firstPlay", 1);
+                }
+            }
         }
     }
 
     private void FixedUpdate()
     {
-        if(isAlive && isAccelerating)
+        if (gameController.isAsteroidGameMode)
         {
-            // Adiciona força ao rigid multiplicando pela aceleração e tranform.up
-            rb.AddForce(shipAcceleration * transform.up);
-            // Definindo o limite da velocidade da nave
-            rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
+            if (isAlive && isAccelerating)
+            {
+                // Adiciona força ao rigid multiplicando pela aceleração e tranform.up
+                rb.AddForce(shipAcceleration * transform.up);
+                // Definindo o limite da velocidade da nave
+                rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
 
+            }
+            else if (isAlive && !isAccelerating)
+            {
+                // Parando a nave se estiver vivo e não acelerar
+                rb.velocity *= shipDisacceleration;
+
+            }
         }
-        else if(isAlive && !isAccelerating) 
+        else
         {
-            // Parando a nave se estiver vivo e não acelerar
-            rb.velocity *= shipDisacceleration;
-          
+            if (isAlive && isAccelerating || sideAcceleration)
+            {
+                if (isAccelerating)
+                {
+                    // Definindo o limite da velocidade da nave
+                    rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
+                }
+                else
+                {
+                    if (isAlive && !isAccelerating)
+                    {
+                        // Parando a nave se estiver vivo e não acelerar
+                        rb.velocity *= shipDisacceleration;
+
+                    }
+                }
+            }
         }
+        
     }
 
     private void ShipAcceleration()
     {
-        // Definindo que isAccelerating será true quando apertar seta para cima ou W
-        isAccelerating = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
-
-        if (isAccelerating)
+        if (gameController.isAsteroidGameMode)
         {
-            animator.SetBool("isBoost", true);
+            // Definindo que isAccelerating será true quando apertar seta para cima ou W
+            isAccelerating = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
+
+            if (isAccelerating)
+            {
+                animator.SetBool("isBoost", true);
+            }
+            else
+            {
+                animator.SetBool("isBoost", false);
+            }
         }
         else
         {
-            animator.SetBool("isBoost", false);
+            float yInput = Input.GetAxis("Vertical") * shipAcceleration * Time.deltaTime;
+            float xInput = Input.GetAxis("Horizontal") * shipAcceleration * Time.deltaTime;
+
+            
+            transform.position = new Vector2(Mathf.Clamp(transform.position.x + xInput,-xOffset,xOffset), Mathf.Clamp(transform.position.y + yInput,-yOffset,yOffset));
+            
         }
+
     }
 
     private void ShipRotation()

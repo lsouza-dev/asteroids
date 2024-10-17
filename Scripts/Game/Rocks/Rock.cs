@@ -25,6 +25,7 @@ public class Rock : MonoBehaviour
     [Header("Controllers")]
     [SerializeField] private GameController controller;
     [SerializeField] private ScreenShakeController screenShake;
+    [SerializeField] private SpawnController spawnController;
     [Header("Others")]
     [SerializeField] private Vector2 dir;
     [SerializeField] private Sprite[] sprites;
@@ -40,6 +41,7 @@ public class Rock : MonoBehaviour
         screenShake = FindObjectOfType<ScreenShakeController>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         coll = GetComponent<PolygonCollider2D>();
+        spawnController = FindObjectOfType<SpawnController>();
     }
 
     // Start is called before the first frame update
@@ -133,7 +135,7 @@ public class Rock : MonoBehaviour
 
             if (controller.destroyedRocks == controller.rocksToPowerUp)
             {
-                controller.InstantiatePowerUp(transform.position);
+                spawnController.InstantiatePowerUp(transform.position);
             }
 
             if(controller.rocksQuantity == 0)

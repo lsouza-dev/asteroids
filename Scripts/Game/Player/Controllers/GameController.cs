@@ -23,6 +23,8 @@ public class GameController : MonoBehaviour
     public int points = 0;
     float nextLevelTimer = 3.5f;
 
+    private SpawnController spawnController;
+
     [Header("Level Variables")]
     private int gameLevel = 1;
     public bool levelTransition;
@@ -75,63 +77,65 @@ public class GameController : MonoBehaviour
 
     [SerializeField] public int playerLifes = 4;
     [SerializeField] public GameObject canva;
-
+    [SerializeField] public bool isAsteroidGameMode = true;
     // Start is called before the first frame update
 
     private void Awake()
     {
+        spawnController = FindObjectOfType<SpawnController>();
         highscorePoints = PlayerPrefs.GetInt("highscore");
         player.movementIntrodution = true;
     }
     void Start()
     {
-        if (highscorePoints == 0) highscoreText.text = $"HIGHSCORE: 0000";
-        else
+        if (isAsteroidGameMode)
         {
-            highscoreText.text = $"HIGHSCORE: {highscorePoints}";
-        }
-
-        UpdatePlayerEnergy(playerLifes);
-        
-        //bulletPrefab.isMissil = true;
-
-        try
-        {
-            diff = TogglesManager.instance.diff;
-        }
-        catch
-        {
-            if (diff == null)
+            if (highscorePoints == 0) highscoreText.text = $"HIGHSCORE: 0000";
+            else
             {
-                diff = "facil";
-                rock.rocksDivision = 2;
+                highscoreText.text = $"HIGHSCORE: {highscorePoints}";
             }
-            
-        }
 
-        if(diff == "facil" )
-        {
-            rocksAdd = 1;
-            rock.rocksDivision = 2; 
+            UpdatePlayerEnergy(playerLifes);
 
-        }else if (diff == "medio")
-        {
-            rocksAdd = 3;
-            rock.rocksDivision = 3;
-        }
-        else if (diff == "dificil")
-        {
-            rocksAdd = 5;
-            rock.rocksDivision = 3;
-        }
+            try
+            {
+                diff = TogglesManager.instance.diff;
+            }
+            catch
+            {
+                if (diff == null)
+                {
+                    diff = "facil";
+                    rock.rocksDivision = 2;
+                }
+
+            }
+
+            if (diff == "facil")
+            {
+                rocksAdd = 1;
+                rock.rocksDivision = 2;
+
+            }
+            else if (diff == "medio")
+            {
+                rocksAdd = 3;
+                rock.rocksDivision = 3;
+            }
+            else if (diff == "dificil")
+            {
+                rocksAdd = 5;
+                rock.rocksDivision = 3;
+            }
             rockSpawn = gameLevel + rocksAdd;
             rocksQuantity = rockSpawn;
             levelText.text = $"LEVEL: {gameLevel}";
+        }
+        else
+        {
 
-            //player.invencibleTime = 3;
-            //levelTransition = true;
-            //nextLevelText.text = string.Empty;
-        
+        }
     }
 
     // Update is called once per frame
@@ -148,25 +152,32 @@ public class GameController : MonoBehaviour
                 nextLevelText.text = string.Empty;
             }
        }
-
-        if (rocksDestroyedWithotDie >= 20 && rocksDestroyedWithotDie < 50)
+        if (isAsteroidGameMode)
         {
-            comboMultiplier = 2;
-            isOnCombo = true;
-            GameObject comboPointsGO = comboPoints.gameObject;
-            comboPointsGO.SetActive(true);
-            comboPoints.text = $"X{comboMultiplier}";
-        }
-        else if (rocksDestroyedWithotDie >= 50)
-        {
-            comboMultiplier = 3;
-            comboPoints.text = $"X{comboMultiplier}";
+            if (rocksDestroyedWithotDie >= 20 && rocksDestroyedWithotDie < 50)
+            {
+                comboMultiplier = 2;
+                isOnCombo = true;
+                GameObject comboPointsGO = comboPoints.gameObject;
+                comboPointsGO.SetActive(true);
+                comboPoints.text = $"X{comboMultiplier}";
+            }
+            else if (rocksDestroyedWithotDie >= 50)
+            {
+                comboMultiplier = 3;
+                comboPoints.text = $"X{comboMultiplier}";
+            }
+            else
+            {
+                GameObject comboPointsGO = comboPoints.gameObject;
+                comboPointsGO.SetActive(false);
+            }
         }
         else
         {
-            GameObject comboPointsGO = comboPoints.gameObject;
-            comboPointsGO.SetActive(false);
+
         }
+        
 
         if (isRespawn)
         {
@@ -188,7 +199,7 @@ public class GameController : MonoBehaviour
         levelText.text = $"LEVEL: {gameLevel}";
         rocksQuantity = rockSpawn;
         nextLevelTimer = 3.5f;
-        InstantiateRocks(rockSpawn);
+        spawnController.InstantiateRocks(rockSpawn);
         
     }
 
@@ -199,24 +210,7 @@ public class GameController : MonoBehaviour
     }
 
 
-    public void InstantiateRocks(int quantity)
-    {
-        if(player.isAlive)
-        {
-            for (int i = 0; i < quantity; i++)
-            {
-                Vector2 randomPos = new Vector2(xLimit, UnityEngine.Random.Range(-yMin, yMax));
-                GameObject obstacleInstance = Instantiate(rockPrefab, randomPos, Quaternion.identity);
-            }
-        }
-    }
-
-    public void InstantiatePowerUp(Vector2 pos)
-    {
-        GameObject powerUp = powerUps[UnityEngine.Random.Range(0, powerUps.Count)];
-        GameObject selectedPowerUp = Instantiate(powerUp, pos, Quaternion.identity);
-        destroyedRocks = 0;
-    }
+    
 
 
     public void UpdatePlayerEnergy(int lifes)
