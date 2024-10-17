@@ -48,16 +48,12 @@ public class SpawnController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(player.isAlive && isShooterMode) StartCoroutine(SpawnEnemies());   
     }
 
     void Update()
     {
-        if(timeToSpawnEnemy > 0) timeToSpawnEnemy -= Time.deltaTime;
-        if(timeToSpawnEnemy < 0){
-            StartCoroutine(SpawnEnemies());
-            timeToSpawnEnemy = 1f;
-        }
+        
     }
 
 
