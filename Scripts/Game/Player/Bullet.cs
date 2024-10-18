@@ -68,5 +68,4 @@ public class Bullet : MonoBehaviour
             gameController.rocksDestroyedWithotDie += 1;
         }
     }
-
 }

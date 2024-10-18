@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     [SerializeField] public float respawnTime;
     [SerializeField] public float maxVelocity;
     [SerializeField] public float rechargeTime;
+    [SerializeField] private float xOffset;
+    [SerializeField] private float yOffset;
 
     [Header("Bullet Variables")]
     [SerializeField] private Rigidbody2D bulletPrefab;
@@ -49,11 +51,14 @@ public class Player : MonoBehaviour
     [SerializeField] public bool movementIntrodution = true;
     private bool isAccelerating = true;
     private bool sideAcceleration = false;
-    
+
+    [Header("Shake Variables")]
+    [SerializeField] private float shakeAmount;
+    [SerializeField] private float shakeDuration;
+
     private int firstPlay = 0;
     private float disabledCollider = 1f;
-    [SerializeField] private float xOffset;
-    [SerializeField] private float yOffset;
+    
 
     // Start is called before the first frame update
     private void Awake()
@@ -221,6 +226,8 @@ public class Player : MonoBehaviour
             float yInput = Input.GetAxis("Vertical") * shipAcceleration * Time.deltaTime;
             float xInput = Input.GetAxis("Horizontal") * shipAcceleration * Time.deltaTime;
 
+            if (xInput != 0 || yInput != 0) animator.SetBool("isBoost", true);
+            else animator.SetBool("isBoost",false);
             
             transform.position = new Vector2(Mathf.Clamp(transform.position.x + xInput,-xOffset,xOffset), Mathf.Clamp(transform.position.y + yInput,-yOffset,yOffset));
             
@@ -277,35 +284,26 @@ public class Player : MonoBehaviour
         if(other.tag == "Rock" || other.tag == "SmallRock")
         {
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-            
+            gameController.playerLifes -= 1;
 
-            int lifesRemain = gameController.playerLifes -= 1;
+            shakeAmount = 1f;
+            shakeDuration = 1f;
 
-            if (gameController.playerLifes > 0)
-            {
-                gameController.isRespawn = true;
-                Destroy(gameObject);
-            }
-            else
-            {
-                gameController.gameOver.SetActive(true);
-                gameController.isRespawn = false;
-                Destroy(gameObject);
-                PlayerPrefs.SetInt("firstPlay", 0);
-
-                if(gameController.points > gameController.highscorePoints) PlayerPrefs.SetInt("highscore", gameController.points);
-            }
-
-            gameController.UpdatePlayerEnergy(lifesRemain);
-
-            shakeController.shakeAmount = 1f;
-            shakeController.shakeDuration = 1f;
-            shakeController.shakeActive = true;
-
-            gameController.rocksDestroyedWithotDie = 0;
-            gameController.isOnCombo = false;
+            PlayerDeath();
+            PlayerHitShake(shakeAmount,shakeDuration);
 
             Destroy(explosion, 1f);   
+        }
+
+        if (other.CompareTag("EnemieBullet"))
+        {
+            gameController.playerLifes -= 1;
+            shakeAmount = .5f;
+            shakeDuration = .5f;
+            gameController.UpdatePlayerEnergy(gameController.playerLifes);
+            PlayerDeath();
+            PlayerHitShake(shakeAmount, shakeDuration);
+            Destroy(other);
         }
 
         if (other.CompareTag("PUpHealth"))
@@ -331,5 +329,57 @@ public class Player : MonoBehaviour
 
             Destroy(other.gameObject);
         }
+    }
+
+    public void PlayerDeath()
+    {
+        if (gameController.isAsteroidGameMode)
+        {
+            if (gameController.playerLifes > 0)
+            {
+                gameController.isRespawn = true;
+                Destroy(gameObject);
+            }
+            else
+            {
+                gameController.gameOver.SetActive(true);
+                gameController.isRespawn = false;
+                Destroy(gameObject);
+                PlayerPrefs.SetInt("firstPlay", 0);
+
+                if (gameController.points > gameController.highscorePoints) PlayerPrefs.SetInt("highscore", gameController.points);
+            }
+        }
+        else
+        {
+            if(gameController.playerLifes == 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+        
+    }
+
+    public void PlayerHitShake(float amount,float duration)
+    {
+        if (gameController.isAsteroidGameMode)
+        {
+            gameController.rocksDestroyedWithotDie = 0;
+            gameController.isOnCombo = false;
+        }
+        else
+        {
+            amount = .5f;
+            duration = .5f;
+        }
+
+
+        int lifesRemain = gameController.playerLifes;
+        gameController.UpdatePlayerEnergy(lifesRemain);
+
+        shakeController.shakeAmount = amount;
+        shakeController.shakeDuration = duration;
+        shakeController.shakeActive = true;
+
     }
 }

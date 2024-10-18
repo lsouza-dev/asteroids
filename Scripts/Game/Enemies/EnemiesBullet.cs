@@ -39,12 +39,4 @@ public class EnemiesBullet : MonoBehaviour
         if (transform.position.x <= -xLimit) Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            print("Hit no player");
-        }
-    }
-
 }

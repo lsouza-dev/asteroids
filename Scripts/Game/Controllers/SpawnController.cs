@@ -35,6 +35,7 @@ public class SpawnController : MonoBehaviour
     [SerializeField] public float xOffset;
     [SerializeField] public float yOffset;
     [SerializeField] public float timeToSpawnEnemy = 2f;
+    [SerializeField] public float timeToSpawnBoss;
 
     bool spawning = true;
     public bool isShooterMode = true;
@@ -53,7 +54,10 @@ public class SpawnController : MonoBehaviour
 
     void Update()
     {
-        
+        if (isShooterMode)
+        {
+            if (timeToSpawnBoss > 0) timeToSpawnBoss -= Time.deltaTime;
+        }
     }
 
 
@@ -80,10 +84,13 @@ public class SpawnController : MonoBehaviour
     {
         while (spawning)
         {
-            yield return new WaitForSeconds(1f);
+            float randomTime = Random.Range(1f, 3f);
+            yield return new WaitForSeconds(randomTime);
             int randomEnemy = Random.Range(0, enemiesList.Count);
             Vector2 randomPos = new Vector2(xOffset, Random.Range(-yOffset, yOffset));
             Instantiate(enemiesList[randomEnemy],randomPos, Quaternion.identity);
+
+            
 
         }
     }

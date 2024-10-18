@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemies : MonoBehaviour
@@ -8,6 +9,8 @@ public class Enemies : MonoBehaviour
     [SerializeField] public float enemySpeed;
     [SerializeField] public EnemiesBullet enemiesBullet;
     [SerializeField] private GameObject spawnPositionObject;
+    [SerializeField] private GameController gameController;
+    [SerializeField] private Player player;
     [SerializeField] public float xLimit;
     public int enemyHealthPoints;
     
@@ -16,11 +19,13 @@ public class Enemies : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-
+        player = FindObjectOfType<Player>();
+        gameController = FindObjectOfType<GameController>();
     }
 
     void Start()
     {
+        enemiesBullet = Resources.Load<EnemiesBullet>("EnemyBullet");
         transform.Rotate(0, 0, 90);
         StartCoroutine(Shoot());
     }
@@ -36,17 +41,24 @@ public class Enemies : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            enemyHealthPoints -= 1;
             Destroy(other.gameObject);
-            if (enemyHealthPoints <= 0) Destroy(gameObject);
+            enemyHealthPoints -= 1;
+            
+            if (enemyHealthPoints <= 0)
+            {
+                gameController.points += 75;
+                Destroy(gameObject);
+            }
         }
     }
-
     private IEnumerator Shoot()
     {
-        yield return new WaitForSeconds(2f);
-        EnemiesBullet bullet = FindObjectOfType<EnemiesBullet>();
-        GameObject spawnPos = GameObject.FindGameObjectWithTag("EnemieBulletSpawner");
-        Instantiate(enemiesBullet, spawnPos.transform.position, Quaternion.identity);
+        
+            while (true)
+            {
+                yield return new WaitForSeconds(1f);
+                Instantiate(enemiesBullet, spawnPositionObject.transform.position, Quaternion.identity);
+            }
+
     }
 }
