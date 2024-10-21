@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     [SerializeField] public bool havePowerUp;
     [SerializeField] private bool doubleShoot;
     [SerializeField] public bool isAlive = true;
-    [SerializeField] public bool movementIntrodution = true;
+    [SerializeField] public bool movementIntrodution;
     private bool isAccelerating = true;
     private bool sideAcceleration = false;
 
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetInt("firstGameplay", 1);
         firstPlay = PlayerPrefs.GetInt("firstPlay");
 
-        if (firstPlay == 0) movementIntrodution = true;
+        if (firstPlay == 0 && gameController.isAsteroidGameMode) movementIntrodution = true;
         else movementIntrodution = false;
 
         if (isAlive) invencibleTime = 3f;
@@ -297,6 +297,7 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("EnemieBullet"))
         {
+            invencibleTime = 2f;
             gameController.playerLifes -= 1;
             shakeAmount = .5f;
             shakeDuration = .5f;

@@ -44,7 +44,7 @@ public class Enemies : MonoBehaviour
             Destroy(other.gameObject);
             enemyHealthPoints -= 1;
             
-            if (enemyHealthPoints <= 0)
+            if (enemyHealthPoints < 0)
             {
                 gameController.points += 75;
                 Destroy(gameObject);

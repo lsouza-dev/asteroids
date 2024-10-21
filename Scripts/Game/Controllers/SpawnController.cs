@@ -32,10 +32,15 @@ public class SpawnController : MonoBehaviour
 
     [Header("Enemies")]
     [SerializeField] List<GameObject> enemiesList;
+    [SerializeField] List<GameObject> bossList;
     [SerializeField] public float xOffset;
     [SerializeField] public float yOffset;
     [SerializeField] public float timeToSpawnEnemy = 2f;
-    [SerializeField] public float timeToSpawnBoss;
+    [SerializeField] public float timeToSpawnBoss = 10f;
+    [SerializeField] public float currentTime;
+    [SerializeField] public bool spawnBoss;
+    [SerializeField] public bool bossFight;
+
 
     bool spawning = true;
     public bool isShooterMode = true;
@@ -56,7 +61,9 @@ public class SpawnController : MonoBehaviour
     {
         if (isShooterMode)
         {
-            if (timeToSpawnBoss > 0) timeToSpawnBoss -= Time.deltaTime;
+            if (currentTime <= timeToSpawnBoss && !bossFight) currentTime += Time.deltaTime;
+            else spawnBoss = true;
+            print($"Current: {currentTime} \tBoss: {timeToSpawnBoss}");
         }
     }
 
@@ -82,16 +89,31 @@ public class SpawnController : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-        while (spawning)
-        {
-            float randomTime = Random.Range(1f, 3f);
-            yield return new WaitForSeconds(randomTime);
-            int randomEnemy = Random.Range(0, enemiesList.Count);
-            Vector2 randomPos = new Vector2(xOffset, Random.Range(-yOffset, yOffset));
-            Instantiate(enemiesList[randomEnemy],randomPos, Quaternion.identity);
-
+        //while (spawning)
+        //{
+        //    if (!bossFight)
+        //    {
+        //        if (!spawnBoss)
+        //        {
+        //            float randomTime = Random.Range(1f, 3f);
+        //            yield return new WaitForSeconds(randomTime);
+        //            int randomEnemy = Random.Range(0, enemiesList.Count);
+        //            Vector2 randomPos = new Vector2(xOffset, Random.Range(-yOffset, yOffset));
+        //            Instantiate(enemiesList[randomEnemy], randomPos, Quaternion.identity);
+        //        }
+        //        else
+        //        {
+        //            int randomEnemy = Random.Range(0, bossList.Count);
+        //            Vector2 pos = new Vector2(xOffset, 0f);
+        //            Instantiate(bossList[randomEnemy], pos, Quaternion.identity);
+        //            bossFight = true;
+        //            spawnBoss = false;
+        //            currentTime = 0f;
+        //        }
+        //    }
+                
             
-
-        }
+        //}
+        yield return null;
     }
 }

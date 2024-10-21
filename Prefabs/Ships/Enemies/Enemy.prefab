@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -6927166662894523582}
   - component: {fileID: -131892037224160565}
   m_Layer: 0
-  m_Name: Enemie
+  m_Name: Enemy
   m_TagString: EnemieTriggerCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
