@@ -9,13 +9,14 @@ public class SpawnController : MonoBehaviour
 
     [Header("Rocks Variables")]
     [SerializeField] public GameObject rockPrefab;
-    [SerializeField] private Rock rock;
+    [SerializeField] public Rock rock;
     [SerializeField] public int rocksQuantity;
     [SerializeField] public int rockSpawn = 1;
-    [SerializeField] private int rocksAdd = 1;
+    [SerializeField] public int rocksAdd = 1;
+    [SerializeField] public int rocksDivision;
     [SerializeField] public bool firstRockSpawn;
-    [SerializeField] private float timeToFirstSpawn;
-    public int rocksToPowerUp = 5;
+    [SerializeField] public float timeToFirstSpawn;
+    [SerializeField] public int rocksToPowerUp = 30;
 
     [Header("Position Variables")]
     [SerializeField] private float xLimit;
@@ -36,15 +37,18 @@ public class SpawnController : MonoBehaviour
     [SerializeField] public float xOffset;
     [SerializeField] public float yOffset;
     [SerializeField] public float timeToSpawnEnemy = 2f;
+    [SerializeField] public float delayToSpawnBoss = 3f;
     [SerializeField] public float timeToSpawnBoss = 10f;
     [SerializeField] public float currentTime;
-    [SerializeField] public bool spawnBoss;
+    [SerializeField] public bool spawnBoss = false;
     [SerializeField] public bool bossFight;
-
-
-    bool spawning = true;
+    [SerializeField] public int bossKilled;
+    [SerializeField] public bool spawning = true;
+    [SerializeField] private int enemiesKilledTopPowerUp = 20;
     public bool isShooterMode = true;
     private GameController gameController;
+    public bool isRespawn;
+    public float respawnTime;
 
     private void Awake()
     {
@@ -61,9 +65,7 @@ public class SpawnController : MonoBehaviour
     {
         if (isShooterMode)
         {
-            if (currentTime <= timeToSpawnBoss && !bossFight) currentTime += Time.deltaTime;
-            else spawnBoss = true;
-            print($"Current: {currentTime} \tBoss: {timeToSpawnBoss}");
+            CurrentTimeVerification();
         }
     }
 
@@ -87,33 +89,48 @@ public class SpawnController : MonoBehaviour
         destroyedRocks = 0;
     }
 
+    private void CurrentTimeVerification()
+    {
+        if (!bossFight)
+        {
+            if (currentTime <= timeToSpawnBoss) currentTime += Time.deltaTime;
+            else {
+                bossFight = true;
+                spawnBoss = true;
+            }
+        }
+        else
+        {
+            delayToSpawnBoss -= Time.deltaTime;
+            if (spawnBoss && delayToSpawnBoss <= 0) SpawnBoss();
+         
+        }
+        
+        
+    }
+
+    private void SpawnBoss()
+    {
+        Vector2 pos = new Vector2(xOffset, 0f);
+        Instantiate(bossList[Boss.BOSSINDEX], pos, Quaternion.identity);
+        spawnBoss = false;
+        delayToSpawnBoss = 3f;
+        Boss.BOSSINDEX += 1;   
+    }
+
     private IEnumerator SpawnEnemies()
     {
-        //while (spawning)
-        //{
-        //    if (!bossFight)
-        //    {
-        //        if (!spawnBoss)
-        //        {
-        //            float randomTime = Random.Range(1f, 3f);
-        //            yield return new WaitForSeconds(randomTime);
-        //            int randomEnemy = Random.Range(0, enemiesList.Count);
-        //            Vector2 randomPos = new Vector2(xOffset, Random.Range(-yOffset, yOffset));
-        //            Instantiate(enemiesList[randomEnemy], randomPos, Quaternion.identity);
-        //        }
-        //        else
-        //        {
-        //            int randomEnemy = Random.Range(0, bossList.Count);
-        //            Vector2 pos = new Vector2(xOffset, 0f);
-        //            Instantiate(bossList[randomEnemy], pos, Quaternion.identity);
-        //            bossFight = true;
-        //            spawnBoss = false;
-        //            currentTime = 0f;
-        //        }
-        //    }
-                
-            
-        //}
-        yield return null;
+        while (spawning)
+        {
+            if (!bossFight)
+            {
+                float randomTime = Random.Range(1f, 3f);
+                yield return new WaitForSeconds(randomTime);
+                int randomEnemy = Random.Range(0, enemiesList.Count);
+                Vector2 randomPos = new Vector2(xOffset, Random.Range(-yOffset, yOffset));
+                Instantiate(enemiesList[randomEnemy], randomPos, Quaternion.identity);
+            }
+            else yield return null;
+        }
     }
 }

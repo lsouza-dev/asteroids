@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Boss : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class Boss : MonoBehaviour
     [SerializeField] public float yStopLimit;
     [SerializeField] private bool goingDown;
     [SerializeField] private bool bossEnter = true;
+    static public int BOSSINDEX = 0;
 
     public int bossHealthPoints;
 
@@ -53,9 +56,18 @@ public class Boss : MonoBehaviour
 
             if (bossHealthPoints < 0)
             {
-                gameController.points += 500;
-                spawnController.bossFight = false;
-                spawnController.spawnBoss = false;
+                if(BOSSINDEX <= 2)
+                {
+                    gameController.points += 500;
+                    spawnController.bossFight = false;
+                    spawnController.currentTime = 0f;
+                    spawnController.delayToSpawnBoss = 3f;
+                }
+                else
+                {
+                    spawnController.spawning = false;
+
+                }
                 Destroy(gameObject);
             }
         }
@@ -66,13 +78,13 @@ public class Boss : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            for(int i = 0;i < spawnPositionObject.Count; i++)
+            for (int i = 0; i < spawnPositionObject.Count; i++)
             {
+                // Verificar a direção das bullets
                 Instantiate(enemiesBullet, spawnPositionObject[i].transform.position, Quaternion.identity);
             }
         }
     }
-
     private void BossMovement()
     {
         limitPos = new Vector3(xStopLimit, yStopLimit);

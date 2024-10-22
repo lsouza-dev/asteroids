@@ -30,24 +30,7 @@ public class GameController : MonoBehaviour
     public bool levelTransition;
     public bool nextLevel;
 
-    [Header("Rocks Variables")]
-    [SerializeField] public GameObject rockPrefab;
-    [SerializeField] private Rock rock;
-    [SerializeField] public int rocksQuantity;
-    [SerializeField] public int rockSpawn = 1;
-    [SerializeField] private int rocksAdd= 1;
-    [SerializeField] public bool firstRockSpawn;
-    [SerializeField] private float timeToFirstSpawn;
-    public int rocksToPowerUp = 5;
-
-    [Header("Position Variables")]
-    [SerializeField] private float xLimit;
-    [SerializeField]  private float yMin;
-    [SerializeField] private float yMax;
-
-    [Header("Respawn Variables")]
-    [SerializeField] public bool isRespawn;
-    [SerializeField] public float respawnTime = 2;
+    
     
     [Header("Sprites Variables")]
     [SerializeField] public List<Sprite> energySprites;
@@ -60,12 +43,6 @@ public class GameController : MonoBehaviour
     [Header("Player Variables")]
     [SerializeField] private Player player;
     [SerializeField] public GameObject gameOver;
-
-
-    [Header("PowerUps")]
-    [SerializeField] private List<GameObject> powerUps;
-    [SerializeField] public int destroyedRocks;
-    [SerializeField] public Bullet bulletPrefab;
 
     [Header("Points Variables")]
     public int highscorePoints;
@@ -107,29 +84,29 @@ public class GameController : MonoBehaviour
                 if (diff == null)
                 {
                     diff = "facil";
-                    rock.rocksDivision = 2;
+                    spawnController.rocksDivision = 2;
                 }
 
             }
 
             if (diff == "facil")
             {
-                rocksAdd = 1;
-                rock.rocksDivision = 2;
+                spawnController.rocksAdd = 1;
+                spawnController.rock.rocksDivision = 2;
 
             }
             else if (diff == "medio")
             {
-                rocksAdd = 3;
-                rock.rocksDivision = 3;
+                spawnController.rocksAdd = 3;
+                spawnController.rock.rocksDivision = 3;
             }
             else if (diff == "dificil")
             {
-                rocksAdd = 5;
-                rock.rocksDivision = 3;
+                spawnController.rocksAdd = 5;
+                spawnController.rock.rocksDivision = 3;
             }
-            rockSpawn = gameLevel + rocksAdd;
-            rocksQuantity = rockSpawn;
+            spawnController.rockSpawn = gameLevel + spawnController.rocksAdd;
+            spawnController.rocksQuantity = spawnController.rockSpawn;
             levelText.text = $"LEVEL: {gameLevel}";
         }
         else
@@ -179,10 +156,10 @@ public class GameController : MonoBehaviour
         }
         
 
-        if (isRespawn)
+        if (spawnController.isRespawn)
         {
-            respawnTime -= Time.deltaTime;
-            if(respawnTime < 0)
+            spawnController.respawnTime -= Time.deltaTime;
+            if(spawnController.respawnTime < 0)
             {
                 PlayerRespawn();
             }
@@ -195,11 +172,11 @@ public class GameController : MonoBehaviour
     {
         nextLevel = false;
         gameLevel += 1;
-        rockSpawn = gameLevel + rocksAdd;
+        spawnController.rockSpawn = gameLevel + spawnController.rocksAdd;
         levelText.text = $"LEVEL: {gameLevel}";
-        rocksQuantity = rockSpawn;
+        spawnController.rocksQuantity = spawnController.rockSpawn;
         nextLevelTimer = 3.5f;
-        spawnController.InstantiateRocks(rockSpawn);
+        spawnController.InstantiateRocks(spawnController.rockSpawn);
         
     }
 
@@ -221,8 +198,8 @@ public class GameController : MonoBehaviour
     public void PlayerRespawn()
     {
         Player respawnPlayer = Instantiate(player, Vector2.zero, Quaternion.identity);
-        respawnTime = 2f;
-        isRespawn = false;
+        spawnController.respawnTime = 2f;
+        spawnController.isRespawn = false;
     }
 
 }

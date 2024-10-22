@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class MenuController : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject gameMode;
     [SerializeField] private GameObject settings;
     [SerializeField] private GameObject credits;
     [SerializeField] private Toggle[] toggles;
@@ -17,10 +18,10 @@ public class MenuController : MonoBehaviour
 
     // Start is called before the first frame update
 
-    public void Play()
+    public void Asteroids()
     {
         firstGameplay = PlayerPrefs.GetInt("firstGameplay");
-        if (firstGameplay == 0)
+        if (firstGameplay == 0 )
         {
             SceneManager.LoadScene("CutScene");
         }
@@ -31,16 +32,33 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    public void Shooter()
+    {
+        SceneManager.LoadScene("Shooter");
+    }
+
+    public void OpenGameMode()
+    {
+        gameMode.SetActive(true);
+        mainMenu.SetActive(false);
+    }
+
+    public void CloseGameMode()
+    {
+        gameMode.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+
     public void OpenSettings()
     {
         settings.SetActive(true);
-        mainMenu.SetActive(false);
+        //mainMenu.SetActive(false);
     }
 
     public void CloseSettings()
     {
-        mainMenu.SetActive(true);
         settings.SetActive(false);
+        mainMenu.SetActive(true);
     }
 
     public void EndGame()

@@ -56,7 +56,7 @@ public class CutSceneController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && playGame)
         {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("Asteroids");
         }
     }
 

@@ -117,8 +117,8 @@ public class Rock : MonoBehaviour
             screenShake.shakeDuration = .2f;
             screenShake.shakeActive = true;
 
-            controller.rocksQuantity--;
-            controller.destroyedRocks++;
+            spawnController.rocksQuantity--;
+            spawnController.destroyedRocks++;
 
             if (!bullet.isMissil)
             {
@@ -129,16 +129,16 @@ public class Rock : MonoBehaviour
                     rockScale = .7f;
                     small.speed = Random.Range(small.speed - 5, small.speed);
                     small.transform.localScale = new Vector3(rockScale, rockScale, rockScale);
-                    controller.rocksQuantity++;
+                    spawnController.rocksQuantity++;
                 }
             }
 
-            if (controller.destroyedRocks == controller.rocksToPowerUp)
+            if (spawnController.destroyedRocks == spawnController.rocksToPowerUp)
             {
                 spawnController.InstantiatePowerUp(transform.position);
             }
 
-            if(controller.rocksQuantity == 0)
+            if(spawnController.rocksQuantity == 0)
             {
                 controller.nextLevel = true;
             }

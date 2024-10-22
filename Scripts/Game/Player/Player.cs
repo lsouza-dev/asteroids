@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
                     rb.velocity = Vector2.zero;
                     animator.SetBool("isBoost", false);
                     gameController.canva.gameObject.SetActive(true);
-                    spawnController.InstantiateRocks(gameController.rockSpawn);
+                    spawnController.InstantiateRocks(spawnController.rockSpawn);
 
                     PlayerPrefs.SetInt("firstPlay", 1);
                 }
@@ -295,6 +295,16 @@ public class Player : MonoBehaviour
             Destroy(explosion, 1f);   
         }
 
+        if (other.CompareTag("EnemieTriggerCollider"))
+        {
+            gameController.playerLifes -= 1;
+            invencibleTime = 3f;
+            shakeAmount = .5f;
+            shakeDuration = .5f;
+            PlayerHitShake(shakeAmount, shakeDuration);
+
+        }
+
         if (other.CompareTag("EnemieBullet"))
         {
             invencibleTime = 2f;
@@ -338,13 +348,13 @@ public class Player : MonoBehaviour
         {
             if (gameController.playerLifes > 0)
             {
-                gameController.isRespawn = true;
+                spawnController.isRespawn = true;
                 Destroy(gameObject);
             }
             else
             {
                 gameController.gameOver.SetActive(true);
-                gameController.isRespawn = false;
+                spawnController.isRespawn = false;
                 Destroy(gameObject);
                 PlayerPrefs.SetInt("firstPlay", 0);
 
@@ -355,7 +365,12 @@ public class Player : MonoBehaviour
         {
             if(gameController.playerLifes == 0)
             {
+                gameController.gameOver.SetActive(true);
+                spawnController.isRespawn = false;
                 Destroy(gameObject);
+                PlayerPrefs.SetInt("firstPlay", 0);
+
+                if (gameController.points > gameController.highscorePoints) PlayerPrefs.SetInt("shooterHighscore", gameController.points);
             }
         }
         

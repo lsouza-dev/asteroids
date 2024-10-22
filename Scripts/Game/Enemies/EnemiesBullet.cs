@@ -10,6 +10,8 @@ public class EnemiesBullet : MonoBehaviour
     [SerializeField] private Animation shoot;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer renderer;
+    [SerializeField] public int bulletDir = 0;
+    [SerializeField] private Vector2 direction;
     [SerializeField] private List<Sprite> sprites;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float xLimit = 36;
@@ -20,6 +22,21 @@ public class EnemiesBullet : MonoBehaviour
     void Start()
     {
         transform.Rotate(0, 0, 90);
+
+        switch (bulletDir)
+        {
+            case 0:
+                direction = Vector2.left * bulletSpeed;
+                break;
+            case 1:
+                direction = new Vector2(-bulletSpeed, bulletSpeed);
+                break;
+            case 2:
+                direction = new Vector2(-bulletSpeed, -bulletSpeed);
+                break;
+        }
+
+        rb.velocity = direction;
     }
     
 
@@ -34,7 +51,7 @@ public class EnemiesBullet : MonoBehaviour
 
     private void Update()
     {
-        rb.velocity = Vector2.left * bulletSpeed;
+     //   rb.velocity = Vector2.left * bulletSpeed;
 
         if (transform.position.x <= -xLimit) Destroy(gameObject);
     }

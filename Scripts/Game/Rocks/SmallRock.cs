@@ -85,10 +85,10 @@ public class SmallRock : MonoBehaviour
             screenShake.shakeDuration = .1f;
             screenShake.shakeActive = true;
 
-            controller.rocksQuantity--;
-            controller.destroyedRocks++;
+            spawnController.rocksQuantity--;
+            spawnController.destroyedRocks++;
 
-            if (controller.destroyedRocks == controller.rocksToPowerUp)
+            if (spawnController.destroyedRocks == spawnController.rocksToPowerUp)
             {
                 spawnController.InstantiatePowerUp(transform.position);
             }
@@ -96,7 +96,7 @@ public class SmallRock : MonoBehaviour
             Destroy(other.gameObject);
             Destroy(this.gameObject);
 
-            if (controller.rocksQuantity == 0)
+            if (spawnController.rocksQuantity == 0)
             {
 
                 controller.nextLevel = true;

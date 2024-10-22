@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &863401152331216966
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2159174644050688100}
+  - component: {fileID: 8238785408631427817}
+  m_Layer: 0
+  m_Name: SpawnController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2159174644050688100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863401152331216966}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8238785408631427817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863401152331216966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e7bce8cd45953d4094651edd09c77f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rockPrefab: {fileID: 0}
+  rock: {fileID: 0}
+  rocksQuantity: 0
+  rockSpawn: 1
+  rocksAdd: 1
+  rocksDivision: 0
+  firstRockSpawn: 0
+  timeToFirstSpawn: 0
+  rocksToPowerUp: 5
+  xLimit: 0
+  yMin: 0
+  yMax: 0
+  player: {fileID: 0}
+  gameOver: {fileID: 0}
+  powerUps: []
+  destroyedRocks: 0
+  enemiesList:
+  - {fileID: 3595681278742348638, guid: a0ac8171c451f434c83c9382ea3412d2, type: 3}
+  bossList:
+  - {fileID: 3595681278742348638, guid: 862f26538454bf84e9f44a8049e0a454, type: 3}
+  - {fileID: 3595681278742348638, guid: d2409535ab83a3a45a69c85f0b1ac893, type: 3}
+  - {fileID: 3595681278742348638, guid: c7e988f1ad34f264bbcce32945325954, type: 3}
+  xOffset: 38
+  yOffset: 18.5
+  timeToSpawnEnemy: 1
+  delayToSpawnBoss: 2
+  timeToSpawnBoss: 10
+  currentTime: 0
+  spawnBoss: 0
+  bossFight: 0
+  bossKilled: 0
+  spawning: 1
+  enemiesKilledTopPowerUp: 20
+  isShooterMode: 1
+  isRespawn: 0
+  respawnTime: 0

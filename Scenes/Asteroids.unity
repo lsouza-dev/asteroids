@@ -648,6 +648,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 468808095}
   m_CullTransparentMesh: 1
+--- !u!1001 &484233983
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 863401152331216966, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_Name
+      value: SpawnController
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159174644050688100, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159174644050688100, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159174644050688100, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159174644050688100, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159174644050688100, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159174644050688100, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159174644050688100, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159174644050688100, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159174644050688100, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159174644050688100, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: rock
+      value: 
+      objectReference: {fileID: 167845295823241581, guid: 66fc9acc90dd033479b1702c6a6eae67, type: 3}
+    - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 8843362037676016873, guid: bf1e4eaed12da5f479d27fead3c1e370, type: 3}
+    - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: gameOver
+      value: 
+      objectReference: {fileID: 786451680}
+    - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: rockPrefab
+      value: 
+      objectReference: {fileID: 700472224537563130, guid: 66fc9acc90dd033479b1702c6a6eae67, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,19 +1019,6 @@ MonoBehaviour:
   points: 0
   levelTransition: 0
   nextLevel: 0
-  rockPrefab: {fileID: 700472224537563130, guid: 66fc9acc90dd033479b1702c6a6eae67, type: 3}
-  rock: {fileID: 167845295823241581, guid: 66fc9acc90dd033479b1702c6a6eae67, type: 3}
-  rocksQuantity: 0
-  rockSpawn: 1
-  rocksAdd: 1
-  firstRockSpawn: 1
-  timeToFirstSpawn: 0
-  rocksToPowerUp: 5
-  xLimit: 35
-  yMin: 22
-  yMax: 22
-  isRespawn: 0
-  respawnTime: 2
   energySprites:
   - {fileID: -604012283, guid: b2233c0eeee80f644b2ecaae25f084b0, type: 3}
   - {fileID: 529894696, guid: b2233c0eeee80f644b2ecaae25f084b0, type: 3}
@@ -970,11 +1030,6 @@ MonoBehaviour:
   diff: 
   player: {fileID: 8843362037676016873, guid: bf1e4eaed12da5f479d27fead3c1e370, type: 3}
   gameOver: {fileID: 786451680}
-  powerUps:
-  - {fileID: 6740998413606993758, guid: 54604a1cd541fdb478da662dc25bb02f, type: 3}
-  - {fileID: 6740998413606993758, guid: d0fea5c9fa556cd4084f9f16fb9f41fb, type: 3}
-  destroyedRocks: 0
-  bulletPrefab: {fileID: 3166250558316290419, guid: cb47c05bfb62dc94892ac7fd15d2ed8a, type: 3}
   highscorePoints: 0
   rockPoints: 50
   smallRockPoints: 25
@@ -983,6 +1038,7 @@ MonoBehaviour:
   rocksDestroyedWithotDie: 0
   playerLifes: 4
   canva: {fileID: 943423119}
+  isAsteroidGameMode: 1
 --- !u!4 &872658336
 Transform:
   m_ObjectHideFlags: 0
@@ -2833,3 +2889,4 @@ SceneRoots:
   - {fileID: 761349323}
   - {fileID: 1089249091}
   - {fileID: 1000715475}
+  - {fileID: 484233983}
