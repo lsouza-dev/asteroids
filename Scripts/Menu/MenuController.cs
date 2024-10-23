@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,6 +13,11 @@ public class MenuController : MonoBehaviour
 
     public int firstGameplay = 0;
 
+    private void Start()
+    {
+        PlayerPrefs.SetInt("firstPlay", 0);
+         
+    }
 
     // Start is called before the first frame update
 
@@ -24,17 +27,19 @@ public class MenuController : MonoBehaviour
         if (firstGameplay == 0 )
         {
             SceneManager.LoadScene("CutScene");
+            PlayerPrefs.SetString("gameMode", "asteroids");
         }
         else
         {
-            PlayerPrefs.SetInt("firstPlay", 0);
-            SceneManager.LoadScene("Game");
+            PlayerPrefs.SetString("gameMode", "asteroids");
+            SceneManager.LoadScene("Asteroids");
         }
     }
 
     public void Shooter()
     {
         SceneManager.LoadScene("Shooter");
+        PlayerPrefs.SetString("gameMode", "shooter");
     }
 
     public void OpenGameMode()
@@ -52,7 +57,7 @@ public class MenuController : MonoBehaviour
     public void OpenSettings()
     {
         settings.SetActive(true);
-        //mainMenu.SetActive(false);
+        mainMenu.SetActive(false);
     }
 
     public void CloseSettings()
@@ -63,6 +68,7 @@ public class MenuController : MonoBehaviour
 
     public void EndGame()
     {
+        PlayerPrefs.SetInt("firstPlay", 0);
         PlayerPrefs.SetInt("firstGameplay", 0);
         Application.Quit();
     }

@@ -44,21 +44,26 @@ public class SpawnController : MonoBehaviour
     [SerializeField] public bool bossFight;
     [SerializeField] public int bossKilled;
     [SerializeField] public bool spawning = true;
-    [SerializeField] private int enemiesKilledTopPowerUp = 20;
+    [SerializeField] public int enemiesKilled= 20;
+    [SerializeField] public int enemiesKilledToPowerUp = 20;
     public bool isShooterMode = true;
     private GameController gameController;
     public bool isRespawn;
     public float respawnTime;
-
+    string gameMode;
     private void Awake()
     {
         player = FindObjectOfType<Player>();
         gameController = FindObjectOfType<GameController>();
+        gameMode = PlayerPrefs.GetString("gameMode");
     }
     // Start is called before the first frame update
     void Start()
     {
-        if(player.isAlive && isShooterMode) StartCoroutine(SpawnEnemies());   
+        if (gameMode == "asteroids") isShooterMode = false;
+        else if (gameMode == "shooter") isShooterMode = true;
+
+        if (player.isAlive && isShooterMode) StartCoroutine(SpawnEnemies());   
     }
 
     void Update()
@@ -115,7 +120,8 @@ public class SpawnController : MonoBehaviour
         Instantiate(bossList[Boss.BOSSINDEX], pos, Quaternion.identity);
         spawnBoss = false;
         delayToSpawnBoss = 3f;
-        Boss.BOSSINDEX += 1;   
+        Boss.BOSSINDEX += 1;
+        timeToSpawnBoss += 10f;
     }
 
     private IEnumerator SpawnEnemies()

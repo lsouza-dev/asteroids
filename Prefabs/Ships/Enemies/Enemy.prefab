@@ -167,6 +167,7 @@ MonoBehaviour:
   enemiesBullet: {fileID: 0}
   spawnPositionObject: {fileID: 5074918531443907214}
   gameController: {fileID: 0}
+  spawnController: {fileID: 0}
   player: {fileID: 0}
   xLimit: 36
   enemyHealthPoints: 2

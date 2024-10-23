@@ -219,6 +219,7 @@ MonoBehaviour:
   xLimit: 36
   xStopLimit: 22
   yStopLimit: 10
+  bulletScale: 0
   goingDown: 0
   bossEnter: 1
   bossHealthPoints: 40

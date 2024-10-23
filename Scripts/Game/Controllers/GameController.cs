@@ -1,14 +1,6 @@
-using JetBrains.Annotations;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using TMPro;
-using UnityEditor.SearchService;
-using UnityEditor.Tilemaps;
-using UnityEditor.XR;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -53,6 +45,7 @@ public class GameController : MonoBehaviour
     public int rocksDestroyedWithotDie;
 
     [SerializeField] public int playerLifes = 4;
+    string gameMode;
     [SerializeField] public GameObject canva;
     [SerializeField] public bool isAsteroidGameMode = true;
     // Start is called before the first frame update
@@ -60,19 +53,19 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         spawnController = FindObjectOfType<SpawnController>();
-        highscorePoints = PlayerPrefs.GetInt("highscore");
+        if (isAsteroidGameMode) highscorePoints = PlayerPrefs.GetInt("highscore");
+        else highscorePoints = PlayerPrefs.GetInt("shooterHighscore");
         player.movementIntrodution = true;
+        gameMode = PlayerPrefs.GetString("gameMode");
     }
     void Start()
     {
+
+        if (gameMode == "asteroids") isAsteroidGameMode = true;
+        else if (gameMode == "shooter") isAsteroidGameMode = false;
+
         if (isAsteroidGameMode)
         {
-            if (highscorePoints == 0) highscoreText.text = $"HIGHSCORE: 0000";
-            else
-            {
-                highscoreText.text = $"HIGHSCORE: {highscorePoints}";
-            }
-
             UpdatePlayerEnergy(playerLifes);
 
             try
@@ -109,9 +102,10 @@ public class GameController : MonoBehaviour
             spawnController.rocksQuantity = spawnController.rockSpawn;
             levelText.text = $"LEVEL: {gameLevel}";
         }
-        else
-        {
 
+        if (highscorePoints == 0) highscoreText.text = $"HIGHSCORE: 0000";
+        {
+            highscoreText.text = $"HIGHSCORE: {highscorePoints}";
         }
     }
 
@@ -124,7 +118,6 @@ public class GameController : MonoBehaviour
             LevelCronometer();
             if (nextLevelTimer <= 0)
             {
-               
                 NextLevel();
                 nextLevelText.text = string.Empty;
             }
@@ -150,11 +143,7 @@ public class GameController : MonoBehaviour
                 comboPointsGO.SetActive(false);
             }
         }
-        else
-        {
-
-        }
-        
+       
 
         if (spawnController.isRespawn)
         {
@@ -186,13 +175,9 @@ public class GameController : MonoBehaviour
         nextLevelText.text = $"NEXT LEVEL...{Mathf.Round(nextLevelTimer)}";
     }
 
-
-    
-
-
     public void UpdatePlayerEnergy(int lifes)
     {
-        energyImage.sprite = energySprites[lifes];
+         if(lifes >= 0)energyImage.sprite = energySprites[lifes];
     }
         
     public void PlayerRespawn()

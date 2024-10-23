@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SmallRock : MonoBehaviour
@@ -8,7 +6,7 @@ public class SmallRock : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Collider2D rockCollider;
+    [SerializeField] private CapsuleCollider2D rockCollider;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [Header("Numeric Variables")]
     private float rotationSpeed = .4f;
@@ -26,7 +24,7 @@ public class SmallRock : MonoBehaviour
 
     private void Awake()
     {
-        rockCollider = GetComponent<Collider2D>();
+        rockCollider = GetComponent<CapsuleCollider2D>();
         controller = FindObjectOfType<GameController>();
         screenShake = FindObjectOfType<ScreenShakeController>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();

@@ -185,9 +185,10 @@ MonoBehaviour:
   xLimit: 36
   xStopLimit: 22
   yStopLimit: 10
+  bulletScale: 8
   goingDown: 0
   bossEnter: 1
-  bossHealthPoints: 40
+  bossHealthPoints: 80
 --- !u!70 &7518738580950697915
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

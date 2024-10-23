@@ -24,7 +24,8 @@ public class CutSceneController : MonoBehaviour
     [Header("Bool Variables")]
     [SerializeField] bool playGame;
     [SerializeField] bool videoTransition;
-
+    
+    [SerializeField] public RenderTexture Texture;
     
     
     // Start is called before the first frame update

@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -104,6 +101,7 @@ public class Player : MonoBehaviour
                 invencibleTime = 3f;
             }
 
+            if (gameController.nextLevelText.text == string.Empty) shipAcceleration = 25f;
 
             if (rechargeTime >= 0) rechargeTime -= Time.deltaTime;
 
@@ -281,7 +279,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Rock" || other.tag == "SmallRock")
+        if(other.tag == "RockCollider" || other.tag == "SmallRockCollider")
         {
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             gameController.playerLifes -= 1;
@@ -358,7 +356,7 @@ public class Player : MonoBehaviour
                 Destroy(gameObject);
                 PlayerPrefs.SetInt("firstPlay", 0);
 
-                if (gameController.points > gameController.highscorePoints) PlayerPrefs.SetInt("highscore", gameController.points);
+                if (gameController.isAsteroidGameMode && gameController.points > gameController.highscorePoints) PlayerPrefs.SetInt("highscore", gameController.points);
             }
         }
         else
@@ -370,7 +368,7 @@ public class Player : MonoBehaviour
                 Destroy(gameObject);
                 PlayerPrefs.SetInt("firstPlay", 0);
 
-                if (gameController.points > gameController.highscorePoints) PlayerPrefs.SetInt("shooterHighscore", gameController.points);
+                if (!gameController.isAsteroidGameMode && gameController.points > gameController.highscorePoints) PlayerPrefs.SetInt("shooterHighscore", gameController.points);
             }
         }
         

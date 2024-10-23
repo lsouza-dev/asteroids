@@ -336,7 +336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89926467a9483f4f8e0c6a906b93e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipAcceleration: 0
+  shipAcceleration: 25
   shipDisacceleration: 0.92
   rotationSpeed: 300
   invencibleTime: 0
@@ -344,6 +344,8 @@ MonoBehaviour:
   respawnTime: 0
   maxVelocity: 50
   rechargeTime: 0
+  xOffset: 0
+  yOffset: 0
   bulletPrefab: {fileID: 2963084133321884316, guid: cb47c05bfb62dc94892ac7fd15d2ed8a, type: 3}
   bulletScript: {fileID: 3166250558316290419, guid: cb47c05bfb62dc94892ac7fd15d2ed8a, type: 3}
   bulletSpeed: 50
@@ -368,8 +370,8 @@ MonoBehaviour:
   doubleShoot: 0
   isAlive: 1
   movementIntrodution: 1
-  xOffset: 0
-  yOffset: 0
+  shakeAmount: 0
+  shakeDuration: 0
 --- !u!212 &7468272666706091962
 SpriteRenderer:
   m_ObjectHideFlags: 0

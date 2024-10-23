@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -10,8 +8,10 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private List<Sprite> sprites;
-    [SerializeField] private float bulletLifetime = 3f;
+    [SerializeField] private float bulletLifetime = 2f;
+    [SerializeField] public int bulletDamage;
     [SerializeField] private GameController gameController;
+    [SerializeField] private SpawnController spawnController;
     [SerializeField] public bool isMissil = false;
 
 
@@ -21,11 +21,13 @@ public class Bullet : MonoBehaviour
         if (isMissil)
         {
             renderer.sprite = sprites[1];
+            bulletDamage = 2;
             animator.Play("missil");
         }
         else
         {
             renderer.sprite = sprites[0];
+            bulletDamage = 1;
             animator.Play("bullet");
         }
     }
@@ -36,13 +38,19 @@ public class Bullet : MonoBehaviour
         renderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         gameController = FindObjectOfType<GameController>();
-        Destroy(gameObject, bulletLifetime);
+        spawnController = FindObjectOfType<SpawnController>();
+        Destroy(gameObject,bulletLifetime);
+    }
+
+    private void Update()
+    {
+        
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Rock"))
+        if (other.CompareTag("RockCollider"))
         {
             if (gameController.isOnCombo)
             {
@@ -55,7 +63,7 @@ public class Bullet : MonoBehaviour
             gameController.rocksDestroyedWithotDie += 1;
         }
 
-        if (other.CompareTag("SmallRock"))
+        if (other.CompareTag("SmallRockCollider"))
         {
             if (gameController.isOnCombo)
             {

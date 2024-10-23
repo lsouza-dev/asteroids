@@ -1,19 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Json;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Rock : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Collider2D rockCollider;
+    [SerializeField] private CapsuleCollider2D rockCollider;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    private PolygonCollider2D coll;
     [SerializeField] private AudioSource audioSource;
     [Header("Numeric Variables")]
     [SerializeField] public int qtdRocks;
@@ -36,11 +28,10 @@ public class Rock : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        rockCollider = GetComponent<Collider2D>();
+        rockCollider = GetComponentInChildren<CapsuleCollider2D>();
         controller = FindObjectOfType<GameController>();
         screenShake = FindObjectOfType<ScreenShakeController>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        coll = GetComponent<PolygonCollider2D>();
         spawnController = FindObjectOfType<SpawnController>();
     }
 
@@ -49,7 +40,7 @@ public class Rock : MonoBehaviour
     {
         RandomDirection();
 
-        coll.enabled = false;
+        rockCollider.enabled = false;
         //qtdRocks = controller.rocksQuantity;
         
     }
@@ -63,7 +54,7 @@ public class Rock : MonoBehaviour
         }
         else
         {
-            coll.enabled = true;
+            rockCollider.enabled = true;
         }
 
         transform.eulerAngles += new Vector3(0, 0, rotationSpeed);

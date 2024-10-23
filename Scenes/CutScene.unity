@@ -179,7 +179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8600000, guid: d4aa4a95a9d250f48b1cc8a43a157bac, type: 2}
+  m_Texture: {fileID: 8400000, guid: d010c9b891c847b4cad0404e9735590b, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -423,6 +423,7 @@ MonoBehaviour:
   transitionTime: 0
   playGame: 0
   videoTransition: 0
+  Texture: {fileID: 8400000, guid: d010c9b891c847b4cad0404e9735590b, type: 2}
 --- !u!328 &1202289682
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -434,8 +435,8 @@ VideoPlayer:
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
-  m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8600000, guid: d4aa4a95a9d250f48b1cc8a43a157bac, type: 2}
+  m_TargetCamera: {fileID: 1108097701}
+  m_TargetTexture: {fileID: 8400000, guid: d010c9b891c847b4cad0404e9735590b, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
@@ -456,7 +457,7 @@ VideoPlayer:
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 0
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
 --- !u!82 &1202289683

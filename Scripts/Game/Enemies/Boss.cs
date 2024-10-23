@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class Boss : MonoBehaviour
 {
@@ -17,8 +15,10 @@ public class Boss : MonoBehaviour
     [SerializeField] public float xLimit;
     [SerializeField] public float xStopLimit;
     [SerializeField] public float yStopLimit;
+    [SerializeField] public float bulletScale = 2;
     [SerializeField] private bool goingDown;
     [SerializeField] private bool bossEnter = true;
+    Vector3 scale;
     static public int BOSSINDEX = 0;
 
     public int bossHealthPoints;
@@ -80,7 +80,6 @@ public class Boss : MonoBehaviour
             yield return new WaitForSeconds(1f);
             for (int i = 0; i < spawnPositionObject.Count; i++)
             {
-                // Verificar a direção das bullets
                 Instantiate(enemiesBullet, spawnPositionObject[i].transform.position, Quaternion.identity);
             }
         }

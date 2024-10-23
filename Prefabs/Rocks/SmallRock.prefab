@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4695758469654395727}
   - component: {fileID: 1394496938929333128}
   - component: {fileID: 9129539748120385039}
-  - component: {fileID: 4598018698438261477}
   m_Layer: 0
   m_Name: SmallRock
   m_TagString: SmallRock
@@ -33,7 +32,8 @@ Transform:
   m_LocalPosition: {x: -7.50282, y: 6.7, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 8042523367910698476}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1348966731049175722
@@ -69,6 +69,7 @@ MonoBehaviour:
   qtdRocks: 0
   speed: 12
   controller: {fileID: 0}
+  spawnController: {fileID: 0}
   screenShake: {fileID: 0}
   dir: {x: 0, y: 0}
 --- !u!50 &1394496938929333128
@@ -150,13 +151,45 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &4598018698438261477
-CircleCollider2D:
+--- !u!1 &2759134743723277277
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 700472224537563130}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8042523367910698476}
+  - component: {fileID: 1464131292665476658}
+  m_Layer: 0
+  m_Name: TriggerCollider
+  m_TagString: SmallRockCollider
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8042523367910698476
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2759134743723277277}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.13, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2061384033657680007}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &1464131292665476658
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2759134743723277277}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -183,5 +216,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.7098593
+  m_Size: {x: 4.2513084, y: 4.3246775}
+  m_Direction: 0

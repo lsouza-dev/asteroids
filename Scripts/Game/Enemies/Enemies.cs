@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemies : MonoBehaviour
@@ -10,6 +8,7 @@ public class Enemies : MonoBehaviour
     [SerializeField] public EnemiesBullet enemiesBullet;
     [SerializeField] private GameObject spawnPositionObject;
     [SerializeField] private GameController gameController;
+    [SerializeField] private SpawnController spawnController;
     [SerializeField] private Player player;
     [SerializeField] public float xLimit;
     public int enemyHealthPoints;
@@ -21,6 +20,7 @@ public class Enemies : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<Player>();
         gameController = FindObjectOfType<GameController>();
+        spawnController = FindObjectOfType<SpawnController>();
     }
 
     void Start()
@@ -41,12 +41,19 @@ public class Enemies : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
+            int damage = other.GetComponent<Bullet>().bulletDamage;
+            enemyHealthPoints -= damage;
             Destroy(other.gameObject);
-            enemyHealthPoints -= 1;
-            
+
             if (enemyHealthPoints < 0)
             {
                 gameController.points += 75;
+                spawnController.enemiesKilled += 1;
+                if (spawnController.enemiesKilled == spawnController.enemiesKilledToPowerUp)
+                {
+                    spawnController.InstantiatePowerUp(transform.position);
+                    spawnController.enemiesKilledToPowerUp *= 2;
+                }
                 Destroy(gameObject);
             }
         }
