@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
+    // Start is called before the first frame update
     private Rigidbody2D rb;
     [SerializeField] public float enemySpeed;
-    [SerializeField] public EnemiesBullet enemiesBullet;
+    [SerializeField] public EnemyBullet minionBullet;
+    [SerializeField] public EnemyBullet bigBossBullet;
+    [SerializeField] public EnemyBullet lastBossBullet;
+    [SerializeField] public EnemyBullet thisEnemyBullet;
     [SerializeField] private List<GameObject> spawnPositionObject;
     [SerializeField] private GameController gameController;
     [SerializeField] private SpawnController spawnController;
@@ -15,10 +19,8 @@ public class Boss : MonoBehaviour
     [SerializeField] public float xLimit;
     [SerializeField] public float xStopLimit;
     [SerializeField] public float yStopLimit;
-    [SerializeField] public float bulletScale = 2;
     [SerializeField] private bool goingDown;
     [SerializeField] private bool bossEnter = true;
-    Vector3 scale;
     static public int BOSSINDEX = 0;
 
     public int bossHealthPoints;
@@ -31,13 +33,39 @@ public class Boss : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<Player>();
         gameController = FindObjectOfType<GameController>();
+
+        minionBullet = Resources.Load<EnemyBullet>("MinionBullet");
+        bigBossBullet = Resources.Load<EnemyBullet>("BigBossBullet");
+        lastBossBullet = Resources.Load<EnemyBullet>("LastBossBullet");
+
+        minionBullet.transform.Rotate(0, 0, 90);
+        lastBossBullet.transform.Rotate(0, 0, 180);
+        bigBossBullet.transform.Rotate(0, 0, 180);
     }
 
     void Start()
     {
-        enemiesBullet = Resources.Load<EnemiesBullet>("EnemyBullet");
+        spawnController.minionEnemy = false;
+        if (BOSSINDEX == 0)
+        {
+            thisEnemyBullet = minionBullet;
+        }
+        else if (BOSSINDEX == 1)
+        {
+            thisEnemyBullet = bigBossBullet;
+
+        }
+        else if (BOSSINDEX == 2)
+        {
+            thisEnemyBullet = lastBossBullet;
+
+
+        }
+
         transform.Rotate(0, 0, 90);
         StartCoroutine(Shoot());
+
+        print(BOSSINDEX);
     }
 
     // Update is called once per frame
@@ -56,7 +84,8 @@ public class Boss : MonoBehaviour
 
             if (bossHealthPoints < 0)
             {
-                if(BOSSINDEX <= 2)
+                BOSSINDEX += 1;
+                if (BOSSINDEX <= 2)
                 {
                     gameController.points += 500;
                     spawnController.bossFight = false;
@@ -80,7 +109,8 @@ public class Boss : MonoBehaviour
             yield return new WaitForSeconds(1f);
             for (int i = 0; i < spawnPositionObject.Count; i++)
             {
-                Instantiate(enemiesBullet, spawnPositionObject[i].transform.position, Quaternion.identity);
+                // Verificar a direção das bullets
+                Instantiate(thisEnemyBullet, spawnPositionObject[i].transform.position, Quaternion.identity);
             }
         }
     }
@@ -95,13 +125,13 @@ public class Boss : MonoBehaviour
         {
             bossEnter = false;
             rb.velocity = Vector3.down * enemySpeed;
-            
+
 
         }
 
         if (!bossEnter)
         {
-            if (transform.position.y >= limitPos.y )
+            if (transform.position.y >= limitPos.y)
             {
                 goingDown = true;
             }
@@ -121,4 +151,5 @@ public class Boss : MonoBehaviour
 
         }
     }
+
 }

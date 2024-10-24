@@ -23,7 +23,8 @@ public class MenuController : MonoBehaviour
 
     public void Asteroids()
     {
-        firstGameplay = PlayerPrefs.GetInt("firstGameplay");
+        //firstGameplay = PlayerPrefs.GetInt("firstGameplay");
+        firstGameplay = 1;
         if (firstGameplay == 0 )
         {
             SceneManager.LoadScene("CutScene");
@@ -31,6 +32,7 @@ public class MenuController : MonoBehaviour
         }
         else
         {
+            PlayerPrefs.SetInt("firstPlay", 0);
             PlayerPrefs.SetString("gameMode", "asteroids");
             SceneManager.LoadScene("Asteroids");
         }

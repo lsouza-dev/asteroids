@@ -66,17 +66,19 @@ MonoBehaviour:
   - {fileID: 3595681278742348638, guid: 862f26538454bf84e9f44a8049e0a454, type: 3}
   - {fileID: 3595681278742348638, guid: d2409535ab83a3a45a69c85f0b1ac893, type: 3}
   - {fileID: 3595681278742348638, guid: c7e988f1ad34f264bbcce32945325954, type: 3}
-  xOffset: 38
+  xOffset: 41
   yOffset: 18.5
   timeToSpawnEnemy: 1
-  delayToSpawnBoss: 2
-  timeToSpawnBoss: 10
+  delayToSpawnBoss: 3
+  timeToSpawnBoss: 25
   currentTime: 0
   spawnBoss: 0
   bossFight: 0
   bossKilled: 0
   spawning: 1
-  enemiesKilledTopPowerUp: 20
+  enemiesKilled: 20
+  enemiesKilledToPowerUp: 20
+  minionEnemy: 0
   isShooterMode: 1
   isRespawn: 0
   respawnTime: 0

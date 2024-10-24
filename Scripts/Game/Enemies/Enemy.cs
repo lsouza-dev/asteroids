@@ -1,18 +1,20 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemies : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     private Rigidbody2D rb;
     [SerializeField] public float enemySpeed;
-    [SerializeField] public EnemiesBullet enemiesBullet;
+    [SerializeField] public EnemyBullet enemiesBullet;
     [SerializeField] private GameObject spawnPositionObject;
     [SerializeField] private GameController gameController;
     [SerializeField] private SpawnController spawnController;
     [SerializeField] private Player player;
     [SerializeField] public float xLimit;
     public int enemyHealthPoints;
-    
+
 
     // Start is called before the first frame update
     private void Awake()
@@ -21,12 +23,15 @@ public class Enemies : MonoBehaviour
         player = FindObjectOfType<Player>();
         gameController = FindObjectOfType<GameController>();
         spawnController = FindObjectOfType<SpawnController>();
+        enemiesBullet = Resources.Load<EnemyBullet>("MinionBullet");
+
     }
 
     void Start()
     {
-        enemiesBullet = Resources.Load<EnemiesBullet>("EnemyBullet");
+        spawnController.minionEnemy = true;
         transform.Rotate(0, 0, 90);
+        enemySpeed = Random.Range(10f, 20f);
         StartCoroutine(Shoot());
     }
 
@@ -34,38 +39,34 @@ public class Enemies : MonoBehaviour
     void Update()
     {
         rb.velocity = Vector3.left * enemySpeed;
-        if(transform.position.x <= -xLimit) Destroy(gameObject);
+        if (transform.position.x <= -xLimit) Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Bullet"))
         {
-            int damage = other.GetComponent<Bullet>().bulletDamage;
-            enemyHealthPoints -= damage;
+            enemyHealthPoints -= 1;
             Destroy(other.gameObject);
 
             if (enemyHealthPoints < 0)
             {
-                gameController.points += 75;
                 spawnController.enemiesKilled += 1;
-                if (spawnController.enemiesKilled == spawnController.enemiesKilledToPowerUp)
-                {
-                    spawnController.InstantiatePowerUp(transform.position);
-                    spawnController.enemiesKilledToPowerUp *= 2;
-                }
+                gameController.points += 75;
+
+                if (spawnController.enemiesKilled == spawnController.enemiesKilledToPowerUp) spawnController.InstantiatePowerUp(transform.position);
                 Destroy(gameObject);
             }
         }
     }
     private IEnumerator Shoot()
     {
-        
-            while (true)
-            {
-                yield return new WaitForSeconds(1f);
-                Instantiate(enemiesBullet, spawnPositionObject.transform.position, Quaternion.identity);
-            }
+
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            Instantiate(enemiesBullet, spawnPositionObject.transform.position, Quaternion.identity);
+        }
 
     }
 }

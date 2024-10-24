@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     [SerializeField] public GameObject shield;
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] public GameObject explosion;
+    [SerializeField] public GameObject enemyBulletExplosion;
 
     [Header("Components")]
     [SerializeField] private Animator animator;
@@ -310,6 +311,7 @@ public class Player : MonoBehaviour
             shakeAmount = .5f;
             shakeDuration = .5f;
             gameController.UpdatePlayerEnergy(gameController.playerLifes);
+            //Instantiate(enemyBulletExplosion, transform.position, Quaternion.identity);
             PlayerDeath();
             PlayerHitShake(shakeAmount, shakeDuration);
             Destroy(other);

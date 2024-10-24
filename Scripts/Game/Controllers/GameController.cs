@@ -47,6 +47,7 @@ public class GameController : MonoBehaviour
     [SerializeField] public int playerLifes = 4;
     string gameMode;
     [SerializeField] public GameObject canva;
+    [SerializeField] public GameObject pauseMenu;
     [SerializeField] public bool isAsteroidGameMode = true;
     // Start is called before the first frame update
 
@@ -143,6 +144,12 @@ public class GameController : MonoBehaviour
                 comboPointsGO.SetActive(false);
             }
         }
+
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    Time.timeScale = 0f;
+        //    pauseMenu.SetActive(true);
+        //}
        
 
         if (spawnController.isRespawn)

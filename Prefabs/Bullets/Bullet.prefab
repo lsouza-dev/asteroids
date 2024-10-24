@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1575250311894014442}
-  - component: {fileID: 3166250558316290419}
   - component: {fileID: 833007227850396842}
   - component: {fileID: 2963084133321884316}
+  - component: {fileID: 3166250558316290419}
   - component: {fileID: 5270827417692051600}
   - component: {fileID: -3044951784901222805}
   - component: {fileID: -280042736913775295}
@@ -37,29 +37,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3166250558316290419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4555285353430921792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26598be26e14a244a946ed48dfef3486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shoot: {fileID: 0}
-  animator: {fileID: 0}
-  renderer: {fileID: 0}
-  sprites:
-  - {fileID: 1470378309, guid: 85d4bc064660b5246977ce77fca66d97, type: 3}
-  - {fileID: -1722568733, guid: 30fcd70e53c79744abb3038fb54a0341, type: 3}
-  bulletLifetime: 2
-  bulletDamage: 2
-  gameController: {fileID: 0}
-  spawnController: {fileID: 0}
-  isMissil: 0
 --- !u!212 &833007227850396842
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -101,12 +78,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1209238484, guid: 6416cea47f677d64e967e5b1755e9803, type: 3}
+  m_Sprite: {fileID: -1722568733, guid: 30fcd70e53c79744abb3038fb54a0341, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.5, y: 3}
+  m_Size: {x: 1.3333334, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -139,6 +116,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3166250558316290419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555285353430921792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26598be26e14a244a946ed48dfef3486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shoot: {fileID: 0}
+  animator: {fileID: 0}
+  renderer: {fileID: 0}
+  sprites:
+  - {fileID: 1470378309, guid: 85d4bc064660b5246977ce77fca66d97, type: 3}
+  - {fileID: -1722568733, guid: 30fcd70e53c79744abb3038fb54a0341, type: 3}
+  bulletLifetime: 1.5
+  bulletDamage: 1
+  gameController: {fileID: 0}
+  spawnController: {fileID: 0}
+  isMissil: 0
 --- !u!82 &5270827417692051600
 AudioSource:
   m_ObjectHideFlags: 0

@@ -880,6 +880,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf1e4eaed12da5f479d27fead3c1e370, type: 3}
+--- !u!114 &761349324 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8843362037676016873, guid: bf1e4eaed12da5f479d27fead3c1e370, type: 3}
+  m_PrefabInstance: {fileID: 761349323}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89926467a9483f4f8e0c6a906b93e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &786451680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2887,6 +2898,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 761349324}
+    - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: xOffset
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: gameOver
+      value: 
+      objectReference: {fileID: 786451680}
+    - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
       propertyPath: enemiesKilled
       value: 0
       objectReference: {fileID: 0}
@@ -2896,7 +2919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
       propertyPath: delayToSpawnBoss
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
       propertyPath: powerUps.Array.size
@@ -2904,7 +2927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
       propertyPath: enemiesKilledToPowerUp
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
       propertyPath: powerUps.Array.data[0]
@@ -2918,6 +2941,10 @@ PrefabInstance:
       propertyPath: enemiesKilledTopPowerUp
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 8238785408631427817, guid: 3178053df2185ab43846cc7ce6c61f47, type: 3}
+      propertyPath: enemiesList.Array.data[0]
+      value: 
+      objectReference: {fileID: 9170676458511365281, guid: b48c57d8115359c478d848f749bf4e98, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

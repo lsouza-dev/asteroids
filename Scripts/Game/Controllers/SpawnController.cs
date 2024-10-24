@@ -46,6 +46,7 @@ public class SpawnController : MonoBehaviour
     [SerializeField] public bool spawning = true;
     [SerializeField] public int enemiesKilled= 20;
     [SerializeField] public int enemiesKilledToPowerUp = 20;
+    [SerializeField] public bool minionEnemy;
     public bool isShooterMode = true;
     private GameController gameController;
     public bool isRespawn;
@@ -120,7 +121,7 @@ public class SpawnController : MonoBehaviour
         Instantiate(bossList[Boss.BOSSINDEX], pos, Quaternion.identity);
         spawnBoss = false;
         delayToSpawnBoss = 3f;
-        Boss.BOSSINDEX += 1;
+        //Boss.BOSSINDEX += 1;
         timeToSpawnBoss += 10f;
     }
 
@@ -130,7 +131,7 @@ public class SpawnController : MonoBehaviour
         {
             if (!bossFight)
             {
-                float randomTime = Random.Range(1f, 3f);
+                float randomTime = Random.Range(1f, 2f);
                 yield return new WaitForSeconds(randomTime);
                 int randomEnemy = Random.Range(0, enemiesList.Count);
                 Vector2 randomPos = new Vector2(xOffset, Random.Range(-yOffset, yOffset));
